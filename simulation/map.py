@@ -4,7 +4,7 @@ from typing import List, Tuple
 class Position:
     """docstring for Position."""
 
-    def __init__(self, x: float , y: float) -> None:
+    def __init__(self, x: float, y: float) -> None:
         self.x: float = x
         self.y: float = y
 
@@ -17,13 +17,13 @@ class Tower:
 class Map:
     """Stores info about the map"""
 
-    def __init__(self) -> None:
+    def __init__(self, size: Tuple[int, int]) -> None:
         # metadata about the map
-        self._size: Tuple[int, int] = (..., ...)
+        self._size: Tuple[int, int] = size
         self._targets: List[Position] = [...]
 
         # info about tiles
-        self._vision_modifier: List[List[float]] = [[...]]
+        self._vision_modifier: List[List[float]] = [[1.0] * size[1]] * size[0]
 
         # structures and stuff on the map
         # TODO: decide on structure implementation (see github issue #3)
