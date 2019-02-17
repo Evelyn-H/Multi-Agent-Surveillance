@@ -2,7 +2,7 @@ from typing import List, Tuple
 
 """ If there is some kind of abstract class concept in python this could
     be a representation of all tiles that we need. """
-    """Not sure if we need this at all when we can load the maps as in the gui package"""
+"""Not sure if we need this at all when we can load the maps as in the gui package"""
 class Tile:
 
     def __init__(self, center_x: float, center_y: float, size: float) -> None:

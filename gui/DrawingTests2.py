@@ -11,13 +11,14 @@ python -m arcade.examples.sprite_tiled_map
 import arcade
 import os
 import time
+from agent import Agent
 
 SPRITE_SCALING = 2.5
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 SCREEN_TITLE = "Sprite Tiled Map Example"
-SPRITE_PIXEL_SIZE = 128
+SPRITE_PIXEL_SIZE = 16
 GRID_PIXEL_SIZE = (SPRITE_PIXEL_SIZE * SPRITE_SCALING)
 
 # How many pixels to keep as a minimum margin between the character
@@ -30,7 +31,6 @@ VIEWPORT_LEFT_MARGIN = 270
 # Physics
 MOVEMENT_SPEED = 5
 
-print(arcade.version)
 class MyGame(arcade.Window):
     """ Main application class. """
 
@@ -49,13 +49,12 @@ class MyGame(arcade.Window):
 
         # Sprite lists
         self.platform_list = None
-        self.player_list = None
-        self.coin_list = None
+        self.agent_list = None
 
         # Set up the player
         self.score = 0
-        self.player_sprite = None
-
+        self.agent = Agent()
+        
         self.physics_engine = None
         self.view_left = 0
         self.view_bottom = 0
@@ -66,19 +65,10 @@ class MyGame(arcade.Window):
 
     def setup(self):
         """ Set up the game and initialize the variables. """
-
-        # Sprite lists
-        self.player_list = arcade.SpriteList()
-        self.coin_list = arcade.SpriteList()
-
-        # Set up the player
-        self.player_sprite = arcade.Sprite("Textures/character.png", SPRITE_SCALING)
-
-        # Starting position of the player
-        self.player_sprite.center_x = 50
-        self.player_sprite.center_y = 1500
-        self.player_list.append(self.player_sprite)
-
+        self.agent_list = arcade.SpriteList()
+        self.agent_list.append(self.agent.getAgent())
+        
+        #Define all layers from the map
         platforms_layer_name = 'Platforms'
         background_layer_name = 'Background'
         bridge_layer_name = 'Bridge'
@@ -121,7 +111,7 @@ class MyGame(arcade.Window):
 #        self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite,
 #                                                             self.platform_list,
 #                                                              gravity_constant=GRAVITY)
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.platform_list)
+        self.physics_engine = arcade.PhysicsEngineSimple(self.agent.getAgent(), self.platform_list)
 
 
         # Set the view port boundaries
@@ -149,7 +139,7 @@ class MyGame(arcade.Window):
         self.platformDeco_list.draw()
         self.pathDeco_list.draw()
         self.bridge_list.draw()
-        self.player_list.draw()
+        self.agent_list.draw()
         
 
         if self.last_time and self.frame_count % 60 == 0:
@@ -165,54 +155,44 @@ class MyGame(arcade.Window):
         # Put the text on the screen.
         # Adjust the text position based on the view port so that we don't
         # scroll the text too.
-        distance = self.player_sprite.right
+        distance = self.agent.getAgent().right
         output = f"Distance: {distance}"
         arcade.draw_text(output, self.view_left + 10, self.view_bottom + 20, arcade.color.BLACK, 14)
 
         if self.game_over:
             arcade.draw_text("Game Over", self.view_left + 200, self.view_bottom + 200, arcade.color.BLACK, 30)
 
+    """
+    TODO: Extract Key listener into a different module (I don't know how to do that)
+    """
     def on_key_press(self, key, modifiers):
         """
         Called whenever the mouse moves.
         """
-       # if key == arcade.key.UP:
-        #    if self.physics_engine.can_jump():
-        #        self.player_sprite.change_y = JUMP_SPEED
-        if key == arcade.key.UP:
-            self.player_sprite.change_y = MOVEMENT_SPEED
-        elif key == arcade.key.DOWN:
-            self.player_sprite.change_y = -MOVEMENT_SPEED
-        elif key == arcade.key.LEFT:
-            self.player_sprite.change_x = -MOVEMENT_SPEED
-        elif key == arcade.key.RIGHT:
-            self.player_sprite.change_x = MOVEMENT_SPEED
-
+        self.agent.setChange(key, MOVEMENT_SPEED)
+        
     def on_key_release(self, key, modifiers):
         """
         Called when the user presses a mouse button.
         """
-        if key == arcade.key.LEFT or key == arcade.key.RIGHT:
-            self.player_sprite.change_x = 0
-        if key == arcade.key.UP or key == arcade.key.DOWN:
-            self.player_sprite.change_y = 0
+        self.agent.setChange(key, 0)
+
 
     def update(self, delta_time):
         """ Movement and game logic """
-
-        if self.player_sprite.right >= self.end_of_map:
+        self.agent_list.update()
+        self.agent_list.update_animation()
+        #Reset agent list (Animation doesnt play when not resettet. Maybe you have an idea :D)
+        self.agent_list = arcade.SpriteList()
+        self.agent_list.append(self.agent.getAgent())
+        
+        if self.agent.getAgent().right >= self.end_of_map:
             self.game_over = True
 
         # Call update on all sprites (The sprites don't do much in this
         # example though.)
         if not self.game_over:
             self.physics_engine.update()
-
-        
-        coins_hit = arcade.check_for_collision_with_list(self.player_sprite, self.coin_list)
-        for coin in coins_hit:
-            coin.kill()
-            self.score += 1
 
         # --- Manage Scrolling ---
 
@@ -222,26 +202,26 @@ class MyGame(arcade.Window):
 
         # Scroll left
         left_bndry = self.view_left + VIEWPORT_LEFT_MARGIN
-        if self.player_sprite.left < left_bndry:
-            self.view_left -= left_bndry - self.player_sprite.left
+        if self.agent.getAgent().left < left_bndry:
+            self.view_left -= left_bndry - self.agent.getAgent().left
             changed = True
 
         # Scroll right
         right_bndry = self.view_left + SCREEN_WIDTH - VIEWPORT_RIGHT_MARGIN
-        if self.player_sprite.right > right_bndry:
-            self.view_left += self.player_sprite.right - right_bndry
+        if self.agent.getAgent().right > right_bndry:
+            self.view_left += self.agent.getAgent().right - right_bndry
             changed = True
 
         # Scroll up
         top_bndry = self.view_bottom + SCREEN_HEIGHT - VIEWPORT_MARGIN_TOP
-        if self.player_sprite.top > top_bndry:
-            self.view_bottom += self.player_sprite.top - top_bndry
+        if self.agent.getAgent().top > top_bndry:
+            self.view_bottom += self.agent.getAgent().top - top_bndry
             changed = True
 
         # Scroll down
         bottom_bndry = self.view_bottom + VIEWPORT_MARGIN_BOTTOM
-        if self.player_sprite.bottom < bottom_bndry:
-            self.view_bottom -= bottom_bndry - self.player_sprite.bottom
+        if self.agent.getAgent().bottom < bottom_bndry:
+            self.view_bottom -= bottom_bndry - self.agent.getAgent().bottom
             changed = True
 
         # If we need to scroll, go ahead and do it.
