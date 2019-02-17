@@ -49,7 +49,6 @@ class MyGame(arcade.Window):
 
         # Sprite lists
         self.platform_list = None
-
         # Set up the player
         self.score = 0
         self.agent = Agent()
@@ -135,8 +134,11 @@ class MyGame(arcade.Window):
         self.platformDeco_list.draw()
         self.pathDeco_list.draw()
         self.bridge_list.draw()
-        self.agent.getAgent().draw()
-        
+        if(self.agent.praise):
+            self.agent.updatePraiseAnimation()
+            self.agent.getPraiseSprite().draw()
+        else: 
+            self.agent.getAgent().draw()
 
         if self.last_time and self.frame_count % 60 == 0:
             fps = 1.0 / (time.time() - self.last_time) * 60
@@ -166,12 +168,16 @@ class MyGame(arcade.Window):
         Called whenever the mouse moves.
         """
         self.agent.setChange(key, MOVEMENT_SPEED)
+        if key == arcade.key.P:
+            self.agent.praise = True
         
     def on_key_release(self, key, modifiers):
         """
         Called when the user presses a mouse button.
         """
         self.agent.setChange(key, 0)
+        if key == arcade.key.P:
+            self.agent.praise = False        
 
 
     def update(self, delta_time):
