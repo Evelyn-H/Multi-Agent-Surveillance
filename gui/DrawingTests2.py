@@ -49,7 +49,6 @@ class MyGame(arcade.Window):
 
         # Sprite lists
         self.platform_list = None
-        self.agent_list = None
 
         # Set up the player
         self.score = 0
@@ -65,9 +64,6 @@ class MyGame(arcade.Window):
 
     def setup(self):
         """ Set up the game and initialize the variables. """
-        self.agent_list = arcade.SpriteList()
-        self.agent_list.append(self.agent.getAgent())
-        
         #Define all layers from the map
         platforms_layer_name = 'Platforms'
         background_layer_name = 'Background'
@@ -139,7 +135,7 @@ class MyGame(arcade.Window):
         self.platformDeco_list.draw()
         self.pathDeco_list.draw()
         self.bridge_list.draw()
-        self.agent_list.draw()
+        self.agent.getAgent().draw()
         
 
         if self.last_time and self.frame_count % 60 == 0:
@@ -180,11 +176,7 @@ class MyGame(arcade.Window):
 
     def update(self, delta_time):
         """ Movement and game logic """
-        self.agent_list.update()
-        self.agent_list.update_animation()
-        #Reset agent list (Animation doesnt play when not resettet. Maybe you have an idea :D)
-        self.agent_list = arcade.SpriteList()
-        self.agent_list.append(self.agent.getAgent())
+        self.agent.updateAnimation()
         
         if self.agent.getAgent().right >= self.end_of_map:
             self.game_over = True

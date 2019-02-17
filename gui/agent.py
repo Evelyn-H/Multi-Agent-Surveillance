@@ -35,6 +35,10 @@ class Agent():
     def getAgent(self):
         return self.player
     
+    def updateAnimation(self):
+        self.player.update_animation()
+        self.player.update()
+
     def setChange(self, key1, MOVEMENT_SPEED):
         if key1 == arcade.key.UP:
             self.player.change_y = MOVEMENT_SPEED
