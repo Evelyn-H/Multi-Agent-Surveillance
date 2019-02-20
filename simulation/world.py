@@ -1,5 +1,13 @@
-class Noise:
-    """Encapsulates a single noise event"""
+from typing import List
+from .map import Map
+from .agent import Agent
 
-    def __init__(self) -> None:
-        ...
+
+class World:
+    """
+    Main class that manages the whole simulation
+    """
+
+    def __init__(self, map: Map, agents: List[Agent]):
+        self.map: Map = map
+        self.agents: List[Agent] = agents
