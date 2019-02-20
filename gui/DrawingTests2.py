@@ -8,12 +8,12 @@ If Python and Arcade are installed, this example can be run from the command lin
 python -m arcade.examples.sprite_tiled_map
 """
 
-import os
 import time
 
 import arcade
 
 from gui.agentGui import Agent
+from gui.mapGui import MapGui
 
 
 SPRITE_SCALING = 2.5
@@ -34,7 +34,7 @@ VIEWPORT_LEFT_MARGIN = 270
 # Physics
 MOVEMENT_SPEED = 5
 
-class MyGame(arcade.Window):
+class GUI(arcade.Window):
     """ Main application class. """
 
     def __init__(self):
@@ -47,8 +47,6 @@ class MyGame(arcade.Window):
         # directory this .py file is in. You can leave this out of your own
         # code, but it is needed to easily run the examples using "python -m"
         # as mentioned at the top of this program.
-        file_path = os.path.dirname(os.path.abspath(__file__))
-        os.chdir(file_path)
 
         # Sprite lists
         self.platform_list = None
@@ -75,7 +73,7 @@ class MyGame(arcade.Window):
         platformsDeco_layer_name = 'PlatformsDeco'
         wallDeco_layer_name = 'WallDeco'
         
-        map_name = "CollectionTest.tmx"
+        map_name = "gfx/CollectionTest.tmx"
 
         # Read in the tiled map
         my_map = arcade.read_tiled_map(map_name, SPRITE_SCALING)
@@ -93,7 +91,7 @@ class MyGame(arcade.Window):
 
         # --- Coins ---
         self.background_list = arcade.generate_sprites(my_map, background_layer_name, SPRITE_SCALING)
-
+        print(self.background_list)
         self.bridge_list = arcade.generate_sprites(my_map, bridge_layer_name, SPRITE_SCALING)
         self.path_list = arcade.generate_sprites(my_map, paths_layer_name, SPRITE_SCALING)
         self.pathDeco_list = arcade.generate_sprites(my_map, pathDeco_layer_name, SPRITE_SCALING)
@@ -240,13 +238,3 @@ class MyGame(arcade.Window):
                                 SCREEN_WIDTH + self.view_left,
                                 self.view_bottom,
                                 SCREEN_HEIGHT + self.view_bottom)
-
-
-def main():
-    window = MyGame()
-    window.setup()
-    arcade.run()
-
-
-if __name__ == "__main__":
-    main()
