@@ -8,9 +8,11 @@ If Python and Arcade are installed, this example can be run from the command lin
 python -m arcade.examples.sprite_tiled_map
 """
 
-import arcade
 import os
 import time
+
+import arcade
+
 
 SPRITE_SCALING = 0.5
 

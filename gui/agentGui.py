@@ -2,7 +2,11 @@
 The GUI part of the agent.
 """
 
+from random import randint
+
 import arcade
+from simulation.agentSim import AgentSim
+
 
 SPRITE_SCALING = 2.5
 #MOVEMENT_SPEED = 5
@@ -10,17 +14,25 @@ SPRITE_SCALING = 2.5
 class Agent():
 
     def __init__(self):
-        
         self.player = None
         self.playerpraise = None
         self.praise = False
+        self.attack = False
         self.textureIndex = 0
+        self.attackCounter = 0
+        self.attackanimation = randint(0, 2)
+        self.agentSim = AgentSim();
         self.setup()
-
+  
     def setup(self):
         """ Set up the player sprites and initialize the variables. """
         self.player = arcade.AnimatedWalkingSprite()
+        #Probably smart to put them in some kind of collection
         self.playerpraise = arcade.AnimatedTimeSprite()
+        self.playerattack = arcade.AnimatedTimeSprite()
+        self.playerattacks = [arcade.AnimatedTimeSprite()
+                              ,arcade.AnimatedTimeSprite()
+                              ,arcade.AnimatedTimeSprite()]
 
         self.loadTextures()
 
@@ -36,6 +48,9 @@ class Agent():
         return self.player
     
     def updateAnimation(self):
+        pos_x, pos_y = self.agentSim.getPosition()
+        self.player.center_x = pos_x
+        self.player.center_y = pos_y
         self.player.update_animation()
         self.player.update()
 
@@ -43,12 +58,28 @@ class Agent():
     def updatePraiseAnimation(self):
         self.player.change_x = 0
         self.player.change_y = 0
+        self.playerpraise.center_x = self.player.center_x    
+        self.playerpraise.center_y = self.player.center_y
         self.playerpraise.update_animation()
         self.playerpraise.update()
 
+    
+    def updateAttackAnimation(self):
+        self.player.change_x = 0
+        self.player.change_y = 0
+        self.playerattack.center_x = self.player.center_x    
+        self.playerattack.center_y = self.player.center_y
+        if(self.attackCounter > 3):
+            self.attackanimation = 0#randint(0, 2)
+            self.attackCounter = 0
+        self.playerattack = self.playerattacks[self.attackanimation]
+        self.playerattack.update_animation()
+        self.playerattack.update()
+        self.attackCounter += 1
+
 
     def setChange(self, key1, MOVEMENT_SPEED):
-        if (self.praise):
+        if (self.praise or self.attack):
             return
         if key1 == arcade.key.UP:
             self.player.change_y = MOVEMENT_SPEED
@@ -58,12 +89,14 @@ class Agent():
             self.player.change_x = -MOVEMENT_SPEED
         elif key1 == arcade.key.RIGHT:
             self.player.change_x = MOVEMENT_SPEED
-        self.playerpraise.center_x = self.player.center_x    
-        self.playerpraise.center_y = self.player.center_y    
+            
          
     def getPraiseSprite(self):
         return self.playerpraise                 
             
+    def getAttackSprite(self):
+        return self.playerattack
+
     def loadTextures(self):
         character_scale = 2;
         self.player.stand_right_textures = []
@@ -124,5 +157,17 @@ class Agent():
                                                                    scale=character_scale))
         for tex in self.player.praise:
             self.playerpraise.append_texture(tex)
+
+        for i in range(0,3): 
+            self.player.attack = []
+
+            self.player.attack.append(arcade.load_texture("gfx/Agent/attack/" + str(i) + "0.png",
+                                                                   scale=character_scale))
+            self.player.attack.append(arcade.load_texture("gfx/Agent/attack/" + str(i) + "1.png",
+                                                                   scale=character_scale))
+            self.player.attack.append(arcade.load_texture("gfx/Agent/attack/" + str(i) + "2.png",
+                                                                   scale=character_scale))
+            for tex in self.player.attack:
+                self.playerattacks[i].append_texture(tex)
 
         self.player.texture_change_distance = 20

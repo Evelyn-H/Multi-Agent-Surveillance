@@ -8,10 +8,13 @@ If Python and Arcade are installed, this example can be run from the command lin
 python -m arcade.examples.sprite_tiled_map
 """
 
-import arcade
 import os
 import time
-from agent import Agent
+
+import arcade
+
+from gui.agentGui import Agent
+
 
 SPRITE_SCALING = 2.5
 
@@ -137,6 +140,9 @@ class MyGame(arcade.Window):
         if(self.agent.praise):
             self.agent.updatePraiseAnimation()
             self.agent.getPraiseSprite().draw()
+        elif(self.agent.attack):
+            self.agent.updateAttackAnimation()
+            self.agent.getAttackSprite().draw()
         else: 
             self.agent.getAgent().draw()
 
@@ -167,17 +173,21 @@ class MyGame(arcade.Window):
         """
         Called whenever the mouse moves.
         """
-        self.agent.setChange(key, MOVEMENT_SPEED)
         if key == arcade.key.P:
             self.agent.praise = True
+        if key == arcade.key.O:
+            self.agent.attack = True
+        self.agent.setChange(key, MOVEMENT_SPEED)
         
     def on_key_release(self, key, modifiers):
         """
         Called when the user presses a mouse button.
         """
-        self.agent.setChange(key, 0)
         if key == arcade.key.P:
             self.agent.praise = False        
+        if key == arcade.key.O:
+            self.agent.attack = False
+        self.agent.setChange(key, 0)
 
 
     def update(self, delta_time):
