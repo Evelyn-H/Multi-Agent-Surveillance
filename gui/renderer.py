@@ -32,6 +32,7 @@ class GUI(arcade.Window):
         self.set_update_rate(1.0 / 60)
 
         self.tiles_vbo = None
+        self.map_items = None
 
         # for fps calculations
         self.t0 = timeit.default_timer()
@@ -64,20 +65,50 @@ class GUI(arcade.Window):
                 points[index:index + 6, :] = ((x, y), (x + 1, y), (x, y + 1), (x, y + 1), (x + 1, y), (x + 1, y + 1))
                 colors[index:index + 6, :] = [tuple((int(255 * c) for c in color))] * 6
 
-        return arcade.create_line_generic_with_colors(points, colors, gl.GL_TRIANGLES)
+        self.tiles_vbo = arcade.create_line_generic_with_colors(points, colors, gl.GL_TRIANGLES)
+
+    def build_map_items(self):
+        shape_list = arcade.ShapeElementList()
+        # targets (blue)
+        for target in self.world.map.targets:
+            shape_list.append(arcade.create_rectangle_filled(target.x - 0.5, target.y - 0.5, 2, 2, color=(0, 0, 255)))
+
+        # towers (red)
+        for tower in self.world.map.towers:
+            shape_list.append(arcade.create_rectangle_filled(tower.pos.x - 0.5, tower.pos.y - 0.5, 2, 2, color=(255, 0, 0)))
+
+        # communication markers (circles)
+        for marker in self.world.map.markers:
+            shape_list.append(arcade.create_ellipse_filled(marker.location.x - 0.5, marker.location.y - 0.5, 1, 1, color=(255, 0, 255)))
+
+        self.map_items = shape_list
 
     def on_draw(self):
         """ Draw everything """
         arcade.start_render()
         self.set_viewport(*self.viewport.as_tuple())
 
+        # build map VBO if necessary
         if self.tiles_vbo is None:
-            self.tiles_vbo = self.build_grid()
+            self.build_grid()
 
-        # and render it
+        # render main map tiles
+        # fix projection each frame
         with self.tiles_vbo.vao:
             self.tiles_vbo.program['Projection'] = arcade.get_projection().flatten()
+        # and draw
         self.tiles_vbo.draw()
+
+        # render stuff on top of the map
+        if self.map_items is None:
+            self.build_map_items()
+        # fix projection each frame
+        with self.map_items.program:
+            self.map_items.program['Projection'] = arcade.get_projection().flatten()
+        # and draw
+        self.map_items.draw()
+
+        # TODO: self.gates
 
         # FPS timing stuff
         t = timeit.default_timer()
@@ -114,7 +145,8 @@ class GUI(arcade.Window):
             self.viewport.move(move_amount, 0)
         # Force rebuild tiles VBO
         elif key == arcade.key.B:
-            self.tiles_vbo = self.build_grid()
+            self.build_grid()
+            self.build_map_items()
 
     def update(self, delta_time):
         """ Update ALL the things! """
