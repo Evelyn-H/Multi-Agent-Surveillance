@@ -1,3 +1,4 @@
+import numpy as np
 from typing import List, Tuple
 from .util import Position
 from .communication import Marker
@@ -46,10 +47,10 @@ class Map:
         self.targets: List[Position] = targets if targets else []
 
         # info about tiles
-        self.vision_modifier: List[List[float]] = [[1.0] * size[1]] * size[0]
+        self.vision_modifier: List[List[float]] = np.ones((size[0], size[1]), dtype=np.float32)
 
         # structures and stuff on the map
-        self.walls = [[False] * size[1]] * size[0]
+        self.walls = np.zeros((size[0], size[1]), dtype=np.bool)
         self.gates: List[Gate] = gates if gates else []
         self.towers: List[Tower] = towers if towers else []
         self.markers: List[Marker] = markers if markers else []
