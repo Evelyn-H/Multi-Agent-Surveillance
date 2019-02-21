@@ -34,11 +34,18 @@ class GUI(arcade.Window):
         self.tiles_vbo = None
         self.map_items = None
 
+        # editor
+        self.is_editing = False
+
         # for fps calculations
         self.t0 = timeit.default_timer()
         self.frame_t0 = timeit.default_timer()
         self.frame_count = 0
         self.fps = 0
+
+    def update(self, delta_time):
+        """ Update ALL the things! """
+        ...
 
     # @profile
     def build_grid(self):
@@ -81,6 +88,8 @@ class GUI(arcade.Window):
         for marker in self.world.map.markers:
             shape_list.append(arcade.create_ellipse_filled(marker.location.x - 0.5, marker.location.y - 0.5, 1, 1, color=(255, 0, 255)))
 
+        # TODO: self.gates
+
         self.map_items = shape_list
 
     def on_draw(self):
@@ -108,7 +117,12 @@ class GUI(arcade.Window):
         # and draw
         self.map_items.draw()
 
-        # TODO: self.gates
+        # change to pixel viewport for text and menu drawing
+        self.set_viewport(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT)
+
+        # editor
+        if self.is_editing:
+            arcade.draw_text("EDITING MODE", 8, SCREEN_HEIGHT - 24 - 18, arcade.color.MAGENTA, 16)
 
         # FPS timing stuff
         t = timeit.default_timer()
@@ -119,20 +133,33 @@ class GUI(arcade.Window):
             self.frame_count = 0
             print(f"FPS: {self.fps:3.1f}", f"({(1 / self.fps) * 1000:3.2f}ms)")
 
-        if t - self.frame_t0 > (1.0 / 60):
+        if t - self.frame_t0 > 0.02:
             print(f"Frame took too long: {(t - self.frame_t0) * 1000:3.2f}ms")
         self.frame_t0 = t
-        # arcade.draw_text(f"FPS: {self.fps:3.1f}", 8, SCREEN_HEIGHT - 20, arcade.color.WHITE, 12)
+        arcade.draw_text(f"FPS: {self.fps:3.1f}", 8, SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
 
     def on_mouse_motion(self, x, y, dx, dy):
         """ Handle Mouse Motion """
         ...
 
+    def on_mouse_press(self, x, y, button, modifiers):
+        """ Called when the user presses a mouse button """
+        if self.is_editing:
+            if button == arcade.MOUSE_BUTTON_LEFT:
+                x, y = self.screen_to_map(x, y)
+                if x >= 0 and y >= 0 and x < self.world.map.size[0] and y < self.world.map.size[1]:
+                    self.world.map.walls[x][y] = True
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        """ Called when a user releases a mouse button """
+        if button == arcade.MOUSE_BUTTON_LEFT:
+            ...
+
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         self.viewport.zoom(direction=scroll_y, factor=1.2)
 
     def on_key_press(self, key, modifiers):
-        """Called whenever a key is pressed. """
+        """ Called whenever a key is pressed """
 
         move_amount = 0.1
         if key == arcade.key.UP or key == arcade.key.W:
@@ -147,10 +174,17 @@ class GUI(arcade.Window):
         elif key == arcade.key.B:
             self.build_grid()
             self.build_map_items()
+        # toggle editing mode
+        elif key == arcade.key.E:
+            self.is_editing = not self.is_editing
 
-    def update(self, delta_time):
-        """ Update ALL the things! """
-        ...
+    def screen_to_map(self, x, y, round=True):
+        x = np.interp(x, (0, SCREEN_WIDTH), (self.viewport.bottom_left[0], self.viewport.top_right[0]))
+        y = np.interp(y, (0, SCREEN_HEIGHT), (self.viewport.bottom_left[1], self.viewport.top_right[1]))
+        if round:
+            return (int(x), int(y))
+        else:
+            return (x, y)
 
 
 class Viewport:
