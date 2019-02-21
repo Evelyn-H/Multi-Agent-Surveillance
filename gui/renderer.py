@@ -4,6 +4,8 @@ import pyglet.gl as gl
 import numpy as np
 from simulation.world import World
 
+# from profilehooks import profile
+
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 960
 ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT
@@ -29,7 +31,7 @@ class GUI(arcade.Window):
         arcade.set_background_color(arcade.color.BLACK)
         self.set_update_rate(1.0 / 60)
 
-        self.shape_grid = None
+        self.tiles_vbo = None
 
         # for fps calculations
         self.t0 = timeit.default_timer()
@@ -37,26 +39,30 @@ class GUI(arcade.Window):
         self.frame_count = 0
         self.fps = 0
 
+    # @profile
     def build_grid(self):
         # prepare VBO for tiles
-        points = []
-        colors = []
+        n_vertices = self.world.map.size[0] * self.world.map.size[1] * 6
+        points = np.zeros((n_vertices, 2), dtype=np.float32)
+        colors = np.zeros((n_vertices, 4), dtype=np.uint8)
         for x in range(self.world.map.size[0]):
             for y in range(self.world.map.size[1]):
                 # default color
-                color = (0.2, 0.2, 0.2)
+                color = (0.2, 0.2, 0.2, 1.0)
                 # vision modfier
                 vision_modifier = self.world.map.vision_modifier[x][y]
                 if vision_modifier < 1.0:
-                    color = (0, vision_modifier * 0.75, 0)
+                    color = (0, vision_modifier * 0.75, 0, 1.0)
                 # wall
                 if self.world.map.walls[x][y]:
-                    color = (0.8, 0.8, 0.8)
+                    color = (0.8, 0.8, 0.8, 1.0)
 
-                # arcade.draw_lrtb_rectangle_filled(x, x + 1, y + 1, y, color=tuple([int(255 * c) for c in color]))
-                # shape = arcade.create_rectangle_filled(x, y, 1, 1, color=tuple([int(255 * c) for c in color]))
-                points.extend([(x, y), (x + 1, y), (x, y + 1), (x, y + 1), (x + 1, y), (x + 1, y + 1)])
-                colors.extend([tuple([int(255 * c) for c in color])] * 6)
+                # points.extend([(x, y), (x + 1, y), (x, y + 1), (x, y + 1), (x + 1, y), (x + 1, y + 1)])
+                # colors.extend([tuple([int(255 * c) for c in color])] * 6)
+
+                index = (x * self.world.map.size[0] + y) * 6
+                points[index:index + 6, :] = ((x, y), (x + 1, y), (x, y + 1), (x, y + 1), (x + 1, y), (x + 1, y + 1))
+                colors[index:index + 6, :] = [tuple((int(255 * c) for c in color))] * 6
 
         return arcade.create_line_generic_with_colors(points, colors, gl.GL_TRIANGLES)
 
@@ -65,13 +71,13 @@ class GUI(arcade.Window):
         arcade.start_render()
         self.set_viewport(*self.viewport.as_tuple())
 
-        if self.shape_grid is None:
-            self.shape_grid = self.build_grid()
+        if self.tiles_vbo is None:
+            self.tiles_vbo = self.build_grid()
 
         # and render it
-        with self.shape_grid.vao:
-            self.shape_grid.program['Projection'] = arcade.get_projection().flatten()
-        self.shape_grid.draw()
+        with self.tiles_vbo.vao:
+            self.tiles_vbo.program['Projection'] = arcade.get_projection().flatten()
+        self.tiles_vbo.draw()
 
         # FPS timing stuff
         t = timeit.default_timer()
@@ -106,6 +112,9 @@ class GUI(arcade.Window):
             self.viewport.move(-move_amount, 0)
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.viewport.move(move_amount, 0)
+        # Force rebuild tiles VBO
+        elif key == arcade.key.B:
+            self.tiles_vbo = self.build_grid()
 
     def update(self, delta_time):
         """ Update ALL the things! """
