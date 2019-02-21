@@ -31,6 +31,7 @@ class GUI(arcade.Window):
         arcade.set_background_color(arcade.color.BLACK)
         self.set_update_rate(1.0 / 60)
 
+        # variables to store rendering objects
         self.tiles_vbo = None
         self.map_items = None
 
@@ -50,9 +51,11 @@ class GUI(arcade.Window):
     # @profile
     def build_grid(self):
         # prepare VBO for tiles
+        # init arrays
         n_vertices = self.world.map.size[0] * self.world.map.size[1] * 6
         points = np.zeros((n_vertices, 2), dtype=np.float32)
         colors = np.zeros((n_vertices, 4), dtype=np.uint8)
+        # for each tile...
         for x in range(self.world.map.size[0]):
             for y in range(self.world.map.size[1]):
                 # default color
@@ -65,13 +68,12 @@ class GUI(arcade.Window):
                 if self.world.map.walls[x][y]:
                     color = (0.8, 0.8, 0.8, 1.0)
 
-                # points.extend([(x, y), (x + 1, y), (x, y + 1), (x, y + 1), (x + 1, y), (x + 1, y + 1)])
-                # colors.extend([tuple([int(255 * c) for c in color])] * 6)
-
+                # add tile to array
                 index = (x * self.world.map.size[0] + y) * 6
                 points[index:index + 6, :] = ((x, y), (x + 1, y), (x, y + 1), (x, y + 1), (x + 1, y), (x + 1, y + 1))
                 colors[index:index + 6, :] = [tuple((int(255 * c) for c in color))] * 6
 
+        # and build VBO object
         self.tiles_vbo = arcade.create_line_generic_with_colors(points, colors, gl.GL_TRIANGLES)
 
     def build_map_items(self):
@@ -127,15 +129,18 @@ class GUI(arcade.Window):
         # FPS timing stuff
         t = timeit.default_timer()
         self.frame_count += 1
+        # update fps once a second
         if t - self.t0 > 1:
             self.fps = self.frame_count / (t - self.t0)
             self.t0 = timeit.default_timer()
             self.frame_count = 0
             print(f"FPS: {self.fps:3.1f}", f"({(1 / self.fps) * 1000:3.2f}ms)")
 
+        # print a message if a frame takes more than 20ms
         if t - self.frame_t0 > 0.02:
             print(f"Frame took too long: {(t - self.frame_t0) * 1000:3.2f}ms")
         self.frame_t0 = t
+        # show the fps on the screen
         arcade.draw_text(f"FPS: {self.fps:3.1f}", 8, SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
 
     def on_mouse_motion(self, x, y, dx, dy):
@@ -143,24 +148,28 @@ class GUI(arcade.Window):
         ...
 
     def on_mouse_press(self, x, y, button, modifiers):
-        """ Called when the user presses a mouse button """
+        """ Called when a mouse button is pressed"""
         if self.is_editing:
             if button == arcade.MOUSE_BUTTON_LEFT:
+                # add wall at the point that was clicked
                 x, y = self.screen_to_map(x, y)
                 if x >= 0 and y >= 0 and x < self.world.map.size[0] and y < self.world.map.size[1]:
                     self.world.map.walls[x][y] = True
 
     def on_mouse_release(self, x, y, button, modifiers):
-        """ Called when a user releases a mouse button """
+        """ Called when a mouse button is released"""
         if button == arcade.MOUSE_BUTTON_LEFT:
             ...
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+        """ Called when the scroll wheel is used """
+        # map zooming
         self.viewport.zoom(direction=scroll_y, factor=1.2)
 
     def on_key_press(self, key, modifiers):
-        """ Called whenever a key is pressed """
+        """ Called when a key is pressed """
 
+        # map panning
         move_amount = 0.1
         if key == arcade.key.UP or key == arcade.key.W:
             self.viewport.move(0, move_amount)
@@ -179,6 +188,7 @@ class GUI(arcade.Window):
             self.is_editing = not self.is_editing
 
     def screen_to_map(self, x, y, round=True):
+        """ Maps screen coordinates in the current viewport to coordinates in the game map """
         x = np.interp(x, (0, SCREEN_WIDTH), (self.viewport.bottom_left[0], self.viewport.top_right[0]))
         y = np.interp(y, (0, SCREEN_HEIGHT), (self.viewport.bottom_left[1], self.viewport.top_right[1]))
         if round:
@@ -188,6 +198,7 @@ class GUI(arcade.Window):
 
 
 class Viewport:
+    """ Utility class for easy zooming and panning """
     def __init__(self, left, right, bottom, top):
         self.bottom_left = np.array((left, bottom), dtype=np.float32)
         self.top_right = np.array((right, top), dtype=np.float32)
@@ -208,6 +219,7 @@ class Viewport:
         center = self.center()
         factor = factor if direction < 0 else (1 / factor)
 
+        # make sure we zoom around the center and not the corner of the screen
         self.bottom_left = (self.bottom_left - center) * factor + center
         self.top_right = (self.top_right - center) * factor + center
 
