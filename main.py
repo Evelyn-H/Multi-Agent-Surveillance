@@ -5,6 +5,7 @@ from simulation.world import World
 from simulation.map import Map, Tower
 from simulation.util import Position
 from simulation.communication import Marker, MarkerType
+from ai import agents
 
 if __name__ == '__main__':
     # init agents and stuff here
@@ -29,8 +30,15 @@ if __name__ == '__main__':
         x, y = np.random.randint(0, map.size[0], size=2)
         map.markers.append(Marker(MarkerType.MAGENTA, Position(x, y)))
 
-    agents = []
-    world = World(map, agents)
+
+
+    world = World(map)
+
+    world.add_agent(agents.SimpleGuard(Position(20, 20)))
+    world.add_agent(agents.SimpleGuard(Position(40, 20)))
+    world.add_agent(agents.SimpleGuard(Position(60, 20)))
+
+    print(world.agents)
 
     # and run the GUI
     window = renderer.GUI(world)
