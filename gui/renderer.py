@@ -52,26 +52,31 @@ class GUI(arcade.Window):
     def build_grid(self):
         # prepare VBO for tiles
         # init arrays
-        n_vertices = self.world.map.size[0] * self.world.map.size[1] * 6
-        points = np.zeros((n_vertices, 2), dtype=np.float32)
-        colors = np.zeros((n_vertices, 4), dtype=np.uint8)
+        points = []
+        colors = []
+        # add background
+        w = self.world.map.size[0]
+        h = self.world.map.size[1]
+        points.extend(((0, 0), (w, 0), (0, h), (0, h), (w, 0), (w, h)))
+        bg_color = (0.2, 0.2, 0.2, 1.0)
+        colors.extend([tuple((int(255 * c) for c in bg_color))] * 6)
         # for each tile...
         for x in range(self.world.map.size[0]):
             for y in range(self.world.map.size[1]):
-                # default color
-                color = (0.2, 0.2, 0.2, 1.0)
                 # vision modfier
                 vision_modifier = self.world.map.vision_modifier[x][y]
                 if vision_modifier < 1.0:
-                    color = (0, vision_modifier * 0.75, 0, 1.0)
+                    color = (0, vision_modifier * 0.75, 0)
                 # wall
-                if self.world.map.walls[x][y]:
-                    color = (0.8, 0.8, 0.8, 1.0)
+                elif self.world.map.walls[x][y]:
+                    color = (0.8, 0.8, 0.8)
+                else:
+                    # nothing here to draw
+                    continue
 
                 # add tile to array
-                index = (x * self.world.map.size[0] + y) * 6
-                points[index:index + 6, :] = ((x, y), (x + 1, y), (x, y + 1), (x, y + 1), (x + 1, y), (x + 1, y + 1))
-                colors[index:index + 6, :] = [tuple((int(255 * c) for c in color))] * 6
+                points.extend(((x, y), (x + 1, y), (x, y + 1), (x, y + 1), (x + 1, y), (x + 1, y + 1)))
+                colors.extend([tuple((int(255 * c) for c in color))] * 6)
 
         # and build VBO object
         self.tiles_vbo = arcade.create_line_generic_with_colors(points, colors, gl.GL_TRIANGLES)
@@ -199,6 +204,7 @@ class GUI(arcade.Window):
 
 class Viewport:
     """ Utility class for easy zooming and panning """
+
     def __init__(self, left, right, bottom, top):
         self.bottom_left = np.array((left, bottom), dtype=np.float32)
         self.top_right = np.array((right, top), dtype=np.float32)
