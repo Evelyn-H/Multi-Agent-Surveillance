@@ -10,6 +10,7 @@ name = "pypi"
 arcade = "*"
 numpy = "*"
 pyglet-ffmpeg = "*"
+pydbg = "*"
 
 
 [dev-packages]

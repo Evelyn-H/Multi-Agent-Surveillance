@@ -12,6 +12,15 @@ ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT
 SCREEN_TITLE = "Sprite Collect Coins Example"
 
 
+class EditorData:
+    def __init__(self):
+        # running or not
+        self.enabled = False
+
+        # input controls
+        self.start_pos = None  # start location of mouse dragging
+
+
 class GUI(arcade.Window):
     """ Our custom Window Class"""
 
@@ -36,7 +45,7 @@ class GUI(arcade.Window):
         self.map_items = None
 
         # editor
-        self.is_editing = False
+        self.editor = EditorData()
 
         # for fps calculations
         self.t0 = timeit.default_timer()
@@ -65,11 +74,11 @@ class GUI(arcade.Window):
             for y in range(self.world.map.size[1]):
                 # vision modfier
                 vision_modifier = self.world.map.vision_modifier[x][y]
-                if vision_modifier < 1.0:
+                if self.world.map.walls[x][y]:
+                    color = (0.8, 0.8, 0.8)
+                elif vision_modifier < 1.0:
                     color = (0, vision_modifier * 0.75, 0)
                 # wall
-                elif self.world.map.walls[x][y]:
-                    color = (0.8, 0.8, 0.8)
                 else:
                     # nothing here to draw
                     continue
@@ -128,7 +137,7 @@ class GUI(arcade.Window):
         self.set_viewport(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT)
 
         # editor
-        if self.is_editing:
+        if self.editor.enabled:
             arcade.draw_text("EDITING MODE", 8, SCREEN_HEIGHT - 24 - 18, arcade.color.MAGENTA, 16)
 
         # FPS timing stuff
@@ -139,11 +148,11 @@ class GUI(arcade.Window):
             self.fps = self.frame_count / (t - self.t0)
             self.t0 = timeit.default_timer()
             self.frame_count = 0
-            print(f"FPS: {self.fps:3.1f}", f"({(1 / self.fps) * 1000:3.2f}ms)")
+            # print(f"FPS: {self.fps:3.1f}", f"({(1 / self.fps) * 1000:3.2f}ms)")
 
         # print a message if a frame takes more than 20ms
-        if t - self.frame_t0 > 0.02:
-            print(f"Frame took too long: {(t - self.frame_t0) * 1000:3.2f}ms")
+        # if t - self.frame_t0 > 0.02:
+            # print(f"Frame took too long: {(t - self.frame_t0) * 1000:3.2f}ms")
         self.frame_t0 = t
         # show the fps on the screen
         arcade.draw_text(f"FPS: {self.fps:3.1f}", 8, SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
@@ -154,16 +163,28 @@ class GUI(arcade.Window):
 
     def on_mouse_press(self, x, y, button, modifiers):
         """ Called when a mouse button is pressed"""
-        if self.is_editing:
+        # editor controls
+        if self.editor.enabled:
             if button == arcade.MOUSE_BUTTON_LEFT:
                 # add wall at the point that was clicked
-                x, y = self.screen_to_map(x, y)
-                if x >= 0 and y >= 0 and x < self.world.map.size[0] and y < self.world.map.size[1]:
-                    self.world.map.walls[x][y] = True
+                self.editor.start_pos = self.screen_to_map(x, y)
+        # normal controls
+        else:
+            ...
 
     def on_mouse_release(self, x, y, button, modifiers):
         """ Called when a mouse button is released"""
-        if button == arcade.MOUSE_BUTTON_LEFT:
+        # editor controls
+        if self.editor.enabled:
+            if button == arcade.MOUSE_BUTTON_LEFT:
+                # add wall at the point that was clicked
+                end_pos = self.screen_to_map(x, y)
+                self.world.map.add_wall(*self.editor.start_pos, *end_pos)
+                self.editor.start_pos = None
+                # invalidate map VBO to force rebuild
+                self.tiles_vbo = None
+        # normal controls
+        else:
             ...
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
@@ -184,13 +205,13 @@ class GUI(arcade.Window):
             self.viewport.move(-move_amount, 0)
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.viewport.move(move_amount, 0)
-        # Force rebuild tiles VBO
+        # Force rebuild VBOs
         elif key == arcade.key.B:
             self.build_grid()
             self.build_map_items()
         # toggle editing mode
         elif key == arcade.key.E:
-            self.is_editing = not self.is_editing
+            self.editor.enabled = not self.editor.enabled
 
     def screen_to_map(self, x, y, round=True):
         """ Maps screen coordinates in the current viewport to coordinates in the game map """
@@ -228,8 +249,6 @@ class Viewport:
         # make sure we zoom around the center and not the corner of the screen
         self.bottom_left = (self.bottom_left - center) * factor + center
         self.top_right = (self.top_right - center) * factor + center
-
-        print(self)
 
     def move(self, move_x, move_y):
         """`move_x` and `move_y` represent a percentage of the screen size"""

@@ -54,3 +54,22 @@ class Map:
         self.gates: List[Gate] = gates if gates else []
         self.towers: List[Tower] = towers if towers else []
         self.markers: List[Marker] = markers if markers else []
+
+    def set_wall(self, x: int, y: int):
+        if x >= 0 and y >= 0 and x < self.size[0] and y < self.size[1]:
+            self.walls[x][y] = True
+
+    def add_wall(self, x0, y0, x1, y1):
+        # make sure values are in the right order
+        if x0 > x1:
+            x0, x1 = x1, x0
+        if y0 > y1:
+            y0, y1 = y1, y0
+        # add horizontal wall
+        for x in range(x0, x1 + 1):
+            self.set_wall(x, y0)
+            self.set_wall(x, y1)
+        # add vertical wall
+        for y in range(y0, y1 + 1):
+            self.set_wall(x0, y)
+            self.set_wall(x1, y)
