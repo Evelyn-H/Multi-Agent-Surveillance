@@ -21,7 +21,23 @@ class World:
     def add_agent(self, agent):
         self.agents[agent.ID] = agent
 
+    def _collision_check(self):
+        def check_pos(x, y, width):
+            return (
+                self.map.is_wall(int(x - width / 2), int(y - width / 2)) or
+                self.map.is_wall(int(x + width / 2), int(y - width / 2)) or
+                self.map.is_wall(int(x - width / 2), int(y + width / 2)) or
+                self.map.is_wall(int(x + width / 2), int(y + width / 2))
+            )
+
+        for ID, agent in self.agents.items():
+            # is agent in a wall tile?
+            width = 0.45
+            while check_pos(agent.location.x, agent.location.y, width):
+                agent.location.move(-0.01, agent.heading)
+
     def tick(self):
         """ Execute one tick / frame """
         for ID, agent in self.agents.items():
             agent.tick(noises=[], messages=[])
+        self._collision_check()

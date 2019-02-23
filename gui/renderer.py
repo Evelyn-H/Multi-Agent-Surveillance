@@ -52,7 +52,7 @@ class GUI(arcade.Window):
         # map from `Agent`s to `Sprite`s
         self.agent_sprite_map: Dict[Agent, arcade.Sprite] = {}
         for ID, agent in self.world.agents.items():
-            sprite = arcade.Sprite("gui/agent.png", scale=(1 / 64) * 3)
+            sprite = arcade.Sprite("gui/agent.png", scale=(1 / 64) * 1.5)
             sprite.color = tuple((int(255 * c) for c in agent.color))
             # add it to the sprite list
             self.agent_sprites.append(sprite)

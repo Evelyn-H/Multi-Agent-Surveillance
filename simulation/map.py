@@ -59,6 +59,12 @@ class Map:
         if x >= 0 and y >= 0 and x < self.size[0] and y < self.size[1]:
             self.walls[x][y] = True
 
+    def is_wall(self, x: int, y: int) -> bool:
+        if x >= 0 and y >= 0 and x < self.size[0] and y < self.size[1]:
+            return self.walls[x][y]
+        else:
+            return True
+
     def add_wall(self, x0, y0, x1, y1):
         # make sure values are in the right order
         if x0 > x1:
