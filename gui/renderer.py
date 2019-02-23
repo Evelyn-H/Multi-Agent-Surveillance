@@ -15,7 +15,7 @@ class GUI(arcade.Window):
     SCREEN_WIDTH = 1280
     SCREEN_HEIGHT = 960
     ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT
-    SCREEN_TITLE = "Sprite Collect Coins Example"
+    SCREEN_TITLE = "Multi Agent Surveillance"
 
     """ Our custom Window Class"""
 
