@@ -1,33 +1,33 @@
 import timeit
 import arcade
+import pyglet
 import pyglet.gl as gl
+
 import numpy as np
 from simulation.world import World
+from . import editor
 
 # from profilehooks import profile
 
-SCREEN_WIDTH = 1280
-SCREEN_HEIGHT = 960
-ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT
-SCREEN_TITLE = "Sprite Collect Coins Example"
-
-
-class EditorData:
-    def __init__(self):
-        # running or not
-        self.enabled = False
-
-        # input controls
-        self.start_pos = None  # start location of mouse dragging
-
 
 class GUI(arcade.Window):
+
+    SCREEN_WIDTH = 1280
+    SCREEN_HEIGHT = 960
+    ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT
+    SCREEN_TITLE = "Sprite Collect Coins Example"
+
     """ Our custom Window Class"""
 
     def __init__(self, world: World) -> None:
         """ Initializer """
         # Call the parent class initializer
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+        super().__init__(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.SCREEN_TITLE)
+
+        # set up key polling handler
+        # this way we can poll `self.keys` to check input states outside of the event handlers
+        self.keys = pyglet.window.key.KeyStateHandler()
+        self.push_handlers(self.keys)
 
         # save the world ;)
         assert world is not None
@@ -35,7 +35,7 @@ class GUI(arcade.Window):
 
     def setup(self):
         """ Set up the GUI """
-        self.viewport = Viewport(-50 * ASPECT_RATIO, 250 * ASPECT_RATIO, -50, 250)
+        self.viewport = Viewport(-50 * self.ASPECT_RATIO, 250 * self.ASPECT_RATIO, -50, 250)
 
         arcade.set_background_color(arcade.color.BLACK)
         self.set_update_rate(1.0 / 60)
@@ -45,7 +45,7 @@ class GUI(arcade.Window):
         self.map_items = None
 
         # editor
-        self.editor = EditorData()
+        self.editor = editor.Editor(self)
 
         # for fps calculations
         self.t0 = timeit.default_timer()
@@ -134,11 +134,11 @@ class GUI(arcade.Window):
         self.map_items.draw()
 
         # change to pixel viewport for text and menu drawing
-        self.set_viewport(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT)
+        self.set_viewport(0, self.SCREEN_WIDTH, 0, self.SCREEN_HEIGHT)
 
         # editor
         if self.editor.enabled:
-            arcade.draw_text("EDITING MODE", 8, SCREEN_HEIGHT - 24 - 18, arcade.color.MAGENTA, 16)
+            self.editor.on_draw()
 
         # FPS timing stuff
         t = timeit.default_timer()
@@ -155,19 +155,18 @@ class GUI(arcade.Window):
             # print(f"Frame took too long: {(t - self.frame_t0) * 1000:3.2f}ms")
         self.frame_t0 = t
         # show the fps on the screen
-        arcade.draw_text(f"FPS: {self.fps:3.1f}", 8, SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
+        arcade.draw_text(f"FPS: {self.fps:3.1f}", 8, self.SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
 
     def on_mouse_motion(self, x, y, dx, dy):
         """ Handle Mouse Motion """
-        ...
+        if self.editor.enabled:
+            self.editor.on_mouse_motion(x, y, dx, dy)
 
     def on_mouse_press(self, x, y, button, modifiers):
         """ Called when a mouse button is pressed"""
         # editor controls
         if self.editor.enabled:
-            if button == arcade.MOUSE_BUTTON_LEFT:
-                # add wall at the point that was clicked
-                self.editor.start_pos = self.screen_to_map(x, y)
+            self.editor.on_mouse_press(x, y, button, modifiers)
         # normal controls
         else:
             ...
@@ -176,13 +175,7 @@ class GUI(arcade.Window):
         """ Called when a mouse button is released"""
         # editor controls
         if self.editor.enabled:
-            if button == arcade.MOUSE_BUTTON_LEFT:
-                # add wall at the point that was clicked
-                end_pos = self.screen_to_map(x, y)
-                self.world.map.add_wall(*self.editor.start_pos, *end_pos)
-                self.editor.start_pos = None
-                # invalidate map VBO to force rebuild
-                self.tiles_vbo = None
+            self.editor.on_mouse_release(x, y, button, modifiers)
         # normal controls
         else:
             ...
@@ -191,6 +184,12 @@ class GUI(arcade.Window):
         """ Called when the scroll wheel is used """
         # map zooming
         self.viewport.zoom(direction=scroll_y, factor=1.2)
+        # editor controls
+        if self.editor.enabled:
+            self.editor.on_mouse_scroll(x, y, scroll_x, scroll_y)
+        # normal controls
+        else:
+            ...
 
     def on_key_press(self, key, modifiers):
         """ Called when a key is pressed """
@@ -213,10 +212,14 @@ class GUI(arcade.Window):
         elif key == arcade.key.E:
             self.editor.enabled = not self.editor.enabled
 
+        # editor controls
+        if self.editor.enabled:
+            self.editor.on_key_press(key, modifiers)
+
     def screen_to_map(self, x, y, round=True):
         """ Maps screen coordinates in the current viewport to coordinates in the game map """
-        x = np.interp(x, (0, SCREEN_WIDTH), (self.viewport.bottom_left[0], self.viewport.top_right[0]))
-        y = np.interp(y, (0, SCREEN_HEIGHT), (self.viewport.bottom_left[1], self.viewport.top_right[1]))
+        x = np.interp(x, (0, self.SCREEN_WIDTH), (self.viewport.bottom_left[0], self.viewport.top_right[0]))
+        y = np.interp(y, (0, self.SCREEN_HEIGHT), (self.viewport.bottom_left[1], self.viewport.top_right[1]))
         if round:
             return (int(x), int(y))
         else:
