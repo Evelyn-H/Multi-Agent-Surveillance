@@ -1,10 +1,13 @@
 import timeit
+from typing import Dict
+
 import arcade
 import pyglet
 import pyglet.gl as gl
 
 import numpy as np
 from simulation.world import World
+from simulation.agent import Agent
 from . import editor
 
 # from profilehooks import profile
@@ -44,6 +47,18 @@ class GUI(arcade.Window):
         self.tiles_vbo = None
         self.map_items = None
 
+        # agent sprite objects
+        self.agent_sprites = arcade.SpriteList()
+        # map from `Agent`s to `Sprite`s
+        self.agent_sprite_map: Dict[Agent, arcade.Sprite] = {}
+        for ID, agent in self.world.agents.items():
+            sprite = arcade.Sprite("gui/agent.png", scale=(1 / 64) * 3)
+            sprite.color = tuple((int(255 * c) for c in agent.color))
+            # add it to the sprite list
+            self.agent_sprites.append(sprite)
+            # and add it to a dict so we can get the sprite for a given agent
+            self.agent_sprite_map[agent] = sprite
+
         # editor
         self.editor = editor.Editor(self)
 
@@ -53,9 +68,19 @@ class GUI(arcade.Window):
         self.frame_count = 0
         self.fps = 0
 
+    def update_agent_sprites(self):
+        for ID, agent in self.world.agents.items():
+            sprite = self.agent_sprite_map[agent]
+            sprite.center_x = agent.location.x
+            sprite.center_y = agent.location.y
+            sprite.angle = -agent.heading
+
     def update(self, delta_time):
         """ Update ALL the things! """
-        ...
+        # update the simulation
+        self.world.tick()
+        # update agent sprites to match
+        self.update_agent_sprites()
 
     # @profile
     def build_grid(self):
@@ -132,6 +157,9 @@ class GUI(arcade.Window):
             self.map_items.program['Projection'] = arcade.get_projection().flatten()
         # and draw
         self.map_items.draw()
+
+        # draw agents
+        self.agent_sprites.draw()
 
         # change to pixel viewport for text and menu drawing
         self.set_viewport(0, self.SCREEN_WIDTH, 0, self.SCREEN_HEIGHT)

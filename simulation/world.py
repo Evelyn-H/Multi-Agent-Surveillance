@@ -15,3 +15,8 @@ class World:
 
     def add_agent(self, agent):
         self.agents[agent.ID] = agent
+
+    def tick(self):
+        """ Execute one tick / frame """
+        for ID, agent in self.agents.items():
+            agent.tick(noises=[], messages=[])

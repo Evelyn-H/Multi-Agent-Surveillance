@@ -34,9 +34,9 @@ if __name__ == '__main__':
 
     world = World(map)
 
-    world.add_agent(agents.SimpleGuard(Position(20, 20)))
-    world.add_agent(agents.SimpleGuard(Position(40, 20)))
-    world.add_agent(agents.SimpleGuard(Position(60, 20)))
+    world.add_agent(agents.SimpleGuard(Position(40, 40), color=(1.0, 1.0, 0)))
+    world.add_agent(agents.SimpleGuard(Position(60, 40), color=(1.0, 1.0, 0)))
+    world.add_agent(agents.SimpleGuard(Position(80, 40)))
 
     print(world.agents)
 

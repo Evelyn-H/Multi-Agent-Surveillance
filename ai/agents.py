@@ -4,8 +4,8 @@ from simulation.agent import GuardAgent, IntruderAgent
 
 
 class SimpleGuard(GuardAgent):
-    def __init__(self, location: Position, heading: float=0) -> None:
-        super().__init__(location, heading)
+    def setup(self):
+        ...
 
     def on_noise(self, noise: NoiseEvent) -> None:
         """ Noise handler, will be called before `on_tick` """
@@ -17,4 +17,8 @@ class SimpleGuard(GuardAgent):
 
     def on_tick(self) -> None:
         """ Agent logic goes here """
-        ...
+        # simple square patrol
+        print(self.move_remaining(), self.turn_remaining())
+        if self.turn_remaining() == 0 and self.move_remaining() == 0:
+            self.turn(90)
+            self.move(20)
