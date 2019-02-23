@@ -9,6 +9,11 @@ class World:
     Main class that manages the whole simulation
     """
 
+    # amount of times `on_tick` is called per second
+    TICK_RATE = 20
+    # time elapsed for each call to `on_tick`
+    TIME_PER_TICK = 1.0 / TICK_RATE
+
     def __init__(self, map: Map):
         self.map: Map = map
         self.agents: Dict[AgentID, Agent] = dict()

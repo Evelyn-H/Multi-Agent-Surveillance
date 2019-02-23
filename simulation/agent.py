@@ -3,17 +3,13 @@ from abc import ABCMeta, abstractmethod
 import math
 from .communication import Message, MarkerType, NoiseEvent
 from .util import Position
+from . import world
 
 AgentID = NewType('AgentID', int)
 
 
 class Agent(metaclass=ABCMeta):
     """Class to be subclassed by specific agent implementations."""
-
-    # amount of times `on_tick` is called per second
-    TICK_RATE = 20
-    # time elapsed for each call to `on_tick`
-    TIME_PER_TICK = 1.0 / TICK_RATE
 
     next_ID = 1
 
@@ -73,10 +69,10 @@ class Agent(metaclass=ABCMeta):
         # process turning
         if not math.isclose(self._turn_target, self.heading):
             remaining = self.turn_remaining()
-            self.heading += math.copysign(min(Agent.TIME_PER_TICK * self.turn_speed, abs(remaining)), remaining)
+            self.heading += math.copysign(min(world.World.TIME_PER_TICK * self.turn_speed, abs(remaining)), remaining)
         # process walking/running
         if self._move_target > 0:
-            distance = math.copysign(min(Agent.TIME_PER_TICK * self.move_speed, abs(self._move_target)), self._move_target)
+            distance = math.copysign(min(world.World.TIME_PER_TICK * self.move_speed, abs(self._move_target)), self._move_target)
             self.location.move(distance, angle=self.heading)
             self._move_target -= distance
 

@@ -62,6 +62,13 @@ class GUI(arcade.Window):
         # editor
         self.editor = editor.Editor(self)
 
+        # for running the simulation at the right speed,
+        # independent of the GUI framerate and tracking the turns per second
+        self.game_speed = 1
+        self.tick_time = 0
+        self.tick_count = 0
+        self.tps = 0
+
         # for fps calculations
         self.t0 = timeit.default_timer()
         self.frame_t0 = timeit.default_timer()
@@ -75,12 +82,20 @@ class GUI(arcade.Window):
             sprite.center_y = agent.location.y
             sprite.angle = -agent.heading
 
-    def update(self, delta_time):
+    def update(self, dt):
         """ Update ALL the things! """
-        # update the simulation
-        self.world.tick()
-        # update agent sprites to match
-        self.update_agent_sprites()
+        # make sure we run at the right tick rate
+        self.tick_time += dt
+        while self.tick_time >= self.world.TIME_PER_TICK / self.game_speed:
+            # subtract the `TIME_PER_TICK` when we run a tick
+            self.tick_time -= self.world.TIME_PER_TICK / self.game_speed
+            # and increase the `tick_count`
+            self.tick_count += 1
+
+            # update the simulation
+            self.world.tick()
+            # update agent sprites to match
+            self.update_agent_sprites()
 
     # @profile
     def build_grid(self):
@@ -174,8 +189,10 @@ class GUI(arcade.Window):
         # update fps once a second
         if t - self.t0 > 1:
             self.fps = self.frame_count / (t - self.t0)
+            self.tps = self.tick_count / (t - self.t0)
             self.t0 = timeit.default_timer()
             self.frame_count = 0
+            self.tick_count = 0
             # print(f"FPS: {self.fps:3.1f}", f"({(1 / self.fps) * 1000:3.2f}ms)")
 
         # print a message if a frame takes more than 20ms
@@ -183,7 +200,7 @@ class GUI(arcade.Window):
             # print(f"Frame took too long: {(t - self.frame_t0) * 1000:3.2f}ms")
         self.frame_t0 = t
         # show the fps on the screen
-        arcade.draw_text(f"FPS: {self.fps:3.1f}", 8, self.SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
+        arcade.draw_text(f"FPS: {self.fps:3.1f}  TPS: {self.tps:3.1f}", 8, self.SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
 
     def on_mouse_motion(self, x, y, dx, dy):
         """ Handle Mouse Motion """
@@ -221,7 +238,6 @@ class GUI(arcade.Window):
 
     def on_key_press(self, key, modifiers):
         """ Called when a key is pressed """
-
         # map panning
         move_amount = 0.1
         if key == arcade.key.UP or key == arcade.key.W:
@@ -239,6 +255,10 @@ class GUI(arcade.Window):
         # toggle editing mode
         elif key == arcade.key.E:
             self.editor.enabled = not self.editor.enabled
+        elif key == arcade.key.PLUS or key == arcade.key.NUM_ADD:
+            self.game_speed *= 2
+        elif key == arcade.key.MINUS or key == arcade.key.NUM_SUBTRACT:
+            self.game_speed /= 2
 
         # editor controls
         if self.editor.enabled:

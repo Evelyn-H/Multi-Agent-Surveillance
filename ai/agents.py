@@ -18,7 +18,6 @@ class SimpleGuard(GuardAgent):
     def on_tick(self) -> None:
         """ Agent logic goes here """
         # simple square patrol
-        print(self.move_remaining(), self.turn_remaining())
         if self.turn_remaining() == 0 and self.move_remaining() == 0:
             self.turn(90)
             self.move(20)
