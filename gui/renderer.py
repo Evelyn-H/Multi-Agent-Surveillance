@@ -185,12 +185,12 @@ class GUI(arcade.Window):
         # and draw
         self.map_items.draw()
 
-        # draw agents
-        self.agent_sprites.draw()
-
         # draw agent trails
         for ID, agent in self.world.agents.items():
             arcade.draw_line_strip(self.agent_trails[agent], color=[int(255 * c) for c in agent.color])
+
+        # draw agents
+        self.agent_sprites.draw()
 
         # change to pixel viewport for text and menu drawing
         self.set_viewport(0, self.SCREEN_WIDTH, 0, self.SCREEN_HEIGHT)
