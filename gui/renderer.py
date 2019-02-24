@@ -241,6 +241,10 @@ class GUI(arcade.Window):
         else:
             ...
 
+    def on_mouse_drag(self, x, y, dx, dy, button, modifiers):
+        if button == arcade.MOUSE_BUTTON_RIGHT:
+            self.viewport.move(-dx / self.SCREEN_WIDTH, -dy / self.SCREEN_HEIGHT)
+
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         """ Called when the scroll wheel is used """
         # map zooming
