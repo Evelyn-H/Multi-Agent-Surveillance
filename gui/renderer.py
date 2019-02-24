@@ -14,13 +14,15 @@ from . import editor
 
 
 class GUI(arcade.Window):
+    """ Our custom Window Class"""
 
     SCREEN_WIDTH = 1280
     SCREEN_HEIGHT = 960
     ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT
     SCREEN_TITLE = "Multi Agent Surveillance"
 
-    """ Our custom Window Class"""
+    AGENT_RADIUS = 1.0
+
 
     def __init__(self, world: World) -> None:
         """ Initializer """
@@ -52,7 +54,7 @@ class GUI(arcade.Window):
         # map from `Agent`s to `Sprite`s
         self.agent_sprite_map: Dict[Agent, arcade.Sprite] = {}
         for ID, agent in self.world.agents.items():
-            sprite = arcade.Sprite("gui/agent.png", scale=(1 / 64) * 1.5)
+            sprite = arcade.Sprite("gui/agent.png", scale=(1 / 64) * self.AGENT_RADIUS)
             sprite.color = tuple((int(255 * c) for c in agent.color))
             # add it to the sprite list
             self.agent_sprites.append(sprite)

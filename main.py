@@ -38,6 +38,9 @@ if __name__ == '__main__':
     world.add_agent(agents.SimpleGuard(Position(60, 40), color=(1.0, 1.0, 0)))
     world.add_agent(agents.SimpleGuard(Position(80, 40)))
 
+    # initialise the world
+    world.setup()
+
     print(world.agents)
 
     # and run the GUI

@@ -5,7 +5,7 @@ from simulation.agent import GuardAgent, IntruderAgent
 
 class SimpleGuard(GuardAgent):
     def setup(self):
-        ...
+        self.turn(45)
 
     def on_noise(self, noise: NoiseEvent) -> None:
         """ Noise handler, will be called before `on_tick` """
