@@ -31,8 +31,8 @@ class World:
                 return None
 
         for ID, agent in self.agents.items():
-            # is agent in a wall tile?
-            width = 1.0
+            # get some values we'll need
+            width = agent._width
             x = agent.location.x
             y = agent.location.y
 

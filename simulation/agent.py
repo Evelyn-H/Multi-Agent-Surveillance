@@ -36,6 +36,9 @@ class Agent(metaclass=ABCMeta):
         self.view_range: float = 6.0
         self.view_angle: float = 45.0
         self.turn_speed: float = 180
+        
+        # for collision detection
+        self._width = 0.9
 
         # private variables
         self._move_target: float = 0
