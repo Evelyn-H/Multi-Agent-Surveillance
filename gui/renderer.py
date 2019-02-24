@@ -1,5 +1,6 @@
 import timeit
-from typing import Dict
+from typing import Dict, List, Tuple
+import collections
 
 import arcade
 import pyglet
@@ -22,7 +23,6 @@ class GUI(arcade.Window):
     SCREEN_TITLE = "Multi Agent Surveillance"
 
     AGENT_RADIUS = 1.5
-
 
     def __init__(self, world: World) -> None:
         """ Initializer """
@@ -61,6 +61,12 @@ class GUI(arcade.Window):
             # and add it to a dict so we can get the sprite for a given agent
             self.agent_sprite_map[agent] = sprite
 
+        # agent trails
+        self.agent_trails: Dict[Agent, List[Tuple[float, float]]] = {}
+        for ID, agent in self.world.agents.items():
+            self.agent_trails[agent] = collections.deque(maxlen=self.world.TICK_RATE * 100)
+            self.agent_trails[agent].append((agent.location.x, agent.location.y))
+
         # editor
         self.editor = editor.Editor(self)
 
@@ -98,6 +104,10 @@ class GUI(arcade.Window):
             self.world.tick()
             # update agent sprites to match
             self.update_agent_sprites()
+
+            # agent trails
+            for ID, agent in self.world.agents.items():
+                self.agent_trails[agent].append((agent.location.x, agent.location.y))
 
     # @profile
     def build_grid(self):
@@ -177,6 +187,10 @@ class GUI(arcade.Window):
 
         # draw agents
         self.agent_sprites.draw()
+
+        # draw agent trails
+        for ID, agent in self.world.agents.items():
+            arcade.draw_line_strip(self.agent_trails[agent], color=[int(255 * c) for c in agent.color])
 
         # change to pixel viewport for text and menu drawing
         self.set_viewport(0, self.SCREEN_WIDTH, 0, self.SCREEN_HEIGHT)
