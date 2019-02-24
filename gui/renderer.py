@@ -21,7 +21,7 @@ class GUI(arcade.Window):
     ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT
     SCREEN_TITLE = "Multi Agent Surveillance"
 
-    AGENT_RADIUS = 1.0
+    AGENT_RADIUS = 1.5
 
 
     def __init__(self, world: World) -> None:
@@ -202,7 +202,7 @@ class GUI(arcade.Window):
             # print(f"Frame took too long: {(t - self.frame_t0) * 1000:3.2f}ms")
         self.frame_t0 = t
         # show the fps on the screen
-        arcade.draw_text(f"FPS: {self.fps:3.1f}  TPS: {self.tps:3.1f}", 8, self.SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
+        arcade.draw_text(f"FPS: {self.fps:3.1f}  TPS: {self.tps:3.1f} (x{self.game_speed})", 8, self.SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
 
     def on_mouse_motion(self, x, y, dx, dy):
         """ Handle Mouse Motion """

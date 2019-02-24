@@ -1,9 +1,9 @@
 from typing import List, Dict
+import math
+import vectormath as vmath
 from .map import Map
 from .agent import Agent, AgentID
 from .util import Position
-import vectormath as vmath
-
 
 class World:
     """
@@ -24,7 +24,7 @@ class World:
 
     def _collision_check(self):
         def collision_point(x, y):
-            x, y = int(x), int(y)
+            x, y = int(math.floor(x)), int(math.floor(y))
             if self.map.is_wall(x, y):
                 return vmath.Vector2(x, y) + (0.5, 0.5)
             else:
@@ -43,18 +43,22 @@ class World:
             collision = collision_point(x - width / 2, y)
             if collision is not None:
                 push.x += collision.x + (0.5 + width / 2) - agent.location.x
+                agent._has_collided |= True
             # right
             collision = collision_point(x + width / 2, y)
             if collision is not None:
                 push.x += collision.x - (0.5 + width / 2) - agent.location.x
+                agent._has_collided |= True
             # bottom
             collision = collision_point(x, y - width / 2)
             if collision is not None:
                 push.y += collision.y + (0.5 + width / 2) - agent.location.y
+                agent._has_collided |= True
             # top
             collision = collision_point(x, y + width / 2)
             if collision is not None:
                 push.y += collision.y - (0.5 + width / 2) - agent.location.y
+                agent._has_collided |= True
 
             # and apply resolution vector
             agent.location += push

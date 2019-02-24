@@ -36,9 +36,10 @@ class Agent(metaclass=ABCMeta):
         self.view_range: float = 6.0
         self.view_angle: float = 45.0
         self.turn_speed: float = 180
-        
+
         # for collision detection
         self._width = 0.9
+        self._has_collided = False
 
         # private variables
         self._move_target: float = 0
@@ -74,7 +75,7 @@ class Agent(metaclass=ABCMeta):
             remaining = self.turn_remaining()
             self.heading += math.copysign(min(world.World.TIME_PER_TICK * self.turn_speed, abs(remaining)), remaining)
         # process walking/running
-        if self._move_target > 0:
+        if self._move_target != 0:
             distance = math.copysign(min(world.World.TIME_PER_TICK * self.move_speed, abs(self._move_target)), self._move_target)
             self.location.move(distance, angle=self.heading)
             self._move_target -= distance
@@ -86,8 +87,12 @@ class Agent(metaclass=ABCMeta):
         for message in messages:
             self.on_message(message)
 
+        if self._has_collided:
+            self.on_collide()
+
         self.on_tick()
 
+        self._has_collided = False
         self._process_movement()
 
     @abstractmethod
@@ -102,6 +107,11 @@ class Agent(metaclass=ABCMeta):
     @abstractmethod
     def on_message(self, message: Message) -> None:
         """ Message handler, will be called before `on_tick` """
+        pass
+
+    @abstractmethod
+    def on_collide(self) -> None:
+        """ Collision handler """
         pass
 
     @abstractmethod

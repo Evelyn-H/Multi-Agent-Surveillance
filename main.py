@@ -30,8 +30,6 @@ if __name__ == '__main__':
         x, y = np.random.randint(0, map.size[0], size=2)
         map.markers.append(Marker(MarkerType.MAGENTA, Position(x, y)))
 
-
-
     world = World(map)
 
     world.add_agent(agents.SimpleGuard(Position(40, 40), color=(1.0, 1.0, 0)))
@@ -40,8 +38,6 @@ if __name__ == '__main__':
 
     # initialise the world
     world.setup()
-
-    print(world.agents)
 
     # and run the GUI
     window = renderer.GUI(world)
