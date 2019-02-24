@@ -216,7 +216,7 @@ class GUI(arcade.Window):
             # print(f"Frame took too long: {(t - self.frame_t0) * 1000:3.2f}ms")
         self.frame_t0 = t
         # show the fps on the screen
-        arcade.draw_text(f"FPS: {self.fps:3.1f}  TPS: {self.tps:3.1f} (x{self.game_speed})", 8, self.SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
+        arcade.draw_text(f"FPS: {self.fps:3.1f}  TPS: {self.tps:3.1f} ({self.game_speed}x)", 8, self.SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
 
     def on_mouse_motion(self, x, y, dx, dy):
         """ Handle Mouse Motion """
