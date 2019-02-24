@@ -63,6 +63,38 @@ class World:
             # and apply resolution vector
             agent.location += push
 
+            def circle_collision(x, y, r=0.5):
+                x, y = int(math.floor(x)), int(math.floor(y))
+                if self.map.is_wall(x, y):
+                    center = vmath.Vector2(x, y) + (0.5, 0.5)
+                    if (agent.location - center).length < (r + width / 2):
+                        return center + (agent.location - center).as_length(r + width / 2)
+
+            collision = circle_collision(x - width / 2, y - width / 2)
+            if collision is not None:
+                agent.location.x = collision.x
+                agent.location.y = collision.y
+                agent._has_collided |= True
+
+            collision = circle_collision(x - width / 2, y + width / 2)
+            if collision is not None:
+                agent.location.x = collision.x
+                agent.location.y = collision.y
+                agent._has_collided |= True
+
+            collision = circle_collision(x + width / 2, y - width / 2)
+            if collision is not None:
+                agent.location.x = collision.x
+                agent.location.y = collision.y
+                agent._has_collided |= True
+
+            collision = circle_collision(x + width / 2, y + width / 2)
+            if collision is not None:
+                agent.location.x = collision.x
+                agent.location.y = collision.y
+                agent._has_collided |= True
+
+
     def setup(self):
         for ID, agent in self.agents.items():
             agent.setup()
