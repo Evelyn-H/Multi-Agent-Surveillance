@@ -1,11 +1,9 @@
 import math
+import vectormath as vmath
 
-class Position:
-    """Simple class for (x,y) pairs"""
 
-    def __init__(self, x: float, y: float) -> None:
-        self.x: float = x
-        self.y: float = y
+class Position(vmath.Vector2):
+    """ small wrapper around `vectormath.Vector2` to add some functionality """
 
     def move(self, distance: float, angle: float):
         self.x += distance * math.sin(math.radians(angle))
