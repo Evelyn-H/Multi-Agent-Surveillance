@@ -124,6 +124,11 @@ class GUI(arcade.Window):
         # for each tile...
         for x in range(self.world.map.size[0]):
             for y in range(self.world.map.size[1]):
+
+                # hacky fog-of-war rendering
+                # if not self.world.agents[1].map.is_revealed(x, y):
+                    # continue
+
                 # vision modfier
                 vision_modifier = self.world.map.vision_modifier[x][y]
                 if self.world.map.walls[x][y]:

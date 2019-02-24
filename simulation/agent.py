@@ -1,9 +1,12 @@
-from typing import NewType, List
+from typing import NewType, List, Tuple
 from abc import ABCMeta, abstractmethod
 import math
 from .communication import Message, MarkerType, NoiseEvent
 from .util import Position
+from .vision import MapView
 from . import world
+
+# from profilehooks import profile
 
 AgentID = NewType('AgentID', int)
 
@@ -19,11 +22,12 @@ class Agent(metaclass=ABCMeta):
         Agent.next_ID += 1
         return ID
 
-    def __init__(self, location: Position, heading: float=0, color=None) -> None:
+    def __init__(self, location: Position, heading: float=0, color=None, map=None) -> None:
         """
         `location`: (x, y) coordinates of the agent
         `heading`: heading of the agent in degrees (counterclockwise), where 0 is up, -90 is left and 90 is right
         """
+        # generate ID
         self.ID = Agent.generate_new_ID()
 
         # pretty colours!
@@ -36,14 +40,19 @@ class Agent(metaclass=ABCMeta):
         self.view_range: float = 6.0
         self.view_angle: float = 45.0
         self.turn_speed: float = 180
+        # to keep track of movement commands and execute them in the background
+        self._move_target: float = 0
+        self._turn_target: float = 0
+
+        # vision stuff
+        assert map is not None
+        self.map: MapView = MapView(map)
+        self._last_tile: Tuple[int, int] = (int(self.location.x), int(self.location.y))
+        self._update_vision(force=True)
 
         # for collision detection
         self._width = 0.9
         self._has_collided = False
-
-        # private variables
-        self._move_target: float = 0
-        self._turn_target: float = 0
 
     def send_message(self, target: AgentID, message: Message) -> None:
         ...
@@ -80,19 +89,34 @@ class Agent(metaclass=ABCMeta):
             self.location.move(distance, angle=self.heading)
             self._move_target -= distance
 
+    def _update_vision(self, force=False):
+        current_tile = (int(self.location.x), int(self.location.y))
+        if force or self._last_tile != current_tile:
+            self._last_tile = current_tile
+            self.map._reveal_circle(current_tile[0], current_tile[1], self.view_range)
+
     def tick(self, noises: List[NoiseEvent], messages: List[Message]):
+        # process vision
+        self._update_vision()
+
+        # noises
         for noise in noises:
             self.on_noise(noise)
 
+        # messages
         for message in messages:
             self.on_message(message)
 
+        # collision
         if self._has_collided:
             self.on_collide()
 
+        # and logic
         self.on_tick()
 
+        # reset collision tracking
         self._has_collided = False
+        # and execute movement commands
         self._process_movement()
 
     @abstractmethod
@@ -122,15 +146,15 @@ class Agent(metaclass=ABCMeta):
 
 # TODO: implement sentry tower
 class GuardAgent(Agent):
-    def __init__(self, location: Position, heading: float=0, color=None) -> None:
+    def __init__(self, location: Position, heading: float=0, color=None, map: MapView=None) -> None:
         color = color if color else (0.0, 1.0, 0.0)
-        super().__init__(location, heading, color)
+        super().__init__(location, heading, color, map)
         self.view_range: float = 6.0
 
 
 # TODO: implement sprinting
 class IntruderAgent(Agent):
-    def __init__(self, location: Position, heading: float=0, color=None) -> None:
+    def __init__(self, location: Position, heading: float=0, color=None, map: MapView=None) -> None:
         color = color if color else (1.0, 0.0, 0.0)
-        super().__init__(location, heading, color)
+        super().__init__(location, heading, color, map)
         self.view_range: float = 7.5
