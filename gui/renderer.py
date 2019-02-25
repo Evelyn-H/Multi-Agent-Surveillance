@@ -73,6 +73,7 @@ class GUI(arcade.Window):
         # for running the simulation at the right speed,
         # independent of the GUI framerate and tracking the turns per second
         self.game_speed = 1
+        self.is_paused = False
         self.tick_time = 0
         self.tick_count = 0
         self.tps = 0
@@ -92,6 +93,9 @@ class GUI(arcade.Window):
 
     def update(self, dt):
         """ Update ALL the things! """
+        if self.is_paused:
+            return
+
         # make sure we run at the right tick rate
         self.tick_time += dt
         while self.tick_time >= self.world.TIME_PER_TICK / self.game_speed:
@@ -221,7 +225,7 @@ class GUI(arcade.Window):
             # print(f"Frame took too long: {(t - self.frame_t0) * 1000:3.2f}ms")
         self.frame_t0 = t
         # show the fps on the screen
-        arcade.draw_text(f"FPS: {self.fps:3.1f}  TPS: {self.tps:3.1f} ({self.game_speed}x)", 8, self.SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
+        arcade.draw_text(f"FPS: {self.fps:3.1f}  TPS: {self.tps:3.1f} ({self.game_speed}x) {'PAUSED' if self.is_paused else ''}", 8, self.SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
 
     def on_mouse_motion(self, x, y, dx, dy):
         """ Handle Mouse Motion """
@@ -280,10 +284,14 @@ class GUI(arcade.Window):
         # toggle editing mode
         elif key == arcade.key.E:
             self.editor.enabled = not self.editor.enabled
+        # game speed and pausing
         elif key == arcade.key.PLUS or key == arcade.key.NUM_ADD:
             self.game_speed *= 2
         elif key == arcade.key.MINUS or key == arcade.key.NUM_SUBTRACT:
             self.game_speed /= 2
+        elif key == arcade.key.SPACE:
+            self.is_paused = not self.is_paused
+
 
         # editor controls
         if self.editor.enabled:
