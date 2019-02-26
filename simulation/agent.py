@@ -25,7 +25,7 @@ class Agent(metaclass=ABCMeta):
     def __init__(self, location: Position, heading: float=0, color=None, map=None) -> None:
         """
         `location`: (x, y) coordinates of the agent
-        `heading`: heading of the agent in degrees (counterclockwise), where 0 is up, -90 is left and 90 is right
+        `heading`: heading of the agent in degrees, where 0 is up, -90 is left and 90 is right
         """
         # generate ID
         self.ID = Agent.generate_new_ID()

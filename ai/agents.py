@@ -5,6 +5,7 @@ import random
 
 class SimpleGuard(GuardAgent):
     def setup(self):
+        """ Agent setup """
         self.turn(45)
 
     def on_noise(self, noise: NoiseEvent) -> None:
