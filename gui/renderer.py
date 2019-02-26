@@ -4,6 +4,7 @@ import timeit
 import arcade
 import pyglet
 import numpy as np
+import vectormath as vmath
 
 from simulation.world import World
 
@@ -210,35 +211,64 @@ class WindowComponent:
 class Viewport:
     """ Utility class for easy zooming and panning """
 
-    def __init__(self, left, right, bottom, top):
-        self.bottom_left = np.array((left, bottom), dtype=np.float32)
-        self.top_right = np.array((right, top), dtype=np.float32)
+    def __init__(self, center_x, center_y, width, height):
+        self.center = vmath.Vector2(center_x, center_y)
+        self.width = width
+        self.height = height
+        # self.bottom_left = np.array((left, bottom), dtype=np.float32)
+        # self.top_right = np.array((right, top), dtype=np.float32)
+
+    @property
+    def left(self):
+        return self.center.x - self.width / 2
+
+    @property
+    def right(self):
+        return self.center.x + self.width / 2
+
+    @property
+    def bottom(self):
+        return self.center.y - self.height / 2
+
+    @property
+    def top(self):
+        return self.center.y + self.height / 2
+
+    @property
+    def bottom_left(self):
+        return (self.left, self.bottom)
+
+    @property
+    def top_right(self):
+        return (self.right, self.top)
 
     def as_tuple(self):
-        return (self.bottom_left[0], self.top_right[0], self.bottom_left[1], self.top_right[1])
-
-    def center(self):
-        return np.array(((self.bottom_left[0] + self.top_right[0]) / 2, (self.bottom_left[1] + self.top_right[1]) / 2))
-
-    def width(self):
-        return self.top_right[0] - self.bottom_left[0]
-
-    def height(self):
-        return self.top_right[1] - self.bottom_left[1]
+        return (self.left, self.right, self.bottom, self.top)
 
     def zoom(self, direction=1, factor=1.2):
-        center = self.center()
         factor = factor if direction < 0 else (1 / factor)
 
         # make sure we zoom around the center and not the corner of the screen
-        self.bottom_left = (self.bottom_left - center) * factor + center
-        self.top_right = (self.top_right - center) * factor + center
+        # self.bottom_left = (self.bottom_left - self.center) * factor + self.center
+        # self.top_right = (self.top_right - self.center) * factor + self.center
+        self.width *= factor
+        self.height *= factor
 
     def move(self, move_x, move_y):
         """`move_x` and `move_y` represent a percentage of the screen size"""
-        offset = np.array((move_x * self.width(), move_y * self.height()))
-        self.bottom_left += offset
-        self.top_right += offset
+        self.center.x += move_x * self.width
+        self.center.y += move_y * self.height
+        # self.lock(-100, 300, 0, 200)
+
+    def lock(self, left, right, bottom, top):
+        if self.left < left:
+            self.center.x += left - self.left
+        if self.right > right:
+            self.center.x += right - self.right
+        if self.bottom < bottom:
+            self.center.y += bottom - self.bottom
+        if self.top > top:
+            self.center.y += top - self.top
 
     def __str__(self):
-        return f"Viewport: (x0,y0)={self.bottom_left}, (x1,y1)={self.top_right}"
+        return f"Viewport: center={self.center}, (width, height)=({self.width}, {self.height})"

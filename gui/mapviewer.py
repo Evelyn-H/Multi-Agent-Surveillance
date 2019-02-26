@@ -17,7 +17,8 @@ class MapViewer(renderer.WindowComponent):
         # get reference to `world` for less typing
         self.world = self.parent.world
 
-        self.viewport = renderer.Viewport(-50 * self.parent.ASPECT_RATIO, 250 * self.parent.ASPECT_RATIO, -50, 250)
+        # self.viewport = renderer.Viewport(-50 * self.parent.ASPECT_RATIO, 250 * self.parent.ASPECT_RATIO, -50, 250)
+        self.viewport = renderer.Viewport(100, 100, 250 * self.parent.ASPECT_RATIO, 250)
 
         # variables to store rendering objects
         self.tiles_vbo = None
