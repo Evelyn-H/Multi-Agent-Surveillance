@@ -59,7 +59,7 @@ class MapView:
             wall[wall_slices] += block[block_slices]
 
         paste(self.fog, z, (x - width // 2, y - width // 2))
-        print('vision updated')
+        # print('vision updated')
 
         # offset_x = x - width // 2
         # offset_y = y - width // 2

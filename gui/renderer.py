@@ -70,6 +70,11 @@ class GUI(arcade.Window):
         # editor
         self.editor = editor.Editor(self)
 
+        # console
+        self.console_open = False
+        self.console_text = ""
+        self.console_out = ""
+
         # for running the simulation at the right speed,
         # independent of the GUI framerate and tracking the turns per second
         self.game_speed = 1
@@ -83,6 +88,18 @@ class GUI(arcade.Window):
         self.frame_t0 = timeit.default_timer()
         self.frame_count = 0
         self.fps = 0
+
+    def reset_console(self):
+        self.console_open = False
+        self.console_text = ""
+        self.console_out = ""
+
+    def console_println(self, line):
+        self.console_out += line + "\n"
+
+    def run_command(self, command: str):
+        self.console_println(f"executed: {command}")
+        ...
 
     def update_agent_sprites(self):
         for ID, agent in self.world.agents.items():
@@ -226,6 +243,10 @@ class GUI(arcade.Window):
         self.frame_t0 = t
         # show the fps on the screen
         arcade.draw_text(f"FPS: {self.fps:3.1f}  TPS: {self.tps:3.1f} ({self.game_speed}x) {'PAUSED' if self.is_paused else ''}", 8, self.SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
+        if self.console_open:
+            arcade.draw_text(f"CONSOLE >> {self.console_text}_", 8, self.SCREEN_HEIGHT - 24 - 18 * 2, arcade.color.WHITE, 16)
+            for num, line in enumerate(self.console_out.split('\n')):
+                arcade.draw_text(f">> {line}", 8, self.SCREEN_HEIGHT - 24 - 18 * 3 - 14 * (num), arcade.color.WHITE, 12)
 
     def on_mouse_motion(self, x, y, dx, dy):
         """ Handle Mouse Motion """
@@ -267,6 +288,23 @@ class GUI(arcade.Window):
 
     def on_key_press(self, key, modifiers):
         """ Called when a key is pressed """
+        # console controls
+        # toggle console
+        if key == arcade.key.QUOTELEFT:
+            self.console_open = not self.console_open
+            if not self.console_open:
+                self.reset_console()
+            return
+        if self.console_open:
+            if (key >= arcade.key.A and key <= arcade.key.Z) or (key >= arcade.key.KEY_0 and key <= arcade.key.KEY_9) or key == arcade.key.SPACE:
+                self.console_text += chr(key)
+            elif key == arcade.key.ENTER:
+                self.run_command(self.console_text)
+                self.console_text = ""
+            elif key == arcade.key.BACKSPACE:
+                self.console_text = self.console_text[0:-1]
+            return
+
         # map panning
         move_amount = 0.1
         if key == arcade.key.UP or key == arcade.key.W:
@@ -291,7 +329,6 @@ class GUI(arcade.Window):
             self.game_speed /= 2
         elif key == arcade.key.SPACE:
             self.is_paused = not self.is_paused
-
 
         # editor controls
         if self.editor.enabled:
