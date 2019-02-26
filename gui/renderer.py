@@ -7,37 +7,6 @@ import numpy as np
 
 from simulation.world import World
 
-class WindowComponent:
-    def __init__(self, parent: arcade.Window):
-        self.parent = parent
-
-    def setup(self):
-        pass
-
-    def update(self, dt):
-        pass
-
-    def on_draw(self):
-        pass
-
-    def on_key_press(self, key, modifiers):
-        pass
-
-    def on_mouse_motion(self, x, y, dx, dy):
-        pass
-
-    def on_mouse_drag(self, x, y, dx, dy, button, modifiers):
-        pass
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        pass
-
-    def on_mouse_release(self, x, y, button, modifiers):
-        pass
-
-    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
-        pass
-
 
 class GUI(arcade.Window):
     """ Our custom Window Class"""
@@ -204,6 +173,38 @@ class GUI(arcade.Window):
         for c in self.components:
             if c.on_mouse_scroll(x, y, scroll_x, scroll_y):
                 break
+
+
+class WindowComponent:
+    def __init__(self, parent: arcade.Window):
+        self.parent = parent
+
+    def setup(self):
+        pass
+
+    def update(self, dt):
+        pass
+
+    def on_draw(self):
+        pass
+
+    def on_key_press(self, key, modifiers):
+        pass
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        pass
+
+    def on_mouse_drag(self, x, y, dx, dy, button, modifiers):
+        pass
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        pass
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        pass
+
+    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
+        pass
 
 
 class Viewport:
