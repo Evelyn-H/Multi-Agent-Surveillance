@@ -39,7 +39,7 @@ class GUI(arcade.Window):
         # for running the simulation at the right speed,
         # independent of the GUI framerate and tracking the turns per second
         self.game_speed = 1
-        self.is_paused = False
+        self.is_paused = True
         self.tick_time = 0
         self.tick_count = 0
         self.tps = 0

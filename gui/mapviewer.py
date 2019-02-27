@@ -114,15 +114,15 @@ class MapViewer(renderer.WindowComponent):
             return (x, y)
 
     def update(self, dt):
-        # update agent sprites to match
-        self.update_agent_sprites()
-
         # agent trails
         for ID, agent in self.world.agents.items():
             self.agent_trails[agent].append((agent.location.x, agent.location.y))
 
     def on_draw(self):
         self.parent.set_viewport(*self.viewport.as_tuple())
+
+        # update agent sprites
+        self.update_agent_sprites()
 
         # build map VBO if necessary
         if self.tiles_vbo is None:
