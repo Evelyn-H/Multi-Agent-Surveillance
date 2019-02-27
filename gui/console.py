@@ -42,8 +42,18 @@ class Console(renderer.WindowComponent):
 
     def on_draw(self):
         if self.open:
-            arcade.draw_text(f"CONSOLE >> {self.text}_", 8, self.parent.SCREEN_HEIGHT - 24 - 18 * 2, arcade.color.WHITE, 16)
-            for num, line in enumerate(self.out.split('\n')):
+            prompt = f"CONSOLE >> {self.text}_"
+
+            lines_out = self.out.split('\n')
+
+            arcade.draw_lrtb_rectangle_filled(
+                0, 8 + 12 * 32 + 6,
+                self.parent.SCREEN_HEIGHT - 24 - 18 * 1 + 4, self.parent.SCREEN_HEIGHT - 24 - 18 * 1 - 14 * (len(lines_out) + 1) - 12,
+                color=(0, 0, 0, 192)
+            )
+
+            arcade.draw_text(prompt, 8, self.parent.SCREEN_HEIGHT - 24 - 18 * 2, arcade.color.WHITE, 16)
+            for num, line in enumerate(lines_out):
                 arcade.draw_text(f">> {line}", 8, self.parent.SCREEN_HEIGHT - 24 - 18 * 3 - 14 * (num), arcade.color.WHITE, 12)
 
     def on_key_press(self, key, modifiers):
