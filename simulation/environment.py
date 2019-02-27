@@ -4,15 +4,6 @@ from typing import List, Tuple
 from .util import Position
 
 
-class Tower:
-    """
-    Represents a single tower (one tile wide)
-    """
-
-    def __init__(self, pos: Position):
-        self.pos: Position = pos
-
-
 class Gate:
     """
     Superclass for doors and windows and such,
@@ -40,7 +31,7 @@ class Map:
                  size: Tuple[int, int],
                  targets: List[Position]=None,
                  gates=None,
-                 towers: List[Tower]=None,
+                 towers: List[Position]=None,
                  markers: List['world.Marker']=None) -> None:
 
         # metadata about the map
@@ -53,7 +44,7 @@ class Map:
         # structures and stuff on the map
         self.walls = np.zeros((size[0], size[1]), dtype=np.bool)
         self.gates: List[Gate] = gates if gates else []
-        self.towers: List[Tower] = towers if towers else []
+        self.towers: List[Position] = towers if towers else []
         self.markers: List['world.Marker'] = markers if markers else []
 
     def add_target(self, x: int, y: int):
@@ -65,11 +56,11 @@ class Map:
                 del self.targets[i]
 
     def add_tower(self, x: int, y: int):
-        self.towers.append(Tower(Position(x, y)))
+        self.towers.append(Position(x, y))
 
     def remove_tower(self, x: int, y: int):
         for i, tower in enumerate(self.towers):
-            if abs(tower.pos.x - x) + abs(tower.pos.y - y) <= 2:
+            if abs(tower.x - x) + abs(tower.y - y) <= 2:
                 del self.towers[i]
 
     def set_wall(self, x: int, y: int, value=True):

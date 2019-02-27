@@ -2,7 +2,7 @@ import arcade
 import numpy as np
 from gui import renderer
 from simulation.world import World, Marker, MarkerType
-from simulation.environment import Map, Tower
+from simulation.environment import Map
 from simulation.util import Position
 from ai import agents
 
@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
     for _ in range(10):
         x, y = np.random.randint(0, map.size[0], size=2)
-        map.towers.append(Tower(Position(x, y)))
+        map.towers.append(Position(x, y))
 
     for _ in range(10):
         x, y = np.random.randint(0, map.size[0], size=2)

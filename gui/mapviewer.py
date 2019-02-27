@@ -94,7 +94,7 @@ class MapViewer(renderer.WindowComponent):
 
         # towers (red)
         for tower in self.world.map.towers:
-            shape_list.append(arcade.create_rectangle_filled(tower.pos.x + 0.5, tower.pos.y + 0.5, 2, 2, color=(255, 0, 0)))
+            shape_list.append(arcade.create_rectangle_filled(tower.x + 0.5, tower.y + 0.5, 2, 2, color=(255, 0, 0)))
 
         # communication markers (circles)
         for marker in self.world.map.markers:
