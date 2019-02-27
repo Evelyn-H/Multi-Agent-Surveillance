@@ -38,13 +38,20 @@ class Editor(renderer.WindowComponent):
             arcade.draw_text("Editor Controls:", 8, line(2), arcade.color.WHITE, 16)
 
             for i, name in self.modes.items():
-                arcade.draw_text(f"  {i}: {name}", 8, line(i + 3), arcade.color.WHITE, 16)
+                color = arcade.color.MAGENTA if i == self.current_mode else arcade.color.WHITE
+                arcade.draw_text(f"  {i}: {name}", 8, line(i + 3), color, 16)
 
     def on_key_press(self, key, modifiers):
         # toggle editing mode
         if key == arcade.key.E:
             self.enabled = not self.enabled
             return True
+
+        # change editor mode
+        if self.enabled and (key >= arcade.key.KEY_1 and key <= arcade.key.KEY_9):
+            m = int(chr(key))
+            if m in self.modes:
+                self.current_mode = m
 
     def on_mouse_press(self, x, y, button, modifiers):
         if not self.enabled:
@@ -62,12 +69,23 @@ class Editor(renderer.WindowComponent):
         if button == arcade.MOUSE_BUTTON_LEFT:
             # add wall at the point that was clicked
             end_pos = self.parent.mapview.screen_to_map(x, y)
-            # are we removing or adding a wall?
-            value = not (modifiers & arcade.key.MOD_CTRL)
-            # add/remove wall
-            self.parent.world.map.set_wall_rectangle(*self.start_pos, *end_pos, value)
+            # check if control is being held
+            ctrl_held = (modifiers & arcade.key.MOD_CTRL)
+            # resolve input according to which mode we're in
+            # walls
+            if self.current_mode == 1:
+                # are we removing or adding a wall?
+                # add/remove wall
+                value = False if ctrl_held else True
+                self.parent.world.map.set_wall_rectangle(*self.start_pos, *end_pos, value)
+            # low vision area
+            elif self.current_mode == 2:
+                value = 1.0 if ctrl_held else 0.5
+                self.parent.world.map.set_vision_area(*self.start_pos, *end_pos, value)
+
             # and reset start pos for next input
             self.start_pos = None
             # invalidate map VBO to force rebuild
             self.parent.mapview.tiles_vbo = None
+            self.parent.mapview.map_items = None
             return True
