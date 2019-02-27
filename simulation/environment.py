@@ -36,15 +36,15 @@ class Map:
 
         # metadata about the map
         self.size: Tuple[int, int] = size
-        self.targets: List[Position] = targets if targets else []
 
         # info about tiles
+        self.walls = np.zeros((size[0], size[1]), dtype=np.bool)
         self.vision_modifier: List[List[float]] = np.ones((size[0], size[1]), dtype=np.float32)
 
         # structures and stuff on the map
-        self.walls = np.zeros((size[0], size[1]), dtype=np.bool)
-        self.gates: List[Gate] = gates if gates else []
+        self.targets: List[Position] = targets if targets else []
         self.towers: List[Position] = towers if towers else []
+        self.gates: List[Gate] = gates if gates else []
         self.markers: List['world.Marker'] = markers if markers else []
 
     def add_target(self, x: int, y: int):
