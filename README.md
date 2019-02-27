@@ -12,7 +12,7 @@
 
 ### Editor
  - Toggle enable / disable: `E`
- - Add wall: `left-click` and drag
+ - Place item: `left-click` or `left-click` and drag, depending on the item
  - Select item to place: `number` keys, shown in the GUI when the editor is enabled
  - Remove item instead of placing: hold `CTRL`
 
