@@ -1,7 +1,7 @@
 from typing import List, Dict
 import math
 import vectormath as vmath
-from .map import Map
+from .environment import Map
 from .agent import Agent, AgentID
 from .util import Position
 

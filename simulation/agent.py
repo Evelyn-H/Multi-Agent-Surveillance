@@ -1,9 +1,9 @@
 from typing import NewType, List, Tuple
 from abc import ABCMeta, abstractmethod
 import math
-from .communication import Message, MarkerType, NoiseEvent
+from . import communication
 from .util import Position
-from .vision import MapView
+from . import vision
 from . import world
 
 # from profilehooks import profile
@@ -46,7 +46,7 @@ class Agent(metaclass=ABCMeta):
 
         # vision stuff
         assert map is not None
-        self.map: MapView = MapView(map)
+        self.map: vision.MapView = vision.MapView(map)
         self._last_tile: Tuple[int, int] = (int(self.location.x), int(self.location.y))
         self._update_vision(force=True)
 
@@ -54,10 +54,10 @@ class Agent(metaclass=ABCMeta):
         self._width = 0.9
         self._has_collided = False
 
-    def send_message(self, target: AgentID, message: Message) -> None:
+    def send_message(self, target: AgentID, message: communication.Message) -> None:
         ...
 
-    def leave_marker(self, type: MarkerType) -> None:
+    def leave_marker(self, type: communication.MarkerType) -> None:
         ...
 
     def turn(self, target_angle: float):
@@ -95,7 +95,7 @@ class Agent(metaclass=ABCMeta):
             self._last_tile = current_tile
             self.map._reveal_circle(current_tile[0], current_tile[1], self.view_range)
 
-    def tick(self, noises: List[NoiseEvent], messages: List[Message]):
+    def tick(self, noises: List[communication.NoiseEvent], messages: List[communication.Message]):
         # process vision
         self._update_vision()
 
@@ -124,12 +124,12 @@ class Agent(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def on_noise(self, noise: NoiseEvent) -> None:
+    def on_noise(self, noise: communication.NoiseEvent) -> None:
         """ Noise handler, will be called before `on_tick` """
         pass
 
     @abstractmethod
-    def on_message(self, message: Message) -> None:
+    def on_message(self, message: communication.Message) -> None:
         """ Message handler, will be called before `on_tick` """
         pass
 
@@ -146,7 +146,7 @@ class Agent(metaclass=ABCMeta):
 
 # TODO: implement sentry tower
 class GuardAgent(Agent):
-    def __init__(self, location: Position, heading: float=0, color=None, map: MapView=None) -> None:
+    def __init__(self, location: Position, heading: float=0, color=None, map: vision.MapView=None) -> None:
         color = color if color else (0.0, 1.0, 0.0)
         super().__init__(location, heading, color, map)
         self.view_range: float = 6.0
@@ -154,7 +154,7 @@ class GuardAgent(Agent):
 
 # TODO: implement sprinting
 class IntruderAgent(Agent):
-    def __init__(self, location: Position, heading: float=0, color=None, map: MapView=None) -> None:
+    def __init__(self, location: Position, heading: float=0, color=None, map: vision.MapView=None) -> None:
         color = color if color else (1.0, 0.0, 0.0)
         super().__init__(location, heading, color, map)
         self.view_range: float = 7.5

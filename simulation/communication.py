@@ -20,7 +20,8 @@ class Marker:
 class Message:
     """Encapsulates a single message"""
 
-    def __init__(self, message: str) -> None:
+    def __init__(self, source, message: str) -> None:
+        self.source = source
         self.message: str = message
 
 

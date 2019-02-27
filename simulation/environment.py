@@ -1,7 +1,7 @@
 import numpy as np
 from typing import List, Tuple
 from .util import Position
-from .communication import Marker
+from . import communication
 
 
 class Tower:
@@ -40,7 +40,7 @@ class Map:
                  targets: List[Position]=None,
                  gates=None,
                  towers: List[Tower]=None,
-                 markers: List[Marker]=None) -> None:
+                 markers: List[communication.Marker]=None) -> None:
 
         # metadata about the map
         self.size: Tuple[int, int] = size
@@ -53,7 +53,7 @@ class Map:
         self.walls = np.zeros((size[0], size[1]), dtype=np.bool)
         self.gates: List[Gate] = gates if gates else []
         self.towers: List[Tower] = towers if towers else []
-        self.markers: List[Marker] = markers if markers else []
+        self.markers: List[communication.Marker] = markers if markers else []
 
     def set_wall(self, x: int, y: int):
         if x >= 0 and y >= 0 and x < self.size[0] and y < self.size[1]:
