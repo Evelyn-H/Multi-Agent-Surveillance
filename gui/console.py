@@ -48,7 +48,7 @@ class Console(renderer.WindowComponent):
 
     def on_key_press(self, key, modifiers):
         # toggle console
-        if key == arcade.key.QUOTELEFT:
+        if key == arcade.key.TAB:
             self.open = not self.open
             # reset the console
             if not self.open:
