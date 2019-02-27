@@ -33,7 +33,10 @@ class Console(renderer.WindowComponent):
         # check if function exists
         if name in self.commands:
             # call function and get output
-            output = self.commands[name](*args)
+            try:
+                output = self.commands[name](*args)
+            except Exception as e:
+                output = "Command cound not be executed"
             # and print output
             if output:
                 self.println(f"{output}")

@@ -24,6 +24,11 @@ class MapViewer(renderer.WindowComponent):
         self.tiles_vbo = None
         self.map_items = None
 
+        # fog-of-war
+        # None: no fog-of-war
+        # number: viewing what a certain agent sees
+        self.fog = None
+
         # agent sprite objects
         self.agent_sprites = arcade.SpriteList()
         # map from `Agent`s to `Sprite`s
@@ -42,6 +47,17 @@ class MapViewer(renderer.WindowComponent):
             self.agent_trails[agent] = collections.deque(maxlen=self.world.TICK_RATE * 100)
             self.agent_trails[agent].append((agent.location.x, agent.location.y))
 
+        # register commands
+        self.parent.console.register_command('fow', lambda x: self.set_fog(int(x)))
+
+    def set_fog(self, agent=None):
+        if agent in self.world.agents:
+            self.fog = agent
+        else:
+            self.fog = None
+            # force redraw
+            self.tiles_vbo = None
+
     def update_agent_sprites(self):
         for ID, agent in self.world.agents.items():
             sprite = self.agent_sprite_map[agent]
@@ -58,25 +74,28 @@ class MapViewer(renderer.WindowComponent):
         w = self.world.map.size[0]
         h = self.world.map.size[1]
         points.extend(((0, 0), (w, 0), (0, h), (0, h), (w, 0), (w, h)))
-        bg_color = (0.2, 0.2, 0.2, 1.0)
+        bg_color = (0.2, 0.2, 0.2)
         colors.extend([tuple((int(255 * c) for c in bg_color))] * 6)
         # for each tile...
         for x in range(self.world.map.size[0]):
             for y in range(self.world.map.size[1]):
 
                 # hacky fog-of-war rendering
-                # if not self.world.agents[1].map.is_revealed(x, y):
-                    # continue
+                if self.fog and not self.world.agents[self.fog].map.is_revealed(x, y):
+                    continue
 
-                # vision modfier
                 vision_modifier = self.world.map.vision_modifier[x][y]
+                # wall
                 if self.world.map.walls[x][y]:
                     color = (0.8, 0.8, 0.8)
+                # vision modfier
                 elif vision_modifier < 1.0:
-                    color = (0, vision_modifier * 0.75, 0)
-                # wall
+                    color = (0, vision_modifier * 0.6, 0)
+                # fog-of-war
+                elif self.fog:
+                    color = (0.4, 0.4, 0.4)
+                # nothing here to draw
                 else:
-                    # nothing here to draw
                     continue
 
                 # add tile to array
@@ -125,7 +144,7 @@ class MapViewer(renderer.WindowComponent):
         self.update_agent_sprites()
 
         # build map VBO if necessary
-        if self.tiles_vbo is None:
+        if self.tiles_vbo is None or self.fog:
             self.build_grid()
 
         # render main map tiles
