@@ -89,5 +89,4 @@ class Map:
             x0, x1 = x1, x0
         if y0 > y1:
             y0, y1 = y1, y0
-        self.vision_modifier[x0:x1, y0:y1] = max(0, min(value, 1.0))
-        print(self.vision_modifier[x0:x1, y0:y1])
+        self.vision_modifier[x0:x1+1, y0:y1+1] = max(0, min(value, 1.0))
