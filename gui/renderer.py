@@ -119,15 +119,24 @@ class GUI(arcade.Window):
         # if t - self.frame_t0 > 0.02:
             # print(f"Frame took too long: {(t - self.frame_t0) * 1000:3.2f}ms")
         self.frame_t0 = t
+
+        fps_text = f"FPS: {self.fps:3.1f}  TPS: {self.tps:3.1f} ({self.game_speed}x){' PAUSED' if self.is_paused else ''}"
+
+        arcade.draw_lrtb_rectangle_filled(
+            0, 8 + 12 * len(fps_text) + 6,
+            self.SCREEN_HEIGHT, self.SCREEN_HEIGHT - 30,
+            color=(0, 0, 0, 192)
+        )
+
         # show the fps on the screen
         arcade.draw_text(
-            f"FPS: {self.fps:3.1f}  TPS: {self.tps:3.1f} ({self.game_speed}x) {'PAUSED' if self.is_paused else ''}",
+            fps_text,
             8, self.SCREEN_HEIGHT - 24, arcade.color.WHITE, 16
         )
 
     def on_key_press(self, key, modifiers):
         # handle input in all components,
-        # only propage as long as they return false
+        # only propagate as long as they return false
         for c in self.components:
             if c.on_key_press(key, modifiers):
                 return
@@ -142,35 +151,35 @@ class GUI(arcade.Window):
 
     def on_mouse_motion(self, x, y, dx, dy):
         # handle input in all components,
-        # only propage as long as they return false
+        # only propagate as long as they return false
         for c in self.components:
             if c.on_mouse_motion(x, y, dx, dy):
                 break
 
     def on_mouse_press(self, x, y, button, modifiers):
         # handle input in all components,
-        # only propage as long as they return false
+        # only propagate as long as they return false
         for c in self.components:
             if c.on_mouse_press(x, y, button, modifiers):
                 break
 
     def on_mouse_release(self, x, y, button, modifiers):
         # handle input in all components,
-        # only propage as long as they return false
+        # only propagate as long as they return false
         for c in self.components:
             if c.on_mouse_release(x, y, button, modifiers):
                 break
 
     def on_mouse_drag(self, x, y, dx, dy, button, modifiers):
         # handle input in all components,
-        # only propage as long as they return false
+        # only propagate as long as they return false
         for c in self.components:
             if c.on_mouse_drag(x, y, dx, dy, button, modifiers):
                 break
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         # handle input in all components,
-        # only propage as long as they return false
+        # only propagate as long as they return false
         for c in self.components:
             if c.on_mouse_scroll(x, y, scroll_x, scroll_y):
                 break
