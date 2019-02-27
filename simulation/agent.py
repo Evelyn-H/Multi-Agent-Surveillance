@@ -1,6 +1,7 @@
 from typing import NewType, List, Tuple
 from abc import ABCMeta, abstractmethod
 import math
+import vectormath as vmath
 
 from .util import Position
 from . import vision
@@ -85,16 +86,22 @@ class Agent(metaclass=ABCMeta):
         """ Turn towards absolute heading """
         self._turn_target = target_angle
 
+    def turn_to_point(self, target: vmath.Vector2):
+        diff = target - self.location
+        angle = vmath.Vector2(0, 1).angle(diff, unit='deg')
+        self.turn_to(angle if diff.x > 0 else -angle)
+
     def move(self, distance):
         self._move_target = distance
 
     @property
     def turn_remaining(self) -> float:
-        return self._turn_target - self.heading
+        a = self._turn_target - self.heading
+        return 0 if math.isclose(a, 0.0, abs_tol=1e-9) else a
 
     @property
     def move_remaining(self) -> float:
-        return self._move_target
+        return 0 if math.isclose(self._move_target, 0.0, abs_tol=1e-9) else self._move_target
 
     def _process_movement(self):
         """ Executes the last movement command """

@@ -30,3 +30,34 @@ class SimpleGuard(GuardAgent):
             self.move(20)
             if self.ID != 1:
                 self.send_message(1, "I just turned!")
+
+
+class PathfindingGuard(GuardAgent):
+    def setup(self):
+        """ Agent setup """
+        self.path = None
+
+    def on_noise(self, noise: world.NoiseEvent) -> None:
+        """ Noise handler, will be called before `on_tick` """
+        ...
+
+    def on_message(self, message: world.Message) -> None:
+        """ Message handler, will be called before `on_tick` """
+
+    def on_collide(self) -> None:
+        """ Collision handler """
+        # recalculate path
+        if self.turn_remaining == 0 and self.move_remaining == 0:
+            self.path = self.map.find_path(self.location, (100, 100))
+
+    def on_tick(self) -> None:
+        """ Agent logic goes here """
+        if not self.path:
+            self.path = self.map.find_path(self.location, (100, 100))
+
+        if self.move_remaining == 0:
+            next_pos = self.path[0]
+            self.turn_to_point(next_pos)
+            if self.turn_remaining == 0:
+                self.move((next_pos - self.location).length)
+                self.path = self.path[1:]

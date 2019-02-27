@@ -1,9 +1,12 @@
+from typing import Tuple, List
 import math
 import numpy as np
 import vectormath as vmath
 
+from . import pathfinding
 
-class MapView:
+
+class MapView(pathfinding.Graph):
     """
     Basically implements a fog-of-war
     """
@@ -69,7 +72,62 @@ class MapView:
         else:
             return True
 
-    # vvvv copy functions from map.Map vvvv
+    # vvvv pathfinding methods vvvv
+
+    def neighbors(self, node):
+        """ Implements abstract method `neighbors` from `Graph` """
+        (x, y) = node
+        # NESW only
+        # results = [(x + 1, y), (x, y - 1), (x - 1, y), (x, y + 1)]
+        # with diagonals
+        results = [(x + 1, y), (x + 1, y - 1), (x, y - 1), (x - 1, y - 1), (x - 1, y), (x - 1, y + 1), (x, y + 1), (x + 1, y + 1)]
+        # if (x + y) % 2 == 0:
+        #     results.reverse()  # aesthetics
+        results = filter(lambda node: self._map.in_bounds(*node), results)
+        results = filter(lambda node: not self._map.is_wall(*node), results)
+        return results
+
+    def cost(self, from_node, to_node):
+        """ Implements abstract method `cost` from `Graph` """
+        x1, y1 = from_node
+        x2, y2 = to_node
+
+        # diagonal
+        if (x2 - x1 + y2 - y1) % 2 == 0:
+            multiplier = 2**0.5
+        # straight
+        else:
+            multiplier = 1
+
+        # double cost for "invisible" tiles
+        if self.is_revealed(*to_node):
+            return 2 * multiplier
+        else:
+            return 1 * multiplier
+
+    def find_path(self, from_node: Tuple[float, float], to_node: Tuple[float, float]) -> List[Tuple[float, float]]:
+        def heuristic(from_node, to_node):
+            (x0, y0) = from_node
+            (x1, y1) = to_node
+            D = 1  # NESW cost
+            D2 = 2**0.5  # diagonal cost
+            dx = abs(x0 - x1)
+            dy = abs(y0 - y1)
+            return D * (dx + dy) + (D2 - 2 * D) * min(dx, dy)
+
+        # make start and goal positions into `int`s
+        from_node = (int(from_node[0]), int(from_node[1]))
+        to_node = (int(to_node[0]), int(to_node[1]))
+
+        came_from, cost_so_far = pathfinding.a_star_search(self, from_node, to_node, heuristic)
+        path = pathfinding.reconstruct_path(came_from, from_node, to_node)
+        # map the path from tile coordinates to agent coordinates
+        path = list(map(lambda node: vmath.Vector2(node[0] + 0.5, node[1] + 0.5), path))
+
+        return path
+
+
+    # vvvv copy methods from map.Map vvvv
 
     def is_wall(self, x: int, y: int) -> bool:
         return self._map.is_wall(x, y)

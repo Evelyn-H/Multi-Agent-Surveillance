@@ -47,6 +47,9 @@ class Map:
         self.gates: List[Gate] = gates if gates else []
         self.markers: List['world.Marker'] = markers if markers else []
 
+    def in_bounds(self, x: int, y: int) -> bool:
+        return x >= 0 and y >= 0 and x < self.size[0] and y < self.size[1]
+
     def add_target(self, x: int, y: int):
         self.targets.append(Position(x, y))
 
@@ -64,11 +67,11 @@ class Map:
                 del self.towers[i]
 
     def set_wall(self, x: int, y: int, value=True):
-        if x >= 0 and y >= 0 and x < self.size[0] and y < self.size[1]:
+        if self.in_bounds(x, y):
             self.walls[x][y] = True if value else False
 
     def is_wall(self, x: int, y: int) -> bool:
-        if x >= 0 and y >= 0 and x < self.size[0] and y < self.size[1]:
+        if self.in_bounds(x, y):
             return self.walls[x][y]
         else:
             return True
@@ -89,7 +92,7 @@ class Map:
             self.set_wall(x1, y, value)
 
     def set_vision(self, x: int, y: int, value=0.5):
-        if x >= 0 and y >= 0 and x < self.size[0] and y < self.size[1]:
+        if self.in_bounds(x, y):
             self.vision_modifier[x][y] = max(0, min(value, 1.0))
 
     def set_vision_area(self, x0, y0, x1, y1, value=0.5):
