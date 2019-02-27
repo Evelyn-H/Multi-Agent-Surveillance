@@ -97,6 +97,7 @@ class Agent(metaclass=ABCMeta):
     @property
     def turn_remaining(self) -> float:
         a = self._turn_target - self.heading
+        a = (a + 180) % 360 - 180
         return 0 if math.isclose(a, 0.0, abs_tol=1e-9) else a
 
     @property

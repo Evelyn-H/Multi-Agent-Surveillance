@@ -58,6 +58,6 @@ class PathfindingGuard(GuardAgent):
         if self.move_remaining == 0:
             next_pos = self.path[0]
             self.turn_to_point(next_pos)
-            if self.turn_remaining == 0:
-                self.move((next_pos - self.location).length)
-                self.path = self.path[1:]
+            # if self.turn_remaining == 0:
+            self.move((next_pos - self.location).length)
+            self.path = self.path[1:]

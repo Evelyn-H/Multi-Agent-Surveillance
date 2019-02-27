@@ -84,7 +84,7 @@ class MapView(pathfinding.Graph):
         # if (x + y) % 2 == 0:
         #     results.reverse()  # aesthetics
         results = filter(lambda node: self._map.in_bounds(*node), results)
-        results = filter(lambda node: not self._map.is_wall(*node), results)
+        results = filter(lambda node: not (self.is_revealed(*node) and self._map.is_wall(*node)), results)
         return results
 
     def cost(self, from_node, to_node):
