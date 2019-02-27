@@ -1,7 +1,6 @@
 import math
 import numpy as np
 import vectormath as vmath
-from .map import Map
 
 
 class MapView:
@@ -9,7 +8,7 @@ class MapView:
     Basically implements a fog-of-war
     """
 
-    def __init__(self, map: Map):
+    def __init__(self, map):
         # private copy of the full map
         self._map = map
 
@@ -48,9 +47,9 @@ class MapView:
             def paste_slices(tup):
                 pos, w, max_w = tup
                 wall_min = max(pos, 0)
-                wall_max = min(pos+w, max_w)
+                wall_max = min(pos + w, max_w)
                 block_min = -min(pos, 0)
-                block_max = max_w-max(pos+w, max_w)
+                block_max = max_w - max(pos + w, max_w)
                 block_max = block_max if block_max != 0 else None
                 return slice(wall_min, wall_max), slice(block_min, block_max)
             loc_zip = zip(loc, block.shape, wall.shape)
