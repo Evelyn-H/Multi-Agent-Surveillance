@@ -13,6 +13,8 @@
 ### Editor
  - Toggle enable / disable: `E`
  - Add wall: `left-click` and drag
+ - Select item to place: `number` keys, shown in the GUI when the editor is enabled
+ - Remove item instead of placing: hold `CTRL`
 
 ### Console
  - Open / close console: `TAB`
