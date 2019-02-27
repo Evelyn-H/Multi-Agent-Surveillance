@@ -3,6 +3,7 @@ from typing import List, Tuple
 
 from .util import Position
 
+
 class Tower:
     """
     Represents a single tower (one tile wide)
@@ -21,6 +22,7 @@ class Gate:
     def __init__(self) -> None:
         ...
 
+    @property
     def is_open(self) -> bool:
         ...
 
@@ -53,6 +55,22 @@ class Map:
         self.gates: List[Gate] = gates if gates else []
         self.towers: List[Tower] = towers if towers else []
         self.markers: List['world.Marker'] = markers if markers else []
+
+    def add_target(self, x: int, y: int):
+        self.targets.append(Position(x, y))
+
+    def remove_target(self, x: int, y: int):
+        for i, target in enumerate(self.targets):
+            if abs(target.x - x) + abs(target.y - y) <= 2:
+                del self.targets[i]
+
+    def add_tower(self, x: int, y: int):
+        self.towers.append(Tower(Position(x, y)))
+
+    def remove_tower(self, x: int, y: int):
+        for i, tower in enumerate(self.towers):
+            if abs(tower.pos.x - x) + abs(tower.pos.y - y) <= 2:
+                del self.towers[i]
 
     def set_wall(self, x: int, y: int, value=True):
         if x >= 0 and y >= 0 and x < self.size[0] and y < self.size[1]:
@@ -89,4 +107,4 @@ class Map:
             x0, x1 = x1, x0
         if y0 > y1:
             y0, y1 = y1, y0
-        self.vision_modifier[x0:x1+1, y0:y1+1] = max(0, min(value, 1.0))
+        self.vision_modifier[x0:x1 + 1, y0:y1 + 1] = max(0, min(value, 1.0))

@@ -13,7 +13,7 @@ class Editor(renderer.WindowComponent):
         self.modes = {
             1: 'Walls',
             2: 'Low Vision Area',
-            3: 'Target Area',
+            3: 'Target Location',
             4: 'Sentry Tower',
             5: 'Door',
             6: 'Window',
@@ -58,9 +58,13 @@ class Editor(renderer.WindowComponent):
             return False
 
         if button == arcade.MOUSE_BUTTON_LEFT:
-            # add wall at the point that was clicked
-            self.start_pos = self.parent.mapview.screen_to_map(x, y)
-            return True
+            # resolve input according to which mode we're in
+            # walls or low visibility area
+            if self.current_mode == 1 or self.current_mode == 2:
+                # store current point for dragging
+                self.start_pos = self.parent.mapview.screen_to_map(x, y)
+                return True
+
 
     def on_mouse_release(self, x, y, button, modifiers):
         if not self.enabled:
@@ -82,6 +86,22 @@ class Editor(renderer.WindowComponent):
             elif self.current_mode == 2:
                 value = 1.0 if ctrl_held else 0.5
                 self.parent.world.map.set_vision_area(*self.start_pos, *end_pos, value)
+            # target location
+            elif self.current_mode == 3:
+                # remove
+                if ctrl_held:
+                    self.parent.world.map.remove_target(*end_pos)
+                # add
+                else:
+                    self.parent.world.map.add_target(*end_pos)
+            # sentry tower
+            elif self.current_mode == 4:
+                # remove
+                if ctrl_held:
+                    self.parent.world.map.remove_tower(*end_pos)
+                # add
+                else:
+                    self.parent.world.map.add_tower(*end_pos)
 
             # and reset start pos for next input
             self.start_pos = None

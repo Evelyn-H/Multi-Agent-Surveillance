@@ -90,15 +90,15 @@ class MapViewer(renderer.WindowComponent):
         shape_list = arcade.ShapeElementList()
         # targets (blue)
         for target in self.world.map.targets:
-            shape_list.append(arcade.create_rectangle_filled(target.x - 0.5, target.y - 0.5, 2, 2, color=(0, 0, 255)))
+            shape_list.append(arcade.create_rectangle_filled(target.x + 0.5, target.y + 0.5, 2, 2, color=(0, 0, 255)))
 
         # towers (red)
         for tower in self.world.map.towers:
-            shape_list.append(arcade.create_rectangle_filled(tower.pos.x - 0.5, tower.pos.y - 0.5, 2, 2, color=(255, 0, 0)))
+            shape_list.append(arcade.create_rectangle_filled(tower.pos.x + 0.5, tower.pos.y + 0.5, 2, 2, color=(255, 0, 0)))
 
         # communication markers (circles)
         for marker in self.world.map.markers:
-            shape_list.append(arcade.create_ellipse_filled(marker.location.x - 0.5, marker.location.y - 0.5, 1, 1, color=(255, 0, 255)))
+            shape_list.append(arcade.create_ellipse_filled(marker.location.x + 0.5, marker.location.y + 0.5, 1, 1, color=(255, 0, 255)))
 
         # TODO: self.gates
 
