@@ -1,10 +1,9 @@
 import arcade
 import numpy as np
 from gui import renderer
-from simulation.world import World
+from simulation.world import World, Marker, MarkerType
 from simulation.environment import Map, Tower
 from simulation.util import Position
-from simulation.communication import Marker, MarkerType
 from ai import agents
 
 if __name__ == '__main__':

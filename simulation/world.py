@@ -1,9 +1,12 @@
 from typing import List, Dict
 import math
+from enum import Enum
 import vectormath as vmath
+
 from .environment import Map
 from .agent import Agent, AgentID
 from .util import Position
+
 
 class World:
     """
@@ -19,8 +22,15 @@ class World:
         self.map: Map = map
         self.agents: Dict[AgentID, Agent] = dict()
 
+        # to keep track of how many ticks have passed:
+        self.time = 0
+
     def add_agent(self, agent):
+        agent._world = self
         self.agents[agent.ID] = agent
+
+    def transmit_message(self, message):
+        self.agents[message.target]._message_queue_in.append(message)
 
     def _collision_check(self):
         def collision_point(x, y):
@@ -94,7 +104,6 @@ class World:
                 agent.location.y = collision.y
                 agent._has_collided |= True
 
-
     def setup(self):
         for ID, agent in self.agents.items():
             agent.setup()
@@ -102,5 +111,46 @@ class World:
     def tick(self):
         """ Execute one tick / frame """
         for ID, agent in self.agents.items():
-            agent.tick(noises=[], messages=[])
+            agent.tick(noises=[])
         self._collision_check()
+
+        # and up the counter
+        self.time += 1
+
+
+class MarkerType(Enum):
+    """The different types of markers used for indirect communication"""
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+    YELLOW = 4
+    MAGENTA = 5
+
+
+class Marker:
+    def __init__(self, type: MarkerType, location: Position):
+        self.type = type
+        self.location = location
+
+
+class Message:
+    """Encapsulates a single message"""
+
+    def __init__(self, source, target, message: str) -> None:
+        self.source: 'AgentID' = source
+        self.target: 'AgentID' = target
+        self.message: str = message
+
+
+class NoiseEvent:
+    """Encapsulates a single noise event"""
+
+    def __init__(self, location: Position) -> None:
+        self._location = location
+
+    def perceived_angle(self, target_pos: Position):
+        """
+        Calculates the perceived angle towards the noise from the perspective of the `target_pos`
+        This also adds the uncertainty as described in the booklet
+        """
+        ...

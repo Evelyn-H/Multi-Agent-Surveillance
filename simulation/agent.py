@@ -1,7 +1,7 @@
 from typing import NewType, List, Tuple
 from abc import ABCMeta, abstractmethod
 import math
-from . import communication
+
 from .util import Position
 from . import vision
 from . import world
@@ -30,6 +30,9 @@ class Agent(metaclass=ABCMeta):
         # generate ID
         self.ID = Agent.generate_new_ID()
 
+        # placeholder reference to the `World` the agent is in
+        self._world = None
+
         # pretty colours!
         self.color = color if color else (1.0, 1.0, 1.0)
 
@@ -54,11 +57,25 @@ class Agent(metaclass=ABCMeta):
         self._width = 0.9
         self._has_collided = False
 
-    def send_message(self, target: AgentID, message: communication.Message) -> None:
+        # communication stuff
+        self._message_queue_in = []
+        self._message_queue_out = []
+
+    def send_message(self, target: AgentID, message: str) -> None:
+        if target == self.ID:
+            print("Agent Warning: Can't send message to yourself")
+            return
+
+        self._message_queue_out.append(
+            world.Message(self.ID, target, message)
+        )
+
+    def leave_marker(self, type: 'world.MarkerType') -> None:
         ...
 
-    def leave_marker(self, type: communication.MarkerType) -> None:
-        ...
+    @property
+    def current_time(self):
+        return self._world.time
 
     def turn(self, target_angle: float):
         """ Turn relative to current heading """
@@ -71,9 +88,11 @@ class Agent(metaclass=ABCMeta):
     def move(self, distance):
         self._move_target = distance
 
+    @property
     def turn_remaining(self) -> float:
         return self._turn_target - self.heading
 
+    @property
     def move_remaining(self) -> float:
         return self._move_target
 
@@ -81,7 +100,7 @@ class Agent(metaclass=ABCMeta):
         """ Executes the last movement command """
         # process turning
         if not math.isclose(self._turn_target, self.heading):
-            remaining = self.turn_remaining()
+            remaining = self.turn_remaining
             self.heading += math.copysign(min(world.World.TIME_PER_TICK * self.turn_speed, abs(remaining)), remaining)
         # process walking/running
         if self._move_target != 0:
@@ -95,7 +114,7 @@ class Agent(metaclass=ABCMeta):
             self._last_tile = current_tile
             self.map._reveal_circle(current_tile[0], current_tile[1], self.view_range)
 
-    def tick(self, noises: List[communication.NoiseEvent], messages: List[communication.Message]):
+    def tick(self, noises: List['world.NoiseEvent']):
         # process vision
         self._update_vision()
 
@@ -104,8 +123,10 @@ class Agent(metaclass=ABCMeta):
             self.on_noise(noise)
 
         # messages
-        for message in messages:
+        for message in self._message_queue_in:
             self.on_message(message)
+        # reset the queue after it's been processed
+        self._message_queue_in = []
 
         # collision
         if self._has_collided:
@@ -119,17 +140,22 @@ class Agent(metaclass=ABCMeta):
         # and execute movement commands
         self._process_movement()
 
+        # send all messages in the out queue
+        for message in self._message_queue_out:
+            self._world.transmit_message(message)
+        self._message_queue_out = []
+
     @abstractmethod
     def setup(self) -> None:
         pass
 
     @abstractmethod
-    def on_noise(self, noise: communication.NoiseEvent) -> None:
+    def on_noise(self, noise: 'world.NoiseEvent') -> None:
         """ Noise handler, will be called before `on_tick` """
         pass
 
     @abstractmethod
-    def on_message(self, message: communication.Message) -> None:
+    def on_message(self, message: 'world.Message') -> None:
         """ Message handler, will be called before `on_tick` """
         pass
 
