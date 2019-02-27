@@ -59,7 +59,12 @@ class Console(renderer.WindowComponent):
 
         # typing and stuff
         if self.open:
-            if (key >= arcade.key.A and key <= arcade.key.Z) or (key >= arcade.key.KEY_0 and key <= arcade.key.KEY_9) or key == arcade.key.SPACE:
+            if (
+                (key >= arcade.key.A and key <= arcade.key.Z) or
+                (key >= arcade.key.KEY_0 and key <= arcade.key.KEY_9) or
+                key == arcade.key.SPACE or
+                key == arcade.key.UNDERSCORE
+            ):
                 self.text += chr(key)
             elif key == arcade.key.ENTER:
                 self.run_command(self.text)
