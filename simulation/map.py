@@ -22,10 +22,10 @@ class Map:
         # --- Walls ---
         # Grab the layer of items we can't move through
         platforms_layer_name = 'Platforms'
-        walls = tiledMap.layers_int_data[platforms_layer_name]
-        walkable = np.where(np.matrix(walls) > 0, 0, 1)
+#        walls = tiledMap.layers_int_data[platforms_layer_name]
+#        walkable = np.where(np.matrix(walls) > 0, 0, 1)
         # metadata about the map
-        self.size: Tuple[int, int] = [len(walls), len(walls[1])]
+#        self.size: Tuple[int, int] = [len(walls), len(walls[1])]
 
         def getTiledMap():
             return tiledMap

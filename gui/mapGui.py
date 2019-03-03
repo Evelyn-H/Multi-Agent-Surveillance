@@ -9,7 +9,6 @@ SPRITE_SCALING = 2.5
 
 class MapGui():
     
-    self.tiledMap = None
 
     def __init__(self, map):
         self.tiledMap = map.getTiledMap()

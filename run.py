@@ -3,7 +3,7 @@ import gui.DrawingTests2
 
 import arcade
 from gui import DrawingTests2
-from gui import MapGui
+#from gui import MapGui
 #from simulation.world import World
 from simulation.map import Map
 
@@ -15,7 +15,8 @@ if __name__ == '__main__':
     
 
     # Read in the tiled map
-    map_name = "gfx/CollectionTest.tmx"
+#    map_name = "gfx/CollectionTest.tmx"
+    map_name = "gfx/StressTest.tmx"
     SPRITE_SCALING = 0.625
     tiled_map = arcade.read_tiled_map(map_name, SPRITE_SCALING)
     map = Map(tiled_map)

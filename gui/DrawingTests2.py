@@ -12,8 +12,8 @@ import time
 
 import arcade
 
-from gui.agentGui import Agent
-from gui.mapGui import MapGui
+from .agentGui import Agent
+from .mapGui import MapGui
 
 
 SPRITE_SCALING = 2.5
@@ -37,7 +37,7 @@ MOVEMENT_SPEED = 5
 class GUI(arcade.Window):
     """ Main application class. """
 
-    def __init__(self):
+    def __init__(self, map):
         """
         Initializer
         """
@@ -73,7 +73,8 @@ class GUI(arcade.Window):
         platformsDeco_layer_name = 'PlatformsDeco'
         wallDeco_layer_name = 'WallDeco'
         
-        map_name = "gfx/CollectionTest.tmx"
+#        map_name = "gfx/CollectionTest.tmx"
+        map_name = "gfx/StressTest.tmx"
 
         # Read in the tiled map
         my_map = arcade.read_tiled_map(map_name, SPRITE_SCALING)
