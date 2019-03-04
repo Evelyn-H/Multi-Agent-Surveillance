@@ -28,7 +28,6 @@ if __name__ == '__main__':
     for _ in range(10):
         x, y = np.random.randint(0, map.size[0], size=2)
         map.markers.append(Marker(MarkerType.MAGENTA, Position(x, y)))
-
     world = World(map)
 
     world.add_agent(agents.SimpleGuard(Position(40, 40), map=map, color=(1.0, 1.0, 0)))

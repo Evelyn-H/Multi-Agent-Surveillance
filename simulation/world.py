@@ -1,11 +1,16 @@
 from typing import List, Dict
 import math
+import random
 from enum import Enum
 import vectormath as vmath
+import threading 
+import datetime 
+
 
 from .environment import Map
 from .agent import Agent, AgentID
 from .util import Position
+from pickle import NONE
 
 
 class World:
@@ -21,10 +26,15 @@ class World:
     def __init__(self, map: Map):
         self.map: Map = map
         self.agents: Dict[AgentID, Agent] = dict()
+        #Kick off random noises
+        nextEmit = self.nextRandomNoiseTime()
+        timer = threading.Timer(nextEmit*60, self.emitRandomNoise)
+        timer.start() 
 
         # to keep track of how many ticks have passed:
         self.time = 0
 
+        
     def add_agent(self, agent):
         agent._world = self
         self.agents[agent.ID] = agent
@@ -113,9 +123,37 @@ class World:
         for ID, agent in self.agents.items():
             agent.tick(noises=[])
         self._collision_check()
-
+        
         # and up the counter
         self.time += 1
+        
+    """Compute the next time of an noise event occuring"""
+    def nextRandomNoiseTime(self):
+        #Rate parameter for one 25m^2 is 0.1 
+        #This can be scaled up to 200m^2 by assuming, that when a noise event 
+        #is emitted the location is chosen uniformly random. 
+        #Hence we can set the rate parameter to 0.1*(200/25)*2=64 (amount of 25m^2 squares in the map)
+        rateParameter = 6.4;
+        return -math.log(1.0 - random.random()) / rateParameter
+
+    """Emit a noise event and schedule the next one"""
+    def emitRandomNoise(self):
+        #Emit noise event
+        posx = random.randint(0,200)
+        posy = random.randint(0,200)
+        position = Position(posx, posy)
+        noise = NoiseEvent(position)
+        self.map.noise.append(noise)
+        
+        #Reschedule
+        nextEmit = self.nextRandomNoiseTime()
+        next = datetime.datetime.now() + datetime.timedelta(minutes=nextEmit) 
+        #Put this into the console logger
+        print(str(datetime.datetime.now().time()) + ": Noise signal emitted at (" 
+               + str(posx) + "," +  str(posy) + 
+               ")\n Next signal scheduled for: " + str(next.time())) 
+        timer = threading.Timer(nextEmit*60, self.emitRandomNoise)
+        timer.start() 
 
 
 class MarkerType(Enum):
@@ -143,11 +181,12 @@ class Message:
 
 
 class NoiseEvent:
-    """Encapsulates a single noise event"""
-
+    """ This should be a singleton (How do I do that in python)
+        Encapsulates a single noise event"""
     def __init__(self, location: Position) -> None:
-        self._location = location
-
+        self.location = location
+        self.source = None
+            
     def perceived_angle(self, target_pos: Position):
         """
         Calculates the perceived angle towards the noise from the perspective of the `target_pos`

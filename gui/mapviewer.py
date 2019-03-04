@@ -118,7 +118,11 @@ class MapViewer(renderer.WindowComponent):
         # communication markers (circles)
         for marker in self.world.map.markers:
             shape_list.append(arcade.create_ellipse_filled(marker.location.x + 0.5, marker.location.y + 0.5, 1, 1, color=(255, 0, 255)))
-
+                        
+        for noise in self.world.map.noise:
+ 
+#            shape_list.append(arcade.draw_circle_outline(noise.x+0.5, noise.y+0.5, 5, arcade.color.WISTERIA, 1))
+            shape_list.append(arcade.create_ellipse_filled(noise.location.x + 0.5, noise.location.y + 0.5, 1, 1, arcade.color.AIR_FORCE_BLUE))
         # TODO: self.gates
 
         self.map_items = shape_list
