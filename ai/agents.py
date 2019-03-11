@@ -15,7 +15,7 @@ class SimpleGuard(GuardAgent):
 
     def on_message(self, message: world.Message) -> None:
         """ Message handler, will be called before `on_tick` """
-        print(f'agent {message.target} received message from agent {message.source} on tick {self.time_ticks}: {message.message}')
+        self.log(f'received message from agent {message.source} on tick {self.time_ticks}: {message.message}')
 
     def on_collide(self) -> None:
         """ Collision handler """
@@ -57,7 +57,7 @@ class PathfindingGuard(GuardAgent):
     def on_vision_update(self) -> None:
         """ Called when vision is updated """
         self.path = self.map.find_path(self.location, (100, 100))
-        self.path = self.path[1:]  # remove starting node
+        self.path = self.path and self.path[1:]  # remove starting node
 
     def on_tick(self) -> None:
         """ Agent logic goes here """

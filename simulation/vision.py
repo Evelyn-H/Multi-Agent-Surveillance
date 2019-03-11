@@ -134,12 +134,19 @@ class MapView(pathfinding.Graph):
         from_node = (int(from_node[0]), int(from_node[1]))
         to_node = (int(to_node[0]), int(to_node[1]))
 
+        def pathify(path):
+            if not path:
+                return None
+            return list(map(lambda node: vmath.Vector2(node[0] + 0.5, node[1] + 0.5), path))
+
+        if from_node == to_node:
+            return pathify([from_node])
+
         came_from, cost_so_far = pathfinding.a_star_search(self, from_node, to_node, heuristic)
         path = pathfinding.reconstruct_path(came_from, from_node, to_node)
         # map the path from tile coordinates to agent coordinates
-        path = list(map(lambda node: vmath.Vector2(node[0] + 0.5, node[1] + 0.5), path))
 
-        return path
+        return pathify(path)
 
     # vvvv copy methods from map.Map vvvv
 

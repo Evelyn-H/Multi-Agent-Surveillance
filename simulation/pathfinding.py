@@ -58,9 +58,14 @@ def dijkstra_search(graph, start, goal):
 def reconstruct_path(came_from, start, goal):
     current = goal
     path = []
-    while current != start:
-        path.append(current)
-        current = came_from[current]
+    try:
+        while current != start:
+            path.append(current)
+            current = came_from[current]
+    except KeyError as e:
+        # no path found
+        return None
+
     path.append(start)  # optional
     path.reverse()  # optional
     return path
