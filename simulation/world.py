@@ -2,6 +2,7 @@ from typing import List, Dict
 import math
 from enum import Enum
 import vectormath as vmath
+import json_tricks as jt
 
 from .environment import Map
 from .agent import Agent, AgentID
@@ -24,6 +25,31 @@ class World:
 
         # to keep track of how many ticks have passed:
         self.time_ticks = 0
+
+    def to_file(self, filename) -> None:
+        data = {
+            'agents': [agent.__class__.__name__ for ID, agent in self.agents.items()],
+            'map': self.map.to_dict()
+        }
+        with open(filename, mode='w') as file:
+            jt.dump(data, file)
+
+    @classmethod
+    def from_file(cls, filename) -> 'World':
+        with open(filename, mode='r') as file:
+            data = jt.load(file)
+
+        m = Map.from_dict(data['map'])
+        world = World(m)
+
+        import importlib
+        for agent_name in data['agents']:
+            # get class by string
+            agent_class = getattr(importlib.import_module("ai.agents"), agent_name)
+            # and add it to the world
+            world.add_agent(agent_class)
+
+        return world
 
     def add_agent(self, agent_type):
         agent = agent_type()

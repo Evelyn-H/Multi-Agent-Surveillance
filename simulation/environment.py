@@ -1,5 +1,5 @@
 import numpy as np
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 from .util import Position
 
@@ -46,6 +46,28 @@ class Map:
         self.towers: List[Position] = towers if towers else []
         self.gates: List[Gate] = gates if gates else []
         self.markers: List['world.Marker'] = markers if markers else []
+
+    def to_dict(self) -> Dict:
+        return {
+            'size': self.size,
+            # objects on map
+            'targets': self.targets,
+            'towers': self.towers,
+            'gates': self.gates,
+            'markers': self.markers,
+            # np arrays
+            'walls': self.walls,
+            'vision_modifier': self.vision_modifier,
+        }
+
+    @classmethod
+    def from_dict(self, data) -> 'Map':
+        m = Map(data['size'], data['targets'], data['gates'], data['towers'], data['markers'])
+        m.targets = list(map(lambda x: Position(x), m.targets))
+        m.towers = list(map(lambda x: Position(x), m.towers))
+        m.walls = data['walls']
+        m.vision_modifier = data['vision_modifier']
+        return m
 
     def in_bounds(self, x: int, y: int) -> bool:
         return x >= 0 and y >= 0 and x < self.size[0] and y < self.size[1]
