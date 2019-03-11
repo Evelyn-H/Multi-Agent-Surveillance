@@ -15,15 +15,15 @@ AgentID = NewType('AgentID', int)
 class Agent(metaclass=ABCMeta):
     """Class to be subclassed by specific agent implementations."""
 
-    next_ID = 1
+    next_ID: AgentID = 1
 
     @classmethod
-    def generate_new_ID(cls):
-        ID = Agent.next_ID
+    def generate_new_ID(cls) -> AgentID:
+        ID: AgentID = Agent.next_ID
         Agent.next_ID += 1
         return ID
 
-    def __init__(self, location: Position, heading: float=0, color=None, map=None) -> None:
+    def __init__(self) -> None:
         """
         `location`: (x, y) coordinates of the agent
         `heading`: heading of the agent in degrees, where 0 is up, -90 is left and 90 is right
@@ -35,11 +35,11 @@ class Agent(metaclass=ABCMeta):
         self._world = None
 
         # pretty colours!
-        self.color = color if color else (1.0, 1.0, 1.0)
+        self.color = (1.0, 1.0, 1.0)
 
         # movement stuff
-        self.location: Position = location
-        self.heading: float = heading
+        self.location: Position = None
+        self.heading: float = 0
         self.move_speed: float = 1.4
         self.view_range: float = 6.0
         self.view_angle: float = 45.0
@@ -49,10 +49,8 @@ class Agent(metaclass=ABCMeta):
         self._turn_target: float = 0
 
         # vision stuff
-        assert map is not None
-        self.map: vision.MapView = vision.MapView(map)
-        self._last_tile: Tuple[int, int] = (int(self.location.x), int(self.location.y))
-        self._update_vision(force=True)
+        self.map: vision.MapView = None
+        self._last_tile: Tuple[int, int] = None
 
         # for collision detection
         self._width = 0.9
@@ -61,6 +59,30 @@ class Agent(metaclass=ABCMeta):
         # communication stuff
         self._message_queue_in = []
         self._message_queue_out = []
+
+    def setup(self, world):
+        self._world = world
+
+        # init mapview
+        self.map = vision.MapView(self._world.map)
+
+        # pick entry point
+        start = self.on_pick_start()
+        # start = (int(start.x), int(start.y))
+        # # must be on the map
+        # if start.x < 0 or start.x >= self.map.width or start.y < 0 or start.y >= self.map.height:
+        #     raise Exception(f"Starting position for Agent {self.ID} is not on the map.")
+        # # must be along the outer edge
+        # if (start.x != 0 and start.x != self.map.width - 1) or (start.y != 0 and start.y != self.map.height - 1):
+        #     raise Exception(f"Starting position for Agent {self.ID} is not along the outer edge.")
+        # found a valid starting location!
+        self.location = Position(start[0], start[1])
+
+        # to track when to update the vision
+        self._last_tile = (int(self.location.x), int(self.location.y))
+
+        # and finally run the custom agent setup code
+        self.on_setup()
 
     def log(self, *args):
         print(f"logging (agent {self.ID}):", *args)
@@ -96,7 +118,7 @@ class Agent(metaclass=ABCMeta):
     def turn_to_point(self, target: vmath.Vector2):
         diff = target - self.location
         if diff.length > 1e-5:
-        # try:
+            # try:
             angle = vmath.Vector2(0, 1).angle(diff, unit='deg')
             self.turn_to(angle if diff.x > 0 else -angle)
         # except ZeroDivisionError as e:
@@ -170,7 +192,12 @@ class Agent(metaclass=ABCMeta):
         self._message_queue_out = []
 
     @abstractmethod
-    def setup(self) -> None:
+    def on_setup(self) -> None:
+        pass
+
+    @abstractmethod
+    def on_pick_start(self) -> Tuple[float, float]:
+        """ Must return a valid starting position for the agent """
         pass
 
     @abstractmethod
@@ -201,15 +228,15 @@ class Agent(metaclass=ABCMeta):
 
 # TODO: implement sentry tower
 class GuardAgent(Agent):
-    def __init__(self, location: Position, heading: float=0, color=None, map: vision.MapView=None) -> None:
-        color = color if color else (0.0, 1.0, 0.0)
-        super().__init__(location, heading, color, map)
+    def __init__(self) -> None:
+        super().__init__()
+        self.color = (0.0, 1.0, 0.0)
         self.view_range: float = 6.0
 
 
 # TODO: implement sprinting
 class IntruderAgent(Agent):
-    def __init__(self, location: Position, heading: float=0, color=None, map: vision.MapView=None) -> None:
-        color = color if color else (1.0, 0.0, 0.0)
-        super().__init__(location, heading, color, map)
+    def __init__(self) -> None:
+        super().__init__()
+        self.color = (1.0, 0.0, 0.0)
         self.view_range: float = 7.5

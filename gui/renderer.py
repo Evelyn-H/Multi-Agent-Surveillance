@@ -270,13 +270,13 @@ class Viewport:
         # self.lock(-100, 300, 0, 200)
 
     def lock(self, left, right, bottom, top):
-        if self.left < left:
+        if left and self.left < left:
             self.center.x += left - self.left
-        if self.right > right:
+        if right and self.right > right:
             self.center.x += right - self.right
-        if self.bottom < bottom:
+        if bottom and self.bottom < bottom:
             self.center.y += bottom - self.bottom
-        if self.top > top:
+        if top and self.top > top:
             self.center.y += top - self.top
 
     def __str__(self):
