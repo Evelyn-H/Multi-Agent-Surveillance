@@ -18,6 +18,18 @@ class MapView(pathfinding.Graph):
         # fog-of-war map
         self.fog = np.zeros((self._map.size[0], self._map.size[1]), dtype=np.bool)
 
+    @property
+    def size(self):
+        return self._map.size
+
+    @property
+    def width(self):
+        return self._map.size[0]
+
+    @property
+    def height(self):
+        return self._map.size[1]
+
     def _reveal_all(self):
         self.fog = np.ones((self._map.size[0], self._map.size[1]), dtype=np.bool)
 

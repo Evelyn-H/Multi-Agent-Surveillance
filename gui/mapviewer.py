@@ -18,7 +18,9 @@ class MapViewer(renderer.WindowComponent):
         self.world = self.parent.world
 
         # self.viewport = renderer.Viewport(-50 * self.parent.ASPECT_RATIO, 250 * self.parent.ASPECT_RATIO, -50, 250)
-        self.viewport = renderer.Viewport(100, 100, 250 * self.parent.ASPECT_RATIO, 250)
+        w = self.world.map.size[0]
+        h = self.world.map.size[1]
+        self.viewport = renderer.Viewport(w/2, h/2, w * 1.2 * self.parent.ASPECT_RATIO, w * 1.2)
 
         # variables to store rendering objects
         self.tiles_vbo = None

@@ -102,3 +102,39 @@ class Map:
         if y0 > y1:
             y0, y1 = y1, y0
         self.vision_modifier[x0:x1 + 1, y0:y1 + 1] = max(0, min(value, 1.0))
+
+
+class MapGenerator:
+    @classmethod
+    def random(cls, size):
+        m = Map(size=size)
+
+        # percentage of wall tiles to add
+        wall_ratio = 0.02
+        # percentage of low vision tiles to add
+        low_vis_ratio = 0.02
+        # number of targets and towers to add
+        num_targets = 4
+        num_towers = 10
+
+        for _ in range(int(wall_ratio * m.size[0] * m.size[1])):
+            x, y = np.random.randint(0, m.size[0], size=2)
+            m.walls[x][y] = True
+
+        for _ in range(int(low_vis_ratio * m.size[0] * m.size[1])):
+            x, y = np.random.randint(0, m.size[0], size=2)
+            m.vision_modifier[x][y] = np.random.rand() * 0.75 + 0.25
+
+        for _ in range(num_targets):
+            x, y = np.random.randint(0, m.size[0], size=2)
+            m.targets.append(Position(x, y))
+
+        for _ in range(num_towers):
+            x, y = np.random.randint(0, m.size[0], size=2)
+            m.towers.append(Position(x, y))
+
+        # for _ in range(10):
+        #     x, y = np.random.randint(0, m.size[0], size=2)
+        #     m.markers.append(Marker(MarkerType.MAGENTA, Position(x, y)))
+
+        return m

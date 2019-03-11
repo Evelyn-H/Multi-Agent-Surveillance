@@ -25,8 +25,8 @@ class World:
         # to keep track of how many ticks have passed:
         self.time_ticks = 0
 
-    def add_agent(self, agent):
-        agent._world = self
+    def add_agent(self, agent_type):
+        agent = agent_type()
         self.agents[agent.ID] = agent
 
     def transmit_message(self, message):
@@ -106,7 +106,7 @@ class World:
 
     def setup(self):
         for ID, agent in self.agents.items():
-            agent.setup()
+            agent.setup(world=self)
 
     def tick(self):
         """ Execute one tick / frame """
