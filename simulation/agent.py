@@ -62,6 +62,9 @@ class Agent(metaclass=ABCMeta):
         self._message_queue_in = []
         self._message_queue_out = []
 
+    def log(self, *args):
+        print(f"logging (agent {self.ID}):", *args)
+
     def send_message(self, target: AgentID, message: str) -> None:
         if target == self.ID:
             print("Agent Warning: Can't send message to yourself")
@@ -75,8 +78,12 @@ class Agent(metaclass=ABCMeta):
         ...
 
     @property
-    def current_time(self):
-        return self._world.time
+    def time_ticks(self):
+        return self._world.time_ticks
+
+    @property
+    def time_seconds(self):
+        return self._world.time_ticks * self._world.TIME_PER_TICK
 
     def turn(self, target_angle: float):
         """ Turn relative to current heading """
@@ -88,8 +95,13 @@ class Agent(metaclass=ABCMeta):
 
     def turn_to_point(self, target: vmath.Vector2):
         diff = target - self.location
-        angle = vmath.Vector2(0, 1).angle(diff, unit='deg')
-        self.turn_to(angle if diff.x > 0 else -angle)
+        if diff.length > 1e-5:
+        # try:
+            angle = vmath.Vector2(0, 1).angle(diff, unit='deg')
+            self.turn_to(angle if diff.x > 0 else -angle)
+        # except ZeroDivisionError as e:
+        else:
+            self.turn_to(self.heading)
 
     def move(self, distance):
         self._move_target = distance
@@ -98,11 +110,11 @@ class Agent(metaclass=ABCMeta):
     def turn_remaining(self) -> float:
         a = self._turn_target - self.heading
         a = (a + 180) % 360 - 180
-        return 0 if math.isclose(a, 0.0, abs_tol=1e-9) else a
+        return 0 if math.isclose(a, 0.0, abs_tol=1e-6) else a
 
     @property
     def move_remaining(self) -> float:
-        return 0 if math.isclose(self._move_target, 0.0, abs_tol=1e-9) else self._move_target
+        return 0 if math.isclose(self._move_target, 0.0, abs_tol=1e-6) else self._move_target
 
     def _process_movement(self):
         """ Executes the last movement command """
@@ -116,15 +128,19 @@ class Agent(metaclass=ABCMeta):
             self.location.move(distance, angle=self.heading)
             self._move_target -= distance
 
-    def _update_vision(self, force=False):
+    def _update_vision(self, force=False) -> bool:
         current_tile = (int(self.location.x), int(self.location.y))
         if force or self._last_tile != current_tile:
             self._last_tile = current_tile
             self.map._reveal_circle(current_tile[0], current_tile[1], self.view_range)
+            return True
+        return False
 
     def tick(self, noises: List['world.NoiseEvent']):
         # process vision
-        self._update_vision()
+        has_updated = self._update_vision(force=(self.time_ticks == 0))
+        if has_updated:
+            self.on_vision_update()
 
         # noises
         for noise in noises:
@@ -155,6 +171,11 @@ class Agent(metaclass=ABCMeta):
 
     @abstractmethod
     def setup(self) -> None:
+        pass
+
+    @abstractmethod
+    def on_vision_update(self) -> None:
+        """ Called when vision is updated """
         pass
 
     @abstractmethod

@@ -15,12 +15,16 @@ class SimpleGuard(GuardAgent):
 
     def on_message(self, message: world.Message) -> None:
         """ Message handler, will be called before `on_tick` """
-        print(f'agent {message.target} received message from agent {message.source} on tick {self.current_time}: {message.message}')
+        print(f'agent {message.target} received message from agent {message.source} on tick {self.time_ticks}: {message.message}')
 
     def on_collide(self) -> None:
         """ Collision handler """
         self.turn(20 * (1 if random.random() < 0.5 else -1))
         self.move(5)
+
+    def on_vision_update(self) -> None:
+        """ Called when vision is updated """
+        pass
 
     def on_tick(self) -> None:
         """ Agent logic goes here """
@@ -50,14 +54,18 @@ class PathfindingGuard(GuardAgent):
         if self.turn_remaining == 0 and self.move_remaining == 0:
             self.path = self.map.find_path(self.location, (100, 100))
 
+    def on_vision_update(self) -> None:
+        """ Called when vision is updated """
+        self.path = self.map.find_path(self.location, (100, 100))
+        self.path = self.path[1:]  # remove starting node
+
     def on_tick(self) -> None:
         """ Agent logic goes here """
-        if not self.path:
-            self.path = self.map.find_path(self.location, (100, 100))
 
-        if self.move_remaining == 0:
+        if self.path and self.move_remaining == 0:
             next_pos = self.path[0]
             self.turn_to_point(next_pos)
+            # self.log(self.location, self.path[0], self.path[1], self.turn_remaining)
             # if self.turn_remaining == 0:
             self.move((next_pos - self.location).length)
             self.path = self.path[1:]

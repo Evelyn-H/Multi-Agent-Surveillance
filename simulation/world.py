@@ -23,7 +23,7 @@ class World:
         self.agents: Dict[AgentID, Agent] = dict()
 
         # to keep track of how many ticks have passed:
-        self.time = 0
+        self.time_ticks = 0
 
     def add_agent(self, agent):
         agent._world = self
@@ -115,7 +115,7 @@ class World:
         self._collision_check()
 
         # and up the counter
-        self.time += 1
+        self.time_ticks += 1
 
 
 class MarkerType(Enum):

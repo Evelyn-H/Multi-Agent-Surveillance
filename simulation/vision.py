@@ -77,15 +77,30 @@ class MapView(pathfinding.Graph):
     def neighbors(self, node):
         """ Implements abstract method `neighbors` from `Graph` """
         (x, y) = node
-        # NESW only
-        # results = [(x + 1, y), (x, y - 1), (x - 1, y), (x, y + 1)]
-        # with diagonals
-        results = [(x + 1, y), (x + 1, y - 1), (x, y - 1), (x - 1, y - 1), (x - 1, y), (x - 1, y + 1), (x, y + 1), (x + 1, y + 1)]
-        # if (x + y) % 2 == 0:
-        #     results.reverse()  # aesthetics
-        results = filter(lambda node: self._map.in_bounds(*node), results)
-        results = filter(lambda node: not (self.is_revealed(*node) and self._map.is_wall(*node)), results)
-        return results
+
+        def is_valid(node):
+            return self._map.in_bounds(*node) and (not (self.is_revealed(*node) and self._map.is_wall(*node)))
+
+        corners = []
+
+        top = is_valid((x, y + 1))
+        right = is_valid((x + 1, y))
+        bottom = is_valid((x, y - 1))
+        left = is_valid((x - 1, y))
+
+        if top and left:
+            corners.append((x - 1, y + 1))
+        if top and right:
+            corners.append((x + 1, y + 1))
+        if bottom and left:
+            corners.append((x - 1, y - 1))
+        if bottom and right:
+            corners.append((x + 1, y - 1))
+
+        nodes = [(x + 1, y), (x, y - 1), (x - 1, y), (x, y + 1)] + corners
+        nodes = filter(is_valid, nodes)
+
+        return nodes
 
     def cost(self, from_node, to_node):
         """ Implements abstract method `cost` from `Graph` """
@@ -125,7 +140,6 @@ class MapView(pathfinding.Graph):
         path = list(map(lambda node: vmath.Vector2(node[0] + 0.5, node[1] + 0.5), path))
 
         return path
-
 
     # vvvv copy methods from map.Map vvvv
 
