@@ -12,6 +12,7 @@ numpy = "*"
 pyglet-ffmpeg = "*"
 pydbg = "*"
 vectormath = "*"
+json-tricks = "*"
 
 
 [dev-packages]

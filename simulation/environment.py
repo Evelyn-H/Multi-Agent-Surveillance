@@ -1,5 +1,5 @@
 import numpy as np
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 from .util import Position
 
@@ -46,6 +46,36 @@ class Map:
         self.towers: List[Position] = towers if towers else []
         self.gates: List[Gate] = gates if gates else []
         self.markers: List['world.Marker'] = markers if markers else []
+
+    def to_dict(self) -> Dict:
+        return {
+            'size': self.size,
+            # objects on map
+            'targets': [[t.x, t.y] for t in self.targets],
+            'towers': [[t.x, t.y] for t in self.towers],
+            'gates': self.gates,
+            'markers': self.markers,
+            # np arrays
+            'walls': self.walls,
+            'vision_modifier': self.vision_modifier,
+        }
+
+    @classmethod
+    def from_dict(self, data) -> 'Map':
+        m = Map(data['size'], data['targets'], data['gates'], data['towers'], data['markers'])
+        m.targets = list(map(lambda x: Position(x[0], x[1]), m.targets))
+        m.towers = list(map(lambda x: Position(x[0], x[1]), m.towers))
+        m.walls = data['walls']
+        m.vision_modifier = data['vision_modifier']
+        return m
+
+    @property
+    def width(self):
+        return self.size[0]
+
+    @property
+    def height(self):
+        return self.size[1]
 
     def in_bounds(self, x: int, y: int) -> bool:
         return x >= 0 and y >= 0 and x < self.size[0] and y < self.size[1]
@@ -136,5 +166,60 @@ class MapGenerator:
         # for _ in range(10):
         #     x, y = np.random.randint(0, m.size[0], size=2)
         #     m.markers.append(Marker(MarkerType.MAGENTA, Position(x, y)))
+
+        return m
+
+    @classmethod
+    def maze(cls, size):
+        from numpy.random import randint as rand
+
+        # from: https://en.wikipedia.org/wiki/Maze_generation_algorithm#Python_code_example
+        def maze_prims(width=81, height=51, complexity=.75, density=.75):
+            # Only odd shapes
+            shape = ((height // 2) * 2 + 1, (width // 2) * 2 + 1)
+            # Adjust complexity and density relative to maze size
+            complexity = int(complexity * (5 * (shape[0] + shape[1])))  # number of components
+            density = int(density * ((shape[0] // 2) * (shape[1] // 2)))  # size of components
+            # Build actual maze
+            Z = np.zeros(shape, dtype=bool)
+            # Fill borders
+            Z[0, :] = Z[-1, :] = 1
+            Z[:, 0] = Z[:, -1] = 1
+            # Make aisles
+            for i in range(density):
+                x, y = rand(0, shape[1] // 2) * 2, rand(0, shape[0] // 2) * 2  # pick a random position
+                Z[y, x] = 1
+                for j in range(complexity):
+                    neighbours = []
+                    if x > 1:
+                        neighbours.append((y, x - 2))
+                    if x < shape[1] - 2:
+                        neighbours.append((y, x + 2))
+                    if y > 1:
+                        neighbours.append((y - 2, x))
+                    if y < shape[0] - 2:
+                        neighbours.append((y + 2, x))
+                    if len(neighbours):
+                        y_, x_ = neighbours[rand(0, len(neighbours) - 1)]
+                        if Z[y_, x_] == 0:
+                            Z[y_, x_] = 1
+                            Z[y_ + (y - y_) // 2, x_ + (x - x_) // 2] = 1
+                            x, y = x_, y_
+            return Z
+
+        z = maze_prims(size[0], size[1], complexity=1, density=1)
+        # z = maze_prims(size[0] // 2, size[1] // 2, complexity=1, density=1)
+        m = Map(size=size)
+        for x in range(0, m.size[0]):
+            for y in range(0, m.size[1]):
+                if z[x, y]:
+                    m.walls[x][y] = True
+        # for x in range(0, m.size[0], 2):
+            # for y in range(0, m.size[1], 2):
+                # if z[x // 2, y // 2]:
+                #     m.walls[x][y] = True
+                #     m.walls[x + 1][y] = True
+                #     m.walls[x][y + 1] = True
+                #     m.walls[x + 1][y + 1] = True
 
         return m
