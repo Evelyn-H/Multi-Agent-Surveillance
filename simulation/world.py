@@ -26,16 +26,18 @@ class World:
         # to keep track of how many ticks have passed:
         self.time_ticks = 0
 
-    def to_file(self, filename) -> None:
+    def to_file(self, name) -> None:
         data = {
             'agents': [agent.__class__.__name__ for ID, agent in self.agents.items()],
             'map': self.map.to_dict()
         }
+        filename = f'saves/{name}.json'
         with open(filename, mode='w') as file:
-            jt.dump(data, file)
+            jt.dump(data, file, indent=4)
 
     @classmethod
-    def from_file(cls, filename) -> 'World':
+    def from_file(cls, name) -> 'World':
+        filename = f'saves/{name}.json'
         with open(filename, mode='r') as file:
             data = jt.load(file)
 

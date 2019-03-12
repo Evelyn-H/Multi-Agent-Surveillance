@@ -51,8 +51,8 @@ class Map:
         return {
             'size': self.size,
             # objects on map
-            'targets': self.targets,
-            'towers': self.towers,
+            'targets': [[t.x, t.y] for t in self.targets],
+            'towers': [[t.x, t.y] for t in self.towers],
             'gates': self.gates,
             'markers': self.markers,
             # np arrays
@@ -63,8 +63,8 @@ class Map:
     @classmethod
     def from_dict(self, data) -> 'Map':
         m = Map(data['size'], data['targets'], data['gates'], data['towers'], data['markers'])
-        m.targets = list(map(lambda x: Position(x), m.targets))
-        m.towers = list(map(lambda x: Position(x), m.towers))
+        m.targets = list(map(lambda x: Position(x[0], x[1]), m.targets))
+        m.towers = list(map(lambda x: Position(x[0], x[1]), m.towers))
         m.walls = data['walls']
         m.vision_modifier = data['vision_modifier']
         return m

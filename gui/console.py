@@ -36,7 +36,9 @@ class Console(renderer.WindowComponent):
             try:
                 output = self.commands[name](*args)
             except Exception as e:
+                print('console error:', repr(e))
                 output = "Command cound not be executed"
+                # raise e
             # and print output
             if output:
                 self.println(f"{output}")
