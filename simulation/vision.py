@@ -33,7 +33,7 @@ class MapView(pathfinding.Graph):
     def _reveal_all(self):
         self.fog = np.ones((self._map.size[0], self._map.size[1]), dtype=np.bool)
 
-    def _reveal_circle(self, x: int, y: int, radius: float):
+    def _reveal_circle(self, x: int, y: int, radius: float, view_angle: float, heading: float):
         # center = vmath.Vector2(x, y)
         # min_x = max(0, int(x - radius - 1))
         # max_x = min(self._map.size[0], int(x + radius + 1))
@@ -55,6 +55,11 @@ class MapView(pathfinding.Graph):
 
         # assign value of 1 to those points where `dist < radius`
         z[np.where(dist <= radius)] = 1
+
+        angle = np.arctan2((Y - width // 2), (X - width // 2)) * 180 / np.pi
+        angle = (angle - heading + 180) % 360 - 180
+        z[np.where(angle > view_angle / 2)] = 0
+        z[np.where(angle < -view_angle / 2)] = 0
 
         # `paste` and `paste_slices` taken from:
         # https://stackoverflow.com/a/50692782

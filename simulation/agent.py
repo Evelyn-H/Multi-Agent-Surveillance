@@ -80,6 +80,7 @@ class Agent(metaclass=ABCMeta):
 
         # to track when to update the vision
         self._last_tile = (int(self.location.x), int(self.location.y))
+        self._last_heading = self.heading
 
         # and finally run the custom agent setup code
         self.on_setup()
@@ -152,9 +153,10 @@ class Agent(metaclass=ABCMeta):
 
     def _update_vision(self, force=False) -> bool:
         current_tile = (int(self.location.x), int(self.location.y))
-        if force or self._last_tile != current_tile:
+        if force or self._last_tile != current_tile or abs(self.heading - self._last_heading) > 5:
             self._last_tile = current_tile
-            self.map._reveal_circle(current_tile[0], current_tile[1], self.view_range)
+            self.map._reveal_circle(current_tile[0], current_tile[1], self.view_range, self.view_angle, self.heading)
+            self._last_heading = self.heading
             return True
         return False
 
