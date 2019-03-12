@@ -60,17 +60,21 @@ class PathfindingGuard(GuardAgent):
 
     def on_collide(self) -> None:
         """ Collision handler """
-        # recalculate path
-        if self.turn_remaining == 0 and self.move_remaining == 0:
-            self.path = self.map.find_path(self.location, (100, 100))
+        pass
 
     def on_vision_update(self) -> None:
         """ Called when vision is updated """
-        self.path = self.map.find_path(self.location, (100, 100))
+        # target = (self.map.width // 2, self.map.height // 2)
+        target = (1, 1)
+        self.path = self.map.find_path(self.location, target)
         self.path = self.path and self.path[1:]  # remove starting node
 
     def on_tick(self) -> None:
         """ Agent logic goes here """
+
+        if not self.path:
+            # self.log('no path')
+            pass
 
         if self.path and self.move_remaining == 0:
             next_pos = self.path[0]

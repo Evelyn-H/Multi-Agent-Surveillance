@@ -6,7 +6,7 @@ from ai import agents
 
 if __name__ == '__main__':
     # init agents and stuff here
-    m = MapGenerator.random(size=(200, 200))
+    m = MapGenerator.maze(size=(50, 50))
 
     world = World(m)
 

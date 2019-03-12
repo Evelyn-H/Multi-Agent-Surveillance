@@ -67,6 +67,16 @@ class World:
                 return None
 
         for ID, agent in self.agents.items():
+            # do a quick bounds check first so they stay on the map
+            if agent.location.x < 0:
+                agent.location.x = 0
+            if agent.location.y < 0:
+                agent.location.y = 0
+            if agent.location.x >= self.map.width:
+                agent.location.x = self.map.width - 0.01
+            if agent.location.y >= self.map.height:
+                agent.location.y = self.map.height - 0.01
+
             # get some values we'll need
             width = agent._width
             x = agent.location.x

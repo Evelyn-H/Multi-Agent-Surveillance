@@ -85,20 +85,24 @@ class MapView(pathfinding.Graph):
             return True
 
     # vvvv pathfinding methods vvvv
+    def is_passable(self, node):
+        if not self._map.in_bounds(*node):
+            return False
+        if self.is_revealed(*node) and self._map.is_wall(*node):
+            return False
+        # we're good!
+        return True
 
     def neighbors(self, node):
         """ Implements abstract method `neighbors` from `Graph` """
         (x, y) = node
 
-        def is_valid(node):
-            return self._map.in_bounds(*node) and (not (self.is_revealed(*node) and self._map.is_wall(*node)))
-
         corners = []
 
-        top = is_valid((x, y + 1))
-        right = is_valid((x + 1, y))
-        bottom = is_valid((x, y - 1))
-        left = is_valid((x - 1, y))
+        top = self.is_passable((x, y + 1))
+        right = self.is_passable((x + 1, y))
+        bottom = self.is_passable((x, y - 1))
+        left = self.is_passable((x - 1, y))
 
         if top and left:
             corners.append((x - 1, y + 1))
@@ -110,7 +114,7 @@ class MapView(pathfinding.Graph):
             corners.append((x + 1, y - 1))
 
         nodes = [(x + 1, y), (x, y - 1), (x - 1, y), (x, y + 1)] + corners
-        nodes = filter(is_valid, nodes)
+        nodes = filter(self.is_passable, nodes)
 
         return nodes
 
@@ -151,8 +155,24 @@ class MapView(pathfinding.Graph):
                 return None
             return list(map(lambda node: vmath.Vector2(node[0] + 0.5, node[1] + 0.5), path))
 
+        # already at target location
         if from_node == to_node:
             return pathify([from_node])
+
+        # target isn't passable
+        if not self.is_passable(to_node):
+            # try the neighbours, sorted by distance from the start
+            n = self.neighbors(to_node)
+            n = sorted(n, key=lambda node: heuristic(from_node, node))
+            n = filter(self.is_passable, n)
+            n = list(n)
+            # do we have a valid neighbor?
+            if len(n) > 0:
+                # if so go there instead
+                to_node = n[0]
+            else:
+                # else we just return no path and skip the A* search
+                return pathify(None)
 
         came_from, cost_so_far = pathfinding.a_star_search(self, from_node, to_node, heuristic)
         path = pathfinding.reconstruct_path(came_from, from_node, to_node)

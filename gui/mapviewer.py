@@ -20,7 +20,7 @@ class MapViewer(renderer.WindowComponent):
         # self.viewport = renderer.Viewport(-50 * self.parent.ASPECT_RATIO, 250 * self.parent.ASPECT_RATIO, -50, 250)
         w = self.world.map.size[0]
         h = self.world.map.size[1]
-        self.viewport = renderer.Viewport(w/2, h/2, w * 1.2 * self.parent.ASPECT_RATIO, w * 1.2)
+        self.viewport = renderer.Viewport(w / 2, h / 2, w * 1.2 * self.parent.ASPECT_RATIO, w * 1.2)
 
         # variables to store rendering objects
         self.tiles_vbo = None
@@ -51,6 +51,10 @@ class MapViewer(renderer.WindowComponent):
 
         # register commands
         self.parent.console.register_command('fow', lambda x: self.set_fog(int(x)))
+
+        # to track mouse motion
+        self.mouse_x = 0
+        self.mouse_y = 0
 
     def set_fog(self, agent=None):
         if agent in self.world.agents:
@@ -174,6 +178,20 @@ class MapViewer(renderer.WindowComponent):
 
         # change back to pixel viewport for the next WindowComponent
         self.parent.set_viewport(0, self.parent.SCREEN_WIDTH, 0, self.parent.SCREEN_HEIGHT)
+
+        # print map position of the cursor
+        location = self.screen_to_map(self.mouse_x, self.mouse_y, round=False)
+        text = f"({location[0]:3.2f}, {location[1]:3.2f})"
+        arcade.draw_lrtb_rectangle_filled(
+            self.parent.SCREEN_WIDTH - 12 * len(text) - 6, self.parent.SCREEN_WIDTH,
+            self.parent.SCREEN_HEIGHT, self.parent.SCREEN_HEIGHT - 24 - 6,
+            color=(0, 0, 0, 192)
+        )
+        arcade.draw_text(text, self.parent.SCREEN_WIDTH - 12 * len(text), self.parent.SCREEN_HEIGHT - 24, arcade.color.WHITE, 16)
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        self.mouse_x = x
+        self.mouse_y = y
 
     def on_key_press(self, key, modifiers):
         # map panning
