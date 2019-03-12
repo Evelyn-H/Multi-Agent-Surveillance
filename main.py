@@ -12,14 +12,13 @@ if __name__ == '__main__':
         world = World.from_file(i)
     # or build a new map
     else:
-        m = MapGenerator.maze(size=(50, 50))
+        m = MapGenerator.maze(size=(51, 51))
 
         world = World(m)
 
         world.add_agent(agents.SimpleGuard)
         world.add_agent(agents.SimpleGuard)
         world.add_agent(agents.PathfindingGuard)
-
 
     # initialise the world
     world.setup()

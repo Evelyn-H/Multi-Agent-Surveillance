@@ -170,6 +170,10 @@ class MapGenerator:
         return m
 
     @classmethod
+    def blank(cls, size):
+        return Map(size=size)
+
+    @classmethod
     def maze(cls, size):
         from numpy.random import randint as rand
 
