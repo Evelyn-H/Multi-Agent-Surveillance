@@ -56,10 +56,13 @@ class MapView(pathfinding.Graph):
         # assign value of 1 to those points where `dist < radius`
         z[np.where(dist <= radius)] = 1
 
+        # only see in the viewing cone
         angle = np.arctan2((Y - width // 2), (X - width // 2)) * 180 / np.pi
         angle = (angle - heading + 180) % 360 - 180
         z[np.where(angle > view_angle / 2)] = 0
         z[np.where(angle < -view_angle / 2)] = 0
+        # but if it's close enough we can still see it
+        z[np.where(dist <= 1)] = 1.5
 
         # `paste` and `paste_slices` taken from:
         # https://stackoverflow.com/a/50692782
