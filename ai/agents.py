@@ -35,9 +35,9 @@ class SimpleGuard(GuardAgent):
         """ Agent logic goes here """
         # only try to chase intruders, not other guards
         seen_intruders = [a for a in seen_agents if a.is_intruder]
-        if self.other_guards:
+        if seen_intruders:
             # chase!
-            target = self.other_guards[0].location
+            target = seen_intruders[0].location
             self.turn_to_point(target)
             self.move((target - self.location).length)
         else:
