@@ -3,7 +3,39 @@ import math
 import numpy as np
 import vectormath as vmath
 
+from .util import Position
 from . import pathfinding
+import simulation
+
+
+class AgentView:
+    """
+    Implements a wrapper around an agent that only exposes things that can be
+    known when another agent sees it
+    """
+
+    def __init__(self, agent):
+        self._agent = agent
+
+    @property
+    def ID(self):
+        return self._agent.ID
+
+    @property
+    def location(self):
+        return Position(self._agent.location)
+
+    @property
+    def heading(self):
+        return self._agent.heading
+
+    @property
+    def is_guard(self):
+        return isinstance(self._agent, simulation.agent.GuardAgent)
+
+    @property
+    def is_intruder(self):
+        return isinstance(self._agent, simulation.agent.IntruderAgent)
 
 
 class MapView(pathfinding.Graph):
@@ -62,7 +94,7 @@ class MapView(pathfinding.Graph):
         z[np.where(angle > view_angle / 2)] = 0
         z[np.where(angle < -view_angle / 2)] = 0
         # but if it's close enough we can still see it
-        z[np.where(dist <= 1)] = 1.5
+        z[np.where(dist <= 1.5)] = 1
 
         # `paste` and `paste_slices` taken from:
         # https://stackoverflow.com/a/50692782

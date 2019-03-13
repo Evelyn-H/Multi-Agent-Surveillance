@@ -145,6 +145,7 @@ class Agent(metaclass=ABCMeta):
         if not math.isclose(self._turn_target, self.heading):
             remaining = self.turn_remaining
             self.heading += math.copysign(min(world.World.TIME_PER_TICK * self.turn_speed, abs(remaining)), remaining)
+            self.heading = (self.heading + 180) % 360 - 180
         # process walking/running
         if self._move_target != 0:
             distance = math.copysign(min(world.World.TIME_PER_TICK * self.move_speed, abs(self._move_target)), self._move_target)
@@ -160,7 +161,7 @@ class Agent(metaclass=ABCMeta):
             return True
         return False
 
-    def tick(self, noises: List['world.NoiseEvent']):
+    def tick(self, seen_agents: List['vision.AgentView'], noises: List['world.NoiseEvent']):
         # process vision
         has_updated = self._update_vision(force=(self.time_ticks == 0))
         if has_updated:
@@ -181,7 +182,7 @@ class Agent(metaclass=ABCMeta):
             self.on_collide()
 
         # and logic
-        self.on_tick()
+        self.on_tick(seen_agents)
 
         # reset collision tracking
         self._has_collided = False
@@ -223,7 +224,7 @@ class Agent(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def on_tick(self) -> None:
+    def on_tick(self, seen_agents: List['vision.AgentView']) -> None:
         """ Agent logic goes here """
         pass
 
@@ -234,6 +235,10 @@ class GuardAgent(Agent):
         super().__init__()
         self.color = (0.0, 1.0, 0.0)
         self.view_range: float = 6.0
+
+    def setup(self, world):
+        super().setup(world)
+        self.other_guards = [vision.AgentView(guard) for ID, guard in self._world.guards.items() if not ID == self.ID]
 
 
 # TODO: implement sprinting
@@ -251,7 +256,7 @@ class IntruderAgent(Agent):
         """ Called once when the agent is captured """
         pass
 
-    def tick(self, noises: List['world.NoiseEvent']):
+    def tick(self, seen_agents, noises):
         if self.is_captured:
             # make sure we only run the `on_captured` handler once
             if not self._prev_is_captured:
@@ -262,4 +267,4 @@ class IntruderAgent(Agent):
             return
         else:
             # if we're not captured then just proceed as usual
-            super().tick(noises)
+            super().tick(seen_agents, noises)

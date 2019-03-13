@@ -4,6 +4,7 @@ from enum import Enum
 import vectormath as vmath
 import json_tricks as jt
 
+import simulation
 from .environment import Map
 from .agent import Agent, AgentID, GuardAgent, IntruderAgent
 from .util import Position
@@ -193,8 +194,21 @@ class World:
         Execute one tick / frame
         return: Whether or not the simulation is finished
         """
+        # find all events for every agent and then run the agent code
         for ID, agent in self.agents.items():
-            agent.tick(noises=[])
+            # check if we can see any other agents
+            visible_agents = []
+            for other_ID, other_agent in self.agents.items():
+                if other_ID == ID:
+                    continue
+                d = other_agent.location - agent.location
+                angle_diff = abs((-math.degrees(math.atan2(d.y, d.x)) + 90 - agent.heading + 180) % 360 - 180)
+                if (d.length <= agent.view_range and angle_diff <= agent.view_angle) \
+                        or d.length <= 1.5:
+                    # create a new `AgentView` event
+                    visible_agents.append(simulation.vision.AgentView(other_agent))
+            # and run the agent code
+            agent.tick(seen_agents=visible_agents, noises=[])
         self._collision_check()
 
         all_captured = self._capture_check()

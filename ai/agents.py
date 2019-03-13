@@ -31,14 +31,22 @@ class SimpleGuard(GuardAgent):
         """ Called when vision is updated """
         pass
 
-    def on_tick(self) -> None:
+    def on_tick(self, seen_agents) -> None:
         """ Agent logic goes here """
-        # simple square patrol
-        if self.turn_remaining == 0 and self.move_remaining == 0:
-            self.turn(90)
-            self.move(20)
-            if self.ID != 1:
-                self.send_message(1, "I just turned!")
+        # only try to chase intruders, not other guards
+        seen_intruders = [a for a in seen_agents if a.is_intruder]
+        if self.other_guards:
+            # chase!
+            target = self.other_guards[0].location
+            self.turn_to_point(target)
+            self.move((target - self.location).length)
+        else:
+            # simple square patrol
+            if self.turn_remaining == 0 and self.move_remaining == 0:
+                self.turn(90)
+                self.move(20)
+                if self.ID != 1:
+                    self.send_message(1, "I just turned!")
 
 
 class PathfindingIntruder(IntruderAgent):
@@ -73,7 +81,7 @@ class PathfindingIntruder(IntruderAgent):
         self.path = self.map.find_path(self.location, target)
         self.path = self.path and self.path[1:]  # remove starting node
 
-    def on_tick(self) -> None:
+    def on_tick(self, seen_agents) -> None:
         """ Agent logic goes here """
 
         if not self.path:
