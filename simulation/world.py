@@ -5,7 +5,7 @@ import vectormath as vmath
 import json_tricks as jt
 
 from .environment import Map
-from .agent import Agent, AgentID
+from .agent import Agent, AgentID, GuardAgent, IntruderAgent
 from .util import Position
 
 
@@ -77,6 +77,14 @@ class World:
     def add_agent(self, agent_type):
         agent = agent_type()
         self.agents[agent.ID] = agent
+
+    @property
+    def guards(self):
+        return {ID: agent for ID, agent in self.agents.items() if isinstance(agent, GuardAgent)}
+
+    @property
+    def intruders(self):
+        return {ID: agent for ID, agent in self.agents.items() if isinstance(agent, IntruderAgent)}
 
     def transmit_message(self, message):
         self.agents[message.target]._message_queue_in.append(message)
@@ -163,18 +171,41 @@ class World:
                 agent.location.y = collision.y
                 agent._has_collided |= True
 
+    def _capture_check(self) -> bool:
+        """
+        return: Whether or not all the intruders have been captured
+        """
+        # see if any intruders will be captured now
+        for ID_intruder, intruder in self.intruders.items():
+            for ID_guard, guard in self.guards.items():
+                if (intruder.location - guard.location).length < 0.5:
+                    intruder.is_captured = True
+
+        # check if all intruders are captured
+        return all((intruder.is_captured for ID, intruder in self.intruders.items()))
+
     def setup(self):
         for ID, agent in self.agents.items():
             agent.setup(world=self)
 
-    def tick(self):
-        """ Execute one tick / frame """
+    def tick(self) -> bool:
+        """
+        Execute one tick / frame
+        return: Whether or not the simulation is finished
+        """
         for ID, agent in self.agents.items():
             agent.tick(noises=[])
         self._collision_check()
 
+        all_captured = self._capture_check()
+        if all_captured:
+            # we're done
+            return True
+
         # and up the counter
         self.time_ticks += 1
+        # keep going...
+        return False
 
 
 class MarkerType(Enum):

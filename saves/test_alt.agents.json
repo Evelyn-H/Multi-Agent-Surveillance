@@ -1,7 +1,7 @@
 {
     "agents": [
-        "PathfindingGuard",
-        "PathfindingGuard",
-        "PathfindingGuard"
+        "PathfindingIntruder",
+        "PathfindingIntruder",
+        "PathfindingIntruder"
     ]
 }

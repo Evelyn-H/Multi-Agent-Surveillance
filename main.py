@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
         world.add_agent(agents.SimpleGuard)
         world.add_agent(agents.SimpleGuard)
-        world.add_agent(agents.PathfindingGuard)
+        world.add_agent(agents.PathfindingIntruder)
 
     # initialise the world
     world.setup()

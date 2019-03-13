@@ -242,3 +242,24 @@ class IntruderAgent(Agent):
         super().__init__()
         self.color = (1.0, 0.0, 0.0)
         self.view_range: float = 7.5
+        # are we captured yet?
+        self.is_captured = False
+        self._prev_is_captured = False
+
+    @abstractmethod
+    def on_captured(self) -> None:
+        """ Called once when the agent is captured """
+        pass
+
+    def tick(self, noises: List['world.NoiseEvent']):
+        if self.is_captured:
+            # make sure we only run the `on_captured` handler once
+            if not self._prev_is_captured:
+                self.on_captured()
+                self._prev_is_captured = True
+
+            # don't run any other agent code if we're captured
+            return
+        else:
+            # if we're not captured then just proceed as usual
+            super().tick(noises)

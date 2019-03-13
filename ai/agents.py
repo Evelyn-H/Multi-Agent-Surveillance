@@ -41,7 +41,7 @@ class SimpleGuard(GuardAgent):
                 self.send_message(1, "I just turned!")
 
 
-class PathfindingGuard(GuardAgent):
+class PathfindingIntruder(IntruderAgent):
     def on_setup(self):
         """ Agent setup """
         self.color = (1, 1, 0)  # yellow
@@ -50,6 +50,10 @@ class PathfindingGuard(GuardAgent):
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
         return (random.random() * self.map.width, random.random() * self.map.height)
+
+    def on_captured(self) -> None:
+        """ Called once when the agent is captured """
+        self.log('I\'ve been captured... :(')
 
     def on_noise(self, noise: world.NoiseEvent) -> None:
         """ Noise handler, will be called before `on_tick` """
