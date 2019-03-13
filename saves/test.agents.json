@@ -1,0 +1,7 @@
+{
+    "agents": [
+        "SimpleGuard",
+        "SimpleGuard",
+        "PathfindingGuard"
+    ]
+}

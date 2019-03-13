@@ -26,31 +26,52 @@ class World:
         # to keep track of how many ticks have passed:
         self.time_ticks = 0
 
-    def to_file(self, name) -> None:
-        data = {
-            'agents': [agent.__class__.__name__ for ID, agent in self.agents.items()],
-            'map': self.map.to_dict()
-        }
-        filename = f'saves/{name}.json'
+    def save_map(self, name) -> None:
+        data = {'map': self.map.to_dict()}
+
+        filename = f'saves/{name}.map.json'
         with open(filename, mode='w') as file:
             jt.dump(data, file, indent=4)
 
+    def save_agents(self, name) -> None:
+        data = {'agents': [agent.__class__.__name__ for ID, agent in self.agents.items()]}
+
+        filename = f'saves/{name}.agents.json'
+        with open(filename, mode='w') as file:
+            jt.dump(data, file, indent=4)
+
+    def to_file(self, name, save_agents=True) -> None:
+        self.save_map(name)
+        if save_agents:
+            self.save_agents(name)
+
     @classmethod
-    def from_file(cls, name) -> 'World':
-        filename = f'saves/{name}.json'
+    def load_map(cls, name) -> 'World':
+        filename = f'saves/{name}.map.json'
         with open(filename, mode='r') as file:
             data = jt.load(file)
 
         m = Map.from_dict(data['map'])
-        world = World(m)
+        return World(m)
 
+    def load_agents(self, name) -> None:
+        filename = f'saves/{name}.agents.json'
+        with open(filename, mode='r') as file:
+            data = jt.load(file)
+
+        # add agents
         import importlib
         for agent_name in data['agents']:
             # get class by string
             agent_class = getattr(importlib.import_module("ai.agents"), agent_name)
             # and add it to the world
-            world.add_agent(agent_class)
+            self.add_agent(agent_class)
 
+    @classmethod
+    def from_file(cls, name, load_agents=True) -> 'World':
+        world = cls.load_map(name)
+        if load_agents:
+            world.load_agents(name)
         return world
 
     def add_agent(self, agent_type):

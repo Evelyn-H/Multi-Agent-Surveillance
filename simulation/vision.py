@@ -140,7 +140,7 @@ class MapView(pathfinding.Graph):
 
         # double cost for "invisible" tiles
         if self.is_revealed(*to_node):
-            return 2 * multiplier
+            return 1 * multiplier
         else:
             return 1 * multiplier
 
