@@ -3,6 +3,7 @@ from typing import List, Tuple, Dict
 
 from .util import Position
 
+
 class Gate:
     """
     Superclass for doors and windows and such,

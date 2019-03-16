@@ -9,7 +9,6 @@ import simulation
 from .environment import Map
 from .agent import Agent, AgentID, GuardAgent, IntruderAgent
 from .util import Position
-from pickle import NONE
 
 
 class World:
@@ -25,10 +24,6 @@ class World:
     def __init__(self, map: Map):
         self.map: Map = map
         self.agents: Dict[AgentID, Agent] = dict()
-        #Kick off random noises
-        nextEmit = self.nextRandomNoiseTime()
-        timer = threading.Timer(nextEmit*60, self.emitRandomNoise)
-        timer.start() 
 
         # to keep track of how many ticks have passed:
         self.time_ticks = 0
@@ -216,10 +211,12 @@ class World:
             # and run the agent code
             agent.tick(seen_agents=visible_agents, noises=[])
         self._collision_check()
+
         all_captured = self._capture_check()
         if all_captured:
             # we're done
             return True
+
         # and up the counter
         self.time_ticks += 1
         # keep going...
@@ -263,8 +260,8 @@ class Message:
 
 
 class NoiseEvent:
-    """ This should be a singleton (How do I do that in python)
-        Encapsulates a single noise event"""
+    """Encapsulates a single noise event"""
+
     def __init__(self, location: Position) -> None:
         self.location = location
         self.source = None
