@@ -234,7 +234,18 @@ def emitRandomNoise(self, fps):
             posy = random.randint(0,self.map.size[1])
             print("Noise at (",posx,",",posy,")")
 
-
+    def emitRandomNoise(self, fps):
+        #Rate parameter for one 25m^2 is 0.1 per minute -> divide by 60 to get the events per second
+        #Scale up the rate parameter to map size 6*(map_size/25)*2=64 (amount of 25m^2 squares in the map)
+        #I know, that the map size should be dynamic
+        random_events_per_second = (0.1/60)*((self.map.size[0]/25)+(self.map.size[1]/25))
+        chance_to_emit = random_events_per_second / fps
+        if(random.uniform(0, 1) < chance_to_emit):
+            #emit an event here
+            posx = random.randint(0,200)
+            posy = random.randint(0,200)
+            print("Noise at (",posx,",",posy,")")
+    
 class MarkerType(Enum):
     """The different types of markers used for indirect communication"""
     RED = 1

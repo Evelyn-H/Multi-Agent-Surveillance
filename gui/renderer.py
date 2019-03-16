@@ -95,6 +95,9 @@ class GUI(arcade.Window):
             self.world.emitRandomNoise(self.fps)
 
 
+            #check if a noise should be emitted 
+            self.world.emitRandomNoise(self.fps)
+
             # update all components
             for c in self.components:
                 c.update(dt)
