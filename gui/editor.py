@@ -22,6 +22,11 @@ class Editor(renderer.WindowComponent):
         # start coordinate for mouse dragging
         self.start_pos = None  # start location of mouse dragging
 
+        # commands
+        self.parent.console.register_command('save', lambda x: self.parent.world.to_file(x))
+        self.parent.console.register_command('save_map', lambda x: self.parent.world.save_map(x))
+        self.parent.console.register_command('save_agents', lambda x: self.parent.world.save_agents(x))
+
     def on_draw(self):
         def line(i):
             return self.parent.SCREEN_HEIGHT - 24 - 18 * (i + 2)

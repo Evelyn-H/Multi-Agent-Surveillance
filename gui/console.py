@@ -15,6 +15,8 @@ class Console(renderer.WindowComponent):
         # command list
         self.commands: Dict[str, Callable] = {}
 
+        self.register_command('help', lambda _: 'Available commands:\n - ' + '\n - '.join((name for name, func in self.commands.items())))
+
     def register_command(self, name: str, func: Callable):
         self.commands[name] = func
 
@@ -36,7 +38,9 @@ class Console(renderer.WindowComponent):
             try:
                 output = self.commands[name](*args)
             except Exception as e:
+                print('console error:', repr(e))
                 output = "Command cound not be executed"
+                # raise e
             # and print output
             if output:
                 self.println(f"{output}")

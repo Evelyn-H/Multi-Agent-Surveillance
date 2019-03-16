@@ -3,7 +3,39 @@ import math
 import numpy as np
 import vectormath as vmath
 
+from .util import Position
 from . import pathfinding
+import simulation
+
+
+class AgentView:
+    """
+    Implements a wrapper around an agent that only exposes things that can be
+    known when another agent sees it
+    """
+
+    def __init__(self, agent):
+        self._agent = agent
+
+    @property
+    def ID(self):
+        return self._agent.ID
+
+    @property
+    def location(self):
+        return Position(self._agent.location)
+
+    @property
+    def heading(self):
+        return self._agent.heading
+
+    @property
+    def is_guard(self):
+        return isinstance(self._agent, simulation.agent.GuardAgent)
+
+    @property
+    def is_intruder(self):
+        return isinstance(self._agent, simulation.agent.IntruderAgent)
 
 
 class MapView(pathfinding.Graph):
@@ -18,10 +50,22 @@ class MapView(pathfinding.Graph):
         # fog-of-war map
         self.fog = np.zeros((self._map.size[0], self._map.size[1]), dtype=np.bool)
 
+    @property
+    def size(self):
+        return self._map.size
+
+    @property
+    def width(self):
+        return self._map.size[0]
+
+    @property
+    def height(self):
+        return self._map.size[1]
+
     def _reveal_all(self):
         self.fog = np.ones((self._map.size[0], self._map.size[1]), dtype=np.bool)
 
-    def _reveal_circle(self, x: int, y: int, radius: float):
+    def _reveal_circle(self, x: int, y: int, radius: float, view_angle: float, heading: float):
         # center = vmath.Vector2(x, y)
         # min_x = max(0, int(x - radius - 1))
         # max_x = min(self._map.size[0], int(x + radius + 1))
@@ -43,6 +87,14 @@ class MapView(pathfinding.Graph):
 
         # assign value of 1 to those points where `dist < radius`
         z[np.where(dist <= radius)] = 1
+
+        # only see in the viewing cone
+        angle = np.arctan2((Y - width // 2), (X - width // 2)) * 180 / np.pi
+        angle = (angle - heading + 180) % 360 - 180
+        z[np.where(angle > view_angle / 2)] = 0
+        z[np.where(angle < -view_angle / 2)] = 0
+        # but if it's close enough we can still see it
+        z[np.where(dist <= 1.5)] = 1
 
         # `paste` and `paste_slices` taken from:
         # https://stackoverflow.com/a/50692782
@@ -73,19 +125,38 @@ class MapView(pathfinding.Graph):
             return True
 
     # vvvv pathfinding methods vvvv
+    def is_passable(self, node):
+        if not self._map.in_bounds(*node):
+            return False
+        if self.is_revealed(*node) and self._map.is_wall(*node):
+            return False
+        # we're good!
+        return True
 
     def neighbors(self, node):
         """ Implements abstract method `neighbors` from `Graph` """
         (x, y) = node
-        # NESW only
-        # results = [(x + 1, y), (x, y - 1), (x - 1, y), (x, y + 1)]
-        # with diagonals
-        results = [(x + 1, y), (x + 1, y - 1), (x, y - 1), (x - 1, y - 1), (x - 1, y), (x - 1, y + 1), (x, y + 1), (x + 1, y + 1)]
-        # if (x + y) % 2 == 0:
-        #     results.reverse()  # aesthetics
-        results = filter(lambda node: self._map.in_bounds(*node), results)
-        results = filter(lambda node: not (self.is_revealed(*node) and self._map.is_wall(*node)), results)
-        return results
+
+        corners = []
+
+        top = self.is_passable((x, y + 1))
+        right = self.is_passable((x + 1, y))
+        bottom = self.is_passable((x, y - 1))
+        left = self.is_passable((x - 1, y))
+
+        if top and left:
+            corners.append((x - 1, y + 1))
+        if top and right:
+            corners.append((x + 1, y + 1))
+        if bottom and left:
+            corners.append((x - 1, y - 1))
+        if bottom and right:
+            corners.append((x + 1, y - 1))
+
+        nodes = [(x + 1, y), (x, y - 1), (x - 1, y), (x, y + 1)] + corners
+        nodes = filter(self.is_passable, nodes)
+
+        return nodes
 
     def cost(self, from_node, to_node):
         """ Implements abstract method `cost` from `Graph` """
@@ -101,7 +172,7 @@ class MapView(pathfinding.Graph):
 
         # double cost for "invisible" tiles
         if self.is_revealed(*to_node):
-            return 2 * multiplier
+            return 1 * multiplier
         else:
             return 1 * multiplier
 
@@ -119,13 +190,35 @@ class MapView(pathfinding.Graph):
         from_node = (int(from_node[0]), int(from_node[1]))
         to_node = (int(to_node[0]), int(to_node[1]))
 
+        def pathify(path):
+            if not path:
+                return None
+            return list(map(lambda node: vmath.Vector2(node[0] + 0.5, node[1] + 0.5), path))
+
+        # already at target location
+        if from_node == to_node:
+            return pathify([from_node])
+
+        # target isn't passable
+        if not self.is_passable(to_node):
+            # try the neighbours, sorted by distance from the start
+            n = self.neighbors(to_node)
+            n = sorted(n, key=lambda node: heuristic(from_node, node))
+            n = filter(self.is_passable, n)
+            n = list(n)
+            # do we have a valid neighbor?
+            if len(n) > 0:
+                # if so go there instead
+                to_node = n[0]
+            else:
+                # else we just return no path and skip the A* search
+                return pathify(None)
+
         came_from, cost_so_far = pathfinding.a_star_search(self, from_node, to_node, heuristic)
         path = pathfinding.reconstruct_path(came_from, from_node, to_node)
         # map the path from tile coordinates to agent coordinates
-        path = list(map(lambda node: vmath.Vector2(node[0] + 0.5, node[1] + 0.5), path))
 
-        return path
-
+        return pathify(path)
 
     # vvvv copy methods from map.Map vvvv
 
