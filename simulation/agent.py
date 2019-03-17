@@ -247,13 +247,26 @@ class IntruderAgent(Agent):
         super().__init__()
         self.color = (1.0, 0.0, 0.0)
         self.view_range: float = 7.5
+        
         # are we captured yet?
         self.is_captured = False
         self._prev_is_captured = False
+        
+        # has the target been reached
+        self.reached_target = False
+        self._prev_reached_target = False
+        self.times_visited_target = 0.0
+        self.ticks_in_target = 0.0
+        self.ticks_since_target = 0.0
 
     @abstractmethod
     def on_captured(self) -> None:
         """ Called once when the agent is captured """
+        pass
+    
+    @abstractmethod
+    def on_reached_target(self) -> None:
+        """ Called once the agent has reached its target """
         pass
 
     def tick(self, seen_agents, noises):
@@ -265,6 +278,14 @@ class IntruderAgent(Agent):
 
             # don't run any other agent code if we're captured
             return
+        elif self.reached_target:
+            # make sure we only run the `on_captured` handler once
+            if not self._prev_reached_target:
+                self.on_reached_target()
+                self._prev_reached_target = True
+            
+            # don't run any other code - the intruder won
+            return 
         else:
-            # if we're not captured then just proceed as usual
+            # if we're not captured or have reached the target then just proceed as usual
             super().tick(seen_agents, noises)

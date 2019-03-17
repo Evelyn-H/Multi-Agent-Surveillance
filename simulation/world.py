@@ -179,12 +179,48 @@ class World:
         # see if any intruders will be captured now
         for ID_intruder, intruder in self.intruders.items():
             for ID_guard, guard in self.guards.items():
+                # still needs check for whether intruder is in sight
                 if (intruder.location - guard.location).length < 0.5:
                     intruder.is_captured = True
 
         # check if all intruders are captured
         return all((intruder.is_captured for ID, intruder in self.intruders.items()))
 
+    def _target_check(self) -> bool: 
+        """
+        return: Whether or not all of the intruders have reached the target
+        """
+        # see if any intruders will reach the target now
+        for ID_intruder, intruder in self.intruders.items():
+            # somehow agents don't get closer to the target than 0.7 or 0.64
+            if (intruder.location - Position(vmath.Vector2(intruder.target))).length <= 0.75: 
+                if intruder.ticks_in_target == 0.0:
+                    if (intruder.ticks_since_target * self.TIME_PER_TICK) >= 3.0 or intruder.times_visited_target == 0.0:
+                        intruder.times_visited_target += 1.0
+                        
+                    intruder.ticks_since_target = 0.0
+                    
+                intruder.ticks_in_target += 1.0
+            
+            else:    
+                if intruder.ticks_in_target > 0.0:
+                    intruder.ticks_since_target += 1.0
+                    intruder.ticks_in_target = 0.0
+                            
+                elif intruder.ticks_since_target > 0.0:
+                    intruder.ticks_since_target += 1.0
+            
+            # win type 1: the intruder has been in the target area for 3 seconds
+            if (intruder.ticks_in_target * self.TIME_PER_TICK) >= 3.0:
+                intruder.reached_target = True
+            
+            # win type 2: the intruder has visited the target area twice with at least 3 seconds inbetween
+            elif intruder.times_visited_target >= 2.0:
+                intruder.reached_target = True
+
+        # check if all intruders have reached the target
+        return all((intruder.reached_target for ID, intruder in self.intruders.items()))
+    
     def setup(self):
         for ID, agent in self.agents.items():
             agent.setup(world=self)
@@ -213,6 +249,11 @@ class World:
 
         all_captured = self._capture_check()
         if all_captured:
+            # we're done
+            return True
+        
+        all_reached_target = self._target_check()
+        if all_reached_target:
             # we're done
             return True
 

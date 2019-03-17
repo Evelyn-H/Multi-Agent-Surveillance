@@ -74,11 +74,15 @@ class PathfindingIntruder(IntruderAgent):
         """ Collision handler """
         pass
 
+    def on_reached_target(self) -> None:
+        """ Called once the intruder has reached its target """
+        self.log('I\'ve reached the target! :)')
+    
     def on_vision_update(self) -> None:
         """ Called when vision is updated """
         # target = (self.map.width // 2, self.map.height // 2)
-        target = (1, 1)
-        self.path = self.map.find_path(self.location, target)
+        self.target = (1, 1)
+        self.path = self.map.find_path(self.location, self.target)
         self.path = self.path and self.path[1:]  # remove starting node
 
     def on_tick(self, seen_agents) -> None:
