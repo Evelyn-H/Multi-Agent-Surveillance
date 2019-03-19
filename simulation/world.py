@@ -25,6 +25,10 @@ class World:
         self.map: Map = map
         self.agents: Dict[AgentID, Agent] = dict()
 
+        self.noises: List['simulation.world.NoiseEvent'] = []
+        # to keep track of past noise events
+        self.old_noises: List['simulation.world.NoiseEvent'] = []
+
         # to keep track of how many ticks have passed:
         self.time_ticks = 0
 
@@ -79,6 +83,10 @@ class World:
     def add_agent(self, agent_type):
         agent = agent_type()
         self.agents[agent.ID] = agent
+
+    def add_noise(self, noise: 'NoiseEvent'):
+        noise.time = self.time_ticks
+        self.noises.append(noise)
 
     @property
     def guards(self):
@@ -195,6 +203,12 @@ class World:
         Execute one tick / frame
         return: Whether or not the simulation is finished
         """
+        # reset noise list
+        self.old_noises.extend(self.noises)
+        self.noises = []
+        # emit random noise
+        self.emit_random_noise()
+
         # find all events for every agent and then run the agent code
         for ID, agent in self.agents.items():
             # check if we can see any other agents
@@ -213,26 +227,31 @@ class World:
         self._collision_check()
 
         all_captured = self._capture_check()
-        if all_captured:
-            # we're done
-            return True
 
         # and up the counter
         self.time_ticks += 1
+
+        if all_captured:
+            # we're done
+            return True
         # keep going...
         return False
 
-    def emit_random_noise(self, fps):
-        #Rate parameter for one 25m^2 is 0.1 per minute -> divide by 60 to get the events per second
-        #Scale up the rate parameter to map size 6*(map_size/25)*2=64 (amount of 25m^2 squares in the map)
-        #I know, that the map size should be dynamic
-        random_events_per_second = (0.1 / 60) * ((self.map.size[0] / 25) + (self.map.size[1] / 25))
-        chance_to_emit = random_events_per_second / (fps + 0.01)
-        if(random.uniform(0, 1) < chance_to_emit):
-            #emit an event here
-            posx = random.randint(0, self.map.size[0])
-            posy = random.randint(0, self.map.size[1])
-            print("Noise at (", posx, ",", posy, ")")
+    def emit_random_noise(self):
+        # Rate parameter for one 25m^2 is 0.1 per minute -> divide by 60 to get the events per second
+        # Scale up the rate parameter to map size 6*(map_size/25)*2=64 (amount of 25m^2 squares in the map)
+        # I know, that the map size should be dynamic
+        event_rate = 0.1
+        random_events_per_second = (event_rate / 60) * (self.map.size[0] * self.map.size[1] / 25)
+        chance_to_emit = random_events_per_second * self.TIME_PER_TICK
+        if random.uniform(0, 1) < chance_to_emit:
+            # emit an event here
+            x = random.randint(0, self.map.size[0] - 1)
+            y = random.randint(0, self.map.size[1] - 1)
+            print("Random noise at (", x, ",", y, ")")
+
+            noise_event = NoiseEvent(Position(x, y))
+            self.add_noise(noise_event)
 
 
 class MarkerType(Enum):
@@ -262,9 +281,10 @@ class Message:
 class NoiseEvent:
     """Encapsulates a single noise event"""
 
-    def __init__(self, location: Position) -> None:
+    def __init__(self, location: Position, source=None, time=0) -> None:
+        self.time = time
         self.location = location
-        self.source = None
+        self.source = source
 
     def perceived_angle(self, target_pos: Position):
         """

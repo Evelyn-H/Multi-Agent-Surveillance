@@ -31,9 +31,8 @@ class Map:
                  targets: List[Position]=None,
                  gates=None,
                  towers: List[Position]=None,
-                 markers: List['world.Marker']=None,
-                 #Prehaps replace with Noise elements 
-                 noise: List['world.NoiseEvent']=None) -> None:
+                 markers: List['simulation.world.Marker']=None
+                 ) -> None:
 
         # metadata about the map
         self.size: Tuple[int, int] = size
@@ -43,7 +42,6 @@ class Map:
         self.vision_modifier: List[List[float]] = np.ones((size[0], size[1]), dtype=np.float32)
 
         # structures and stuff on the map
-        self.noise: List['world.NoiseEvent'] = noise if noise else []
         self.targets: List[Position] = targets if targets else []
         self.towers: List[Position] = towers if towers else []
         self.gates: List[Gate] = gates if gates else []

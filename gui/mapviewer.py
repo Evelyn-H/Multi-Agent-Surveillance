@@ -124,11 +124,7 @@ class MapViewer(renderer.WindowComponent):
         # communication markers (circles)
         for marker in self.world.map.markers:
             shape_list.append(arcade.create_ellipse_filled(marker.location.x + 0.5, marker.location.y + 0.5, 1, 1, color=(255, 0, 255)))
-                        
-        for noise in self.world.map.noise:
- 
-#            shape_list.append(arcade.draw_circle_outline(noise.x+0.5, noise.y+0.5, 5, arcade.color.WISTERIA, 1))
-            shape_list.append(arcade.create_ellipse_filled(noise.location.x + 0.5, noise.location.y + 0.5, 1, 1, arcade.color.AIR_FORCE_BLUE))
+
         # TODO: self.gates
 
         self.map_items = shape_list
@@ -179,6 +175,13 @@ class MapViewer(renderer.WindowComponent):
 
         # draw agents
         self.agent_sprites.draw()
+
+        # draw noises
+        for noise in self.world.noises + self.world.old_noises:
+            radius = max(0, 1 - (self.world.time_ticks - noise.time) * self.world.TIME_PER_TICK * 0.5)
+            print(self.world.time_ticks, noise.time)
+            if radius > 0:
+                arcade.draw_ellipse_outline(noise.location.x + 0.5, noise.location.y + 0.5, radius, radius, arcade.color.AIR_FORCE_BLUE, border_width=0.2)
 
         # change back to pixel viewport for the next WindowComponent
         self.parent.set_viewport(0, self.parent.SCREEN_WIDTH, 0, self.parent.SCREEN_HEIGHT)
