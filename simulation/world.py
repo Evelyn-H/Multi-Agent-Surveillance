@@ -248,7 +248,7 @@ class World:
             # emit an event here
             x = random.randint(0, self.map.size[0] - 1)
             y = random.randint(0, self.map.size[1] - 1)
-            print("Random noise at (", x, ",", y, ")")
+            # print("Random noise at (", x, ",", y, ")")
 
             noise_event = NoiseEvent(Position(x, y))
             self.add_noise(noise_event)
