@@ -21,26 +21,11 @@ if __name__ == '__main__':
 
         world = World(m)
 
-<<<<<<< Upstream, based on branch 'master' of https://github.com/Evelyn-H/Multi-Agent-Surveillance.git
         world.add_agent(agents.SimpleGuard)
         world.add_agent(agents.SimpleGuard)
         world.add_agent(agents.SimpleGuard)
         world.add_agent(agents.PathfindingIntruder)
         world.add_agent(agents.PathfindingIntruder)
-=======
-    for _ in range(10):
-        x, y = np.random.randint(0, map.size[0], size=2)
-        map.towers.append(Position(x, y))
-
-    for _ in range(10):
-        x, y = np.random.randint(0, map.size[0], size=2)
-        map.markers.append(Marker(MarkerType.MAGENTA, Position(x, y)))
-    world = World(map)
-
-    world.add_agent(agents.SimpleGuard(Position(40, 40), map=map, color=(1.0, 1.0, 0)))
-    world.add_agent(agents.PathfindingGuard(Position(60, 40), map=map, color=(1.0, 1.0, 0)))
-    world.add_agent(agents.SimpleGuard(Position(80, 40), map=map))
->>>>>>> 1866a51 Poisson distribution for random noise
 
     # initialise the world
     world.setup()
