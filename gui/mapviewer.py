@@ -169,6 +169,20 @@ class MapViewer(renderer.WindowComponent):
         # and draw
         self.map_items.draw()
 
+        # draw noises
+        for noise in self.world.noises + self.world.old_noises:
+            if(noise.source == None):
+                radius = max(0, 1 - (self.world.time_ticks - noise.time) * self.world.TIME_PER_TICK * 0.5)
+                #print(self.world.time_ticks, noise.time)                
+                if radius > 0:# and not noise.drawn:
+                    arcade.draw_ellipse_outline(noise.location.x + 0.5, noise.location.y + 0.5, radius, radius, arcade.color.AIR_FORCE_BLUE, border_width=0.2)
+#                if isinstance(noise.source, Agent):
+#                    noise.drawn = True
+        for noise in self.world.noises:
+            if isinstance(noise.source, Agent):
+                radius = max(0, 1 - self.world.TIME_PER_TICK * 0.5)
+                arcade.draw_ellipse_outline(noise.location.x + 0.5, noise.location.y + 0.5, radius, radius, arcade.color.AFRICAN_VIOLET, border_width=0.2)
+        
         # draw agent trails
         for ID, agent in self.world.agents.items():
             arcade.draw_line_strip(self.agent_trails[agent], color=[int(255 * c) for c in agent.color])
@@ -176,12 +190,6 @@ class MapViewer(renderer.WindowComponent):
         # draw agents
         self.agent_sprites.draw()
 
-        # draw noises
-        for noise in self.world.noises + self.world.old_noises:
-            radius = max(0, 1 - (self.world.time_ticks - noise.time) * self.world.TIME_PER_TICK * 0.5)
-            print(self.world.time_ticks, noise.time)
-            if radius > 0:
-                arcade.draw_ellipse_outline(noise.location.x + 0.5, noise.location.y + 0.5, radius, radius, arcade.color.AIR_FORCE_BLUE, border_width=0.2)
 
         # change back to pixel viewport for the next WindowComponent
         self.parent.set_viewport(0, self.parent.SCREEN_WIDTH, 0, self.parent.SCREEN_HEIGHT)

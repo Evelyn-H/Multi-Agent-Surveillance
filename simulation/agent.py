@@ -151,6 +151,7 @@ class Agent(metaclass=ABCMeta):
             distance = math.copysign(min(world.World.TIME_PER_TICK * self.move_speed, abs(self._move_target)), self._move_target)
             self.location.move(distance, angle=self.heading)
             self._move_target -= distance
+        self.make_noise()
 
     def _update_vision(self, force=False) -> bool:
         current_tile = (int(self.location.x), int(self.location.y))
@@ -227,6 +228,11 @@ class Agent(metaclass=ABCMeta):
     def on_tick(self, seen_agents: List['vision.AgentView']) -> None:
         """ Agent logic goes here """
         pass
+    
+    def make_noise(self):
+        noise_event = world.NoiseEvent(Position(self.location.x - self._width/2, self.location.y - self._width/2), self)
+        self._world.add_noise(noise_event)
+        
 
 
 # TODO: implement sentry tower

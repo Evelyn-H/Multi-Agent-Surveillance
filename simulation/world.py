@@ -285,6 +285,7 @@ class NoiseEvent:
         self.time = time
         self.location = location
         self.source = source
+        self.drawn = False
 
     def perceived_angle(self, target_pos: Position):
         """

@@ -6,6 +6,7 @@ from ai import agents
 
 if __name__ == '__main__':
 
+
     i = input('Load save? ')
     # load from file
     if i:
