@@ -230,7 +230,7 @@ class Agent(metaclass=ABCMeta):
         pass
     
     def make_noise(self):
-        noise_event = world.NoiseEvent(Position(self.location.x - self._width/2, self.location.y - self._width/2), self)
+        noise_event = world.NoiseEvent(Position(self.location.x, self.location.y), self)
         self._world.add_noise(noise_event)
         
 
