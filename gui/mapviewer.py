@@ -190,7 +190,6 @@ class MapViewer(renderer.WindowComponent):
         # draw agents
         self.agent_sprites.draw()
 
-
         # change back to pixel viewport for the next WindowComponent
         self.parent.set_viewport(0, self.parent.SCREEN_WIDTH, 0, self.parent.SCREEN_HEIGHT)
 
