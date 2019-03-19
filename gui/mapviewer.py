@@ -179,7 +179,6 @@ class MapViewer(renderer.WindowComponent):
         # draw noises
         for noise in self.world.noises + self.world.old_noises:
             radius = max(0, 1 - (self.world.time_ticks - noise.time) * self.world.TIME_PER_TICK * 0.5)
-            print(self.world.time_ticks, noise.time)
             if radius > 0:
                 arcade.draw_ellipse_outline(noise.location.x + 0.5, noise.location.y + 0.5, radius, radius, arcade.color.AIR_FORCE_BLUE, border_width=0.2)
 
