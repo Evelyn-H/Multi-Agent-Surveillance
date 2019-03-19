@@ -175,13 +175,13 @@ class MapViewer(renderer.WindowComponent):
                 radius = max(0, 1 - (self.world.time_ticks - noise.time) * self.world.TIME_PER_TICK * 0.5)
                 #print(self.world.time_ticks, noise.time)                
                 if radius > 0:# and not noise.drawn:
-                    arcade.draw_ellipse_outline(noise.location.x + 0.5, noise.location.y + 0.5, radius, radius, arcade.color.AIR_FORCE_BLUE, border_width=0.2)
+                    arcade.draw_ellipse_outline(noise.location.x, noise.location.y, radius, radius, arcade.color.AIR_FORCE_BLUE, border_width=0.2)
 #                if isinstance(noise.source, Agent):
 #                    noise.drawn = True
         for noise in self.world.noises:
             if isinstance(noise.source, Agent):
                 radius = max(0, 1 - self.world.TIME_PER_TICK * 0.5)
-                arcade.draw_ellipse_outline(noise.location.x + 0.5, noise.location.y + 0.5, radius, radius, arcade.color.AFRICAN_VIOLET, border_width=0.2)
+                arcade.draw_ellipse_outline(noise.location.x, noise.location.y, radius, radius, arcade.color.AFRICAN_VIOLET, border_width=0.2)
         
         # draw agent trails
         for ID, agent in self.world.agents.items():
