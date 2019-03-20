@@ -1,6 +1,8 @@
 from typing import Tuple
 import random
+import vectormath as vmath
 
+from simulation.util import Position
 from simulation import world
 from simulation.agent import GuardAgent, IntruderAgent
 
@@ -49,6 +51,55 @@ class SimpleGuard(GuardAgent):
                     self.send_message(1, "I just turned!")
 
 
+class PatrollingGuard(GuardAgent):
+    def on_setup(self):
+        """ Agent setup """
+        self.path = None
+
+    def on_pick_start(self) -> Tuple[float, float]:
+        """ Must return a valid starting position for the agent """
+        return (random.random() * self.map.width, random.random() * self.map.height)
+
+    def on_noise(self, noise: world.NoiseEvent) -> None:
+        """ Noise handler, will be called before `on_tick` """
+        ...
+
+    def on_message(self, message: world.Message) -> None:
+        """ Message handler, will be called before `on_tick` """
+        self.log(f'received message from agent {message.source} on tick {self.time_ticks}: {message.message}')
+
+    def on_collide(self) -> None:
+        """ Collision handler """
+        pass
+
+    def on_vision_update(self) -> None:
+        """ Called when vision is updated """
+        if (self.location - self.target).length < 0.5:
+            self.log('I\'ve reached corner point', self.target_idx, 'of my patrolling route.')
+            self.target_idx = (self.target_idx + 1)  % len(self.patrol_route)
+            self.target = self.patrol_route[self.target_idx]
+           
+        self.path = self.map.find_path(self.location, self.target)
+        self.path = self.path and self.path[1:]
+
+    def on_tick(self, seen_agents) -> None:
+        """ Agent logic goes here """
+        # only try to chase intruders, not other guards
+        seen_intruders = [a for a in seen_agents if a.is_intruder]
+        
+        if seen_intruders:
+            # chase!
+            self.target = seen_intruders[0].location
+            self.turn_to_point(self.target)
+            self.move((self.target - self.location).length)
+        else:
+            if self.path and self.move_remaining == 0:
+                next_pos = self.path[0]
+                self.turn_to_point(next_pos)
+                self.move((next_pos - self.location).length)
+                self.path = self.path[1:]
+
+
 class PathfindingIntruder(IntruderAgent):
     def on_setup(self):
         """ Agent setup """
@@ -80,18 +131,11 @@ class PathfindingIntruder(IntruderAgent):
     
     def on_vision_update(self) -> None:
         """ Called when vision is updated """
-        # target = (self.map.width // 2, self.map.height // 2)
-        self.target = (1, 1)
         self.path = self.map.find_path(self.location, self.target)
         self.path = self.path and self.path[1:]  # remove starting node
 
     def on_tick(self, seen_agents) -> None:
         """ Agent logic goes here """
-
-        if not self.path:
-            # self.log('no path')
-            pass
-
         if self.path and self.move_remaining == 0:
             next_pos = self.path[0]
             self.turn_to_point(next_pos)

@@ -40,6 +40,7 @@ class GUI(arcade.Window):
         # independent of the GUI framerate and tracking the turns per second
         self.game_speed = 1
         self.is_paused = True
+        self.is_finished = False
         self.tick_time = 0
         self.tick_count = 0
         self.tps = 0
@@ -77,7 +78,7 @@ class GUI(arcade.Window):
         self.console.register_command('pause', toggle_paused)
 
     def update(self, dt):
-        if self.is_paused:
+        if self.is_paused or self.is_finished:
             return
 
         # make sure we run at the right tick rate
@@ -89,7 +90,7 @@ class GUI(arcade.Window):
             self.tick_count += 1
 
             # update the simulation
-            self.world.tick()
+            self.is_finished = self.world.tick()
 
             # update all components
             for c in self.components:

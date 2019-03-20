@@ -1,6 +1,7 @@
 from typing import NewType, List, Tuple
 from abc import ABCMeta, abstractmethod
 import math
+import random
 import vectormath as vmath
 
 from .util import Position
@@ -235,24 +236,40 @@ class GuardAgent(Agent):
         super().__init__()
         self.color = (0.0, 1.0, 0.0)
         self.view_range: float = 6.0
+        
+    def make_patrol_route(self) -> List['Position']:
+        width  = [1.5, self.map.width - 1.5]
+        height = [1.5, self.map.height - 1.5]
+        corner_points = [Position(vmath.Vector2(a, b)) for a in width for b in height]
+        
+        patrol_route = []
+        
+        for i in range(3):
+            route_point = corner_points.pop(random.randint(0,len(corner_points)-1))
+            patrol_route.append(route_point)
+        return patrol_route
 
     def setup(self, world):
         super().setup(world)
         self.other_guards = [vision.AgentView(guard) for ID, guard in self._world.guards.items() if not ID == self.ID]
-
-
+        self.patrol_route = self.make_patrol_route()
+        self.target_idx = 0
+        self.target = self.patrol_route[self.target_idx]
+        print('Guard', self.ID, 'Patrolling Route:', self.patrol_route)
+        
 # TODO: implement sprinting
 class IntruderAgent(Agent):
     def __init__(self) -> None:
         super().__init__()
-        self.color = (1.0, 0.0, 0.0)
+        self.color = (1.0, 0.0, 0.0) # needed?
         self.view_range: float = 7.5
+        self.target = Position(vmath.Vector2((1.5, 1.5))) # must be .5 (center of tile)
         
         # are we captured yet?
         self.is_captured = False
         self._prev_is_captured = False
         
-        # has the target been reached
+        # has the target been reached?
         self.reached_target = False
         self._prev_reached_target = False
         self.times_visited_target = 0.0

@@ -97,6 +97,14 @@ class World:
                 return vmath.Vector2(x, y) + (0.5, 0.5)
             else:
                 return None
+            
+        def circle_collision(x, y, r=0.5):
+                x, y = int(math.floor(x)), int(math.floor(y))
+                if self.map.is_wall(x, y):
+                    center = vmath.Vector2(x, y) + (0.5, 0.5)
+                    if (agent.location - center).length < (r + width / 2):
+                        return center + (agent.location - center).as_length(r + width / 2)
+
 
         for ID, agent in self.agents.items():
             # do a quick bounds check first so they stay on the map
@@ -140,13 +148,6 @@ class World:
 
             # and apply resolution vector
             agent.location += push
-
-            def circle_collision(x, y, r=0.5):
-                x, y = int(math.floor(x)), int(math.floor(y))
-                if self.map.is_wall(x, y):
-                    center = vmath.Vector2(x, y) + (0.5, 0.5)
-                    if (agent.location - center).length < (r + width / 2):
-                        return center + (agent.location - center).as_length(r + width / 2)
 
             collision = circle_collision(x - width / 2, y - width / 2)
             if collision is not None:
@@ -193,7 +194,7 @@ class World:
         # see if any intruders will reach the target now
         for ID_intruder, intruder in self.intruders.items():
             # somehow agents don't get closer to the target than 0.7 or 0.64
-            if (intruder.location - Position(vmath.Vector2(intruder.target))).length <= 0.75: 
+            if (intruder.location - intruder.target).length < 0.5: 
                 if intruder.ticks_in_target == 0.0:
                     if (intruder.ticks_since_target * self.TIME_PER_TICK) >= 3.0 or intruder.times_visited_target == 0.0:
                         intruder.times_visited_target += 1.0
@@ -250,11 +251,13 @@ class World:
         all_captured = self._capture_check()
         if all_captured:
             # we're done
+            print('The guards won!')
             return True
         
         all_reached_target = self._target_check()
         if all_reached_target:
             # we're done
+            print('The intruders won!')
             return True
 
         # and up the counter
