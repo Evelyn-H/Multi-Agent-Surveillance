@@ -1,5 +1,8 @@
 {
     "agents": [
+        "SimpleGuard",
+        "PatrollingGuard",
+        "PatrollingGuard",
         "PatrollingGuard",
         "PatrollingGuard",
         "PathfindingIntruder"

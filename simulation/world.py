@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import Dict
 import math
 from enum import Enum
 import vectormath as vmath
@@ -183,6 +183,7 @@ class World:
                 # still needs check for whether intruder is in sight
                 if (intruder.location - guard.location).length < 0.5:
                     intruder.is_captured = True
+                    intruder.on_captured()
 
         # check if all intruders are captured
         return all((intruder.is_captured for ID, intruder in self.intruders.items()))
@@ -214,6 +215,7 @@ class World:
             # win type 1: the intruder has been in the target area for 3 seconds
             if (intruder.ticks_in_target * self.TIME_PER_TICK) >= 3.0:
                 intruder.reached_target = True
+                intruder.on_reached_target()
             
             # win type 2: the intruder has visited the target area twice with at least 3 seconds inbetween
             elif intruder.times_visited_target >= 2.0:
@@ -244,6 +246,7 @@ class World:
                         or d.length <= 1.5:
                     # create a new `AgentView` event
                     visible_agents.append(simulation.vision.AgentView(other_agent))
+            
             # and run the agent code
             agent.tick(seen_agents=visible_agents, noises=[])
         self._collision_check()

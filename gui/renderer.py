@@ -41,6 +41,7 @@ class GUI(arcade.Window):
         self.game_speed = 1
         self.is_paused = True
         self.is_finished = False
+        
         self.tick_time = 0
         self.tick_count = 0
         self.tps = 0
@@ -77,10 +78,10 @@ class GUI(arcade.Window):
 
         self.console.register_command('pause', toggle_paused)
 
-    def update(self, dt):
+    def update(self, dt):       
         if self.is_paused or self.is_finished:
             return
-
+        
         # make sure we run at the right tick rate
         self.tick_time += dt
         while self.tick_time >= self.world.TIME_PER_TICK / self.game_speed:
@@ -95,6 +96,9 @@ class GUI(arcade.Window):
             # update all components
             for c in self.components:
                 c.update(dt)
+                
+            if self.is_finished:
+                return
 
     def on_draw(self):
         arcade.start_render()
@@ -107,6 +111,7 @@ class GUI(arcade.Window):
         # FPS timing stuff
         t = timeit.default_timer()
         self.frame_count += 1
+        
         # update fps once a second
         if t - self.t0 > 1:
             self.fps = self.frame_count / (t - self.t0)

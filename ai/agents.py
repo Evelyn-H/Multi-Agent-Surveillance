@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, List
 import random
 import vectormath as vmath
 
@@ -50,11 +50,28 @@ class SimpleGuard(GuardAgent):
                 if self.ID != 1:
                     self.send_message(1, "I just turned!")
 
-
 class PatrollingGuard(GuardAgent):
+    def make_patrol_route(self) -> List['Position']:
+        width  = [1.5, self.map.width - 1.5]
+        height = [1.5, self.map.height - 1.5]
+        corner_points = [Position(vmath.Vector2(a, b)) for a in width for b in height]
+        patrol_route = []
+        
+        for i in range(3):
+            route_point = corner_points.pop(random.randint(0,len(corner_points)-1))
+            patrol_route.append(route_point)
+        return patrol_route
+        
     def on_setup(self):
         """ Agent setup """
+        self.color = (0, 1, 1) # cyan
         self.path = None
+        self.patrol_route = self.make_patrol_route()
+        self.patrol_idx = 0
+        self.patrol_point = self.patrol_route[self.patrol_idx]
+        self.seen_intruder = None
+        self.chase = False
+        print('Guard', self.ID, 'Patrolling Route:', self.patrol_route)
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
@@ -74,12 +91,14 @@ class PatrollingGuard(GuardAgent):
 
     def on_vision_update(self) -> None:
         """ Called when vision is updated """
-        if (self.location - self.target).length < 0.5:
-            self.log('I\'ve reached corner point', self.target_idx, 'of my patrolling route.')
-            self.target_idx = (self.target_idx + 1)  % len(self.patrol_route)
-            self.target = self.patrol_route[self.target_idx]
-           
-        self.path = self.map.find_path(self.location, self.target)
+        if (self.location - self.patrol_point).length < 0.5:
+            self.log('I\'ve reached corner point', self.patrol_idx, 'of my patrolling route.')
+            self.patrol_idx = (self.patrol_idx + 1)  % len(self.patrol_route)
+            self.patrol_point = self.patrol_route[self.patrol_idx]
+        
+        target = self.patrol_point if not self.chase else self.seen_intruder
+        
+        self.path = self.map.find_path(self.location, target)
         self.path = self.path and self.path[1:]
 
     def on_tick(self, seen_agents) -> None:
@@ -88,22 +107,20 @@ class PatrollingGuard(GuardAgent):
         seen_intruders = [a for a in seen_agents if a.is_intruder]
         
         if seen_intruders:
-            # chase!
-            self.target = seen_intruders[0].location
-            self.turn_to_point(self.target)
-            self.move((self.target - self.location).length)
+            self.seen_intruder = seen_intruders[0].location
+            self.chase = True
         else:
-            if self.path and self.move_remaining == 0:
-                next_pos = self.path[0]
-                self.turn_to_point(next_pos)
-                self.move((next_pos - self.location).length)
-                self.path = self.path[1:]
-
+            self.chase = False 
+            
+        if self.path and self.move_remaining == 0:
+            next_pos = self.path[0]
+            self.turn_to_point(next_pos)
+            self.move((next_pos - self.location).length)
+            self.path = self.path[1:]
 
 class PathfindingIntruder(IntruderAgent):
     def on_setup(self):
         """ Agent setup """
-        self.color = (1, 1, 0)  # yellow
         self.path = None
 
     def on_pick_start(self) -> Tuple[float, float]:
