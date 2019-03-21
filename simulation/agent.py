@@ -2,6 +2,7 @@ from typing import NewType, List, Tuple
 from abc import ABCMeta, abstractmethod
 import math
 import vectormath as vmath
+import random
 
 from .util import Position
 from . import vision
@@ -230,8 +231,12 @@ class Agent(metaclass=ABCMeta):
         pass
     
     def make_noise(self):
-        noise_event = world.NoiseEvent(Position(self.location.x, self.location.y), self)
-        self._world.add_noise(noise_event)
+        event_rate = 0.1
+        random_events_per_second = (event_rate / 60) * (self._world.map.size[0] * self._world.map.size[1] / 25)
+        chance_to_emit = random_events_per_second * self._world.TIME_PER_TICK
+        if random.uniform(0, 1) < chance_to_emit:
+            noise_event = world.NoiseEvent(Position(self.location.x, self.location.y), self)
+            self._world.add_noise(noise_event)
         
 
 
