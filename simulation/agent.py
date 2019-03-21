@@ -237,7 +237,7 @@ class Agent(metaclass=ABCMeta):
         chance_to_emit = random_events_per_second * self._world.TIME_PER_TICK
         if random.uniform(0, 1) < chance_to_emit:
             noise_event = world.NoiseEvent(Position(self.location.x, self.location.y), self)
-            self._world.add_noise(noise_event)
+            self._world.add_noise(noise_event) 
         
 
 # TODO: implement sentry tower

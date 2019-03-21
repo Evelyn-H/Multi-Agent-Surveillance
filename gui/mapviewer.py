@@ -174,7 +174,7 @@ class MapViewer(renderer.WindowComponent):
             radius = max(0, 1 - (self.world.time_ticks - noise.time) * self.world.TIME_PER_TICK * 0.5)
             if radius > 0:# and not noise.drawn:
                 arcade.draw_ellipse_outline(noise.location.x, noise.location.y, radius, radius, arcade.color.AIR_FORCE_BLUE, border_width=0.2)
-        
+         
         # draw agent trails
         for ID, agent in self.world.agents.items():
             arcade.draw_line_strip(self.agent_trails[agent], color=[int(255 * c) for c in agent.color])
