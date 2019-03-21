@@ -2,6 +2,7 @@ from typing import NewType, List, Tuple
 from abc import ABCMeta, abstractmethod
 import math
 import vectormath as vmath
+import random
 
 from .util import Position
 from . import vision
@@ -152,6 +153,7 @@ class Agent(metaclass=ABCMeta):
             distance = math.copysign(min(world.World.TIME_PER_TICK * self.move_speed, abs(self._move_target)), self._move_target)
             self.location.move(distance, angle=self.heading)
             self._move_target -= distance
+        self.make_noise()
 
     def _update_vision(self, force=False) -> bool:
         current_tile = (int(self.location.x), int(self.location.y))
@@ -228,6 +230,15 @@ class Agent(metaclass=ABCMeta):
     def on_tick(self, seen_agents: List['vision.AgentView']) -> None:
         """ Agent logic goes here """
         pass
+    
+    def make_noise(self):
+        event_rate = 0.1
+        random_events_per_second = (event_rate / 60) * (self._world.map.size[0] * self._world.map.size[1] / 25)
+        chance_to_emit = random_events_per_second * self._world.TIME_PER_TICK
+        if random.uniform(0, 1) < chance_to_emit:
+            noise_event = world.NoiseEvent(Position(self.location.x, self.location.y), self)
+            self._world.add_noise(noise_event) 
+        
 
 # TODO: implement sentry tower
 class GuardAgent(Agent):
