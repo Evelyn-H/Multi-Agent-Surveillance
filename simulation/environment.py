@@ -3,7 +3,6 @@ from typing import List, Tuple, Dict
 
 from .util import Position
 
-
 class Gate:
     """
     Superclass for doors and windows and such,
@@ -32,7 +31,8 @@ class Map:
                  targets: List[Position]=None,
                  gates=None,
                  towers: List[Position]=None,
-                 markers: List['world.Marker']=None) -> None:
+                 markers: List['simulation.world.Marker']=None
+                 ) -> None:
 
         # metadata about the map
         self.size: Tuple[int, int] = size

@@ -2,6 +2,7 @@ from typing import NewType, List, Tuple
 from abc import ABCMeta, abstractmethod
 import math
 import vectormath as vmath
+import random
 
 from .util import Position
 from . import vision
@@ -49,14 +50,12 @@ class Agent(metaclass=ABCMeta):
         self._can_sprint: boolean = False
         self._sprint_rest_time = 10
         self._sprint_time = 5
-
         
         #I would like to move these into the intruder agent since only the intruder should be able to sprint
         #Set the sprint cooldown to the tick that it started
         self._sprint_stop_time = -100000
         #Set the sprint time to the tick that the agent started sprinting
         self._sprint_start_time = 0
-
         
         # to keep track of movement commands and execute them in the background
         self._move_target: float = 0
@@ -213,6 +212,7 @@ class Agent(metaclass=ABCMeta):
             distance = math.copysign(min(world.World.TIME_PER_TICK * self.move_speed, abs(self._move_target)), self._move_target)
             self.location.move(distance, angle=self.heading)
             self._move_target -= distance
+        self.make_noise()
 
     def _update_vision(self, force=False) -> bool:
         current_tile = (int(self.location.x), int(self.location.y))
@@ -289,32 +289,40 @@ class Agent(metaclass=ABCMeta):
     def on_tick(self, seen_agents: List['vision.AgentView']) -> None:
         """ Agent logic goes here """
         pass
-
+    
+    def make_noise(self):
+        event_rate = 0.1
+        random_events_per_second = (event_rate / 60) * (self._world.map.size[0] * self._world.map.size[1] / 25)
+        chance_to_emit = random_events_per_second * self._world.TIME_PER_TICK
+        if random.uniform(0, 1) < chance_to_emit:
+            noise_event = world.NoiseEvent(Position(self.location.x, self.location.y), self)
+            self._world.add_noise(noise_event) 
+        
 
 # TODO: implement sentry tower
 class GuardAgent(Agent):
     def __init__(self) -> None:
         super().__init__()
-        self.color = (0.0, 1.0, 0.0)
+        self.color = (0, 1, 0) # green
         self.view_range: float = 6.0
-
+        
     def setup(self, world):
         super().setup(world)
         self.other_guards = [vision.AgentView(guard) for ID, guard in self._world.guards.items() if not ID == self.ID]
-
-
+        
 # TODO: implement sprinting
 class IntruderAgent(Agent):
     def __init__(self) -> None:
         super().__init__()
-        self.color = (1.0, 0.0, 0.0)
+        self.color = (1, 1, 0) # yellow
         self.view_range: float = 7.5
-        
+        self.target = Position(vmath.Vector2((1.5, 1.5))) # must be .5 (center of tile)
+                
         # are we captured yet?
         self.is_captured = False
         self._prev_is_captured = False
         
-        # has the target been reached
+        # has the target been reached?
         self.reached_target = False
         self._prev_reached_target = False
         self.times_visited_target = 0.0
@@ -332,24 +340,4 @@ class IntruderAgent(Agent):
     def on_reached_target(self) -> None:
         """ Called once the agent has reached its target """
         pass
-
-    def tick(self, seen_agents, noises):
-        if self.is_captured:
-            # make sure we only run the `on_captured` handler once
-            if not self._prev_is_captured:
-                self.on_captured()
-                self._prev_is_captured = True
-
-            # don't run any other agent code if we're captured
-            return
-        elif self.reached_target:
-            # make sure we only run the `on_captured` handler once
-            if not self._prev_reached_target:
-                self.on_reached_target()
-                self._prev_reached_target = True
-            
-            # don't run any other code - the intruder won
-            return 
-        else:
-            # if we're not captured or have reached the target then just proceed as usual
-            super().tick(seen_agents, noises)
+    

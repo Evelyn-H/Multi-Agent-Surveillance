@@ -1,5 +1,6 @@
-from typing import List, Dict
+from typing import Dict
 import math
+import random
 from enum import Enum
 import vectormath as vmath
 import json_tricks as jt
@@ -23,6 +24,10 @@ class World:
     def __init__(self, map: Map):
         self.map: Map = map
         self.agents: Dict[AgentID, Agent] = dict()
+
+        self.noises: List['simulation.world.NoiseEvent'] = []
+        # to keep track of past noise events
+        self.old_noises: List['simulation.world.NoiseEvent'] = []
 
         # to keep track of how many ticks have passed:
         self.time_ticks = 0
@@ -79,6 +84,10 @@ class World:
         agent = agent_type()
         self.agents[agent.ID] = agent
 
+    def add_noise(self, noise: 'NoiseEvent'):
+        noise.time = self.time_ticks
+        self.noises.append(noise)
+
     @property
     def guards(self):
         return {ID: agent for ID, agent in self.agents.items() if isinstance(agent, GuardAgent)}
@@ -97,6 +106,14 @@ class World:
                 return vmath.Vector2(x, y) + (0.5, 0.5)
             else:
                 return None
+            
+        def circle_collision(x, y, r=0.5):
+                x, y = int(math.floor(x)), int(math.floor(y))
+                if self.map.is_wall(x, y):
+                    center = vmath.Vector2(x, y) + (0.5, 0.5)
+                    if (agent.location - center).length < (r + width / 2):
+                        return center + (agent.location - center).as_length(r + width / 2)
+
 
         for ID, agent in self.agents.items():
             # do a quick bounds check first so they stay on the map
@@ -141,13 +158,6 @@ class World:
             # and apply resolution vector
             agent.location += push
 
-            def circle_collision(x, y, r=0.5):
-                x, y = int(math.floor(x)), int(math.floor(y))
-                if self.map.is_wall(x, y):
-                    center = vmath.Vector2(x, y) + (0.5, 0.5)
-                    if (agent.location - center).length < (r + width / 2):
-                        return center + (agent.location - center).as_length(r + width / 2)
-
             collision = circle_collision(x - width / 2, y - width / 2)
             if collision is not None:
                 agent.location.x = collision.x
@@ -182,6 +192,7 @@ class World:
                 # still needs check for whether intruder is in sight
                 if (intruder.location - guard.location).length < 0.5:
                     intruder.is_captured = True
+                    intruder.on_captured()
 
         # check if all intruders are captured
         return all((intruder.is_captured for ID, intruder in self.intruders.items()))
@@ -193,7 +204,7 @@ class World:
         # see if any intruders will reach the target now
         for ID_intruder, intruder in self.intruders.items():
             # somehow agents don't get closer to the target than 0.7 or 0.64
-            if (intruder.location - Position(vmath.Vector2(intruder.target))).length <= 0.75: 
+            if (intruder.location - intruder.target).length < 0.5: 
                 if intruder.ticks_in_target == 0.0:
                     if (intruder.ticks_since_target * self.TIME_PER_TICK) >= 3.0 or intruder.times_visited_target == 0.0:
                         intruder.times_visited_target += 1.0
@@ -213,6 +224,7 @@ class World:
             # win type 1: the intruder has been in the target area for 3 seconds
             if (intruder.ticks_in_target * self.TIME_PER_TICK) >= 3.0:
                 intruder.reached_target = True
+                intruder.on_reached_target()
             
             # win type 2: the intruder has visited the target area twice with at least 3 seconds inbetween
             elif intruder.times_visited_target >= 2.0:
@@ -230,6 +242,12 @@ class World:
         Execute one tick / frame
         return: Whether or not the simulation is finished
         """
+        # reset noise list
+        self.old_noises.extend(self.noises)
+        self.noises = []
+        # emit random noise
+        self.emit_random_noise()
+
         # find all events for every agent and then run the agent code
         for ID, agent in self.agents.items():
             # check if we can see any other agents
@@ -243,24 +261,48 @@ class World:
                         or d.length <= 1.5:
                     # create a new `AgentView` event
                     visible_agents.append(simulation.vision.AgentView(other_agent))
+            
             # and run the agent code
             agent.tick(seen_agents=visible_agents, noises=[])
         self._collision_check()
 
         all_captured = self._capture_check()
+
         if all_captured:
             # we're done
+            print('The guards won!')
             return True
         
         all_reached_target = self._target_check()
         if all_reached_target:
             # we're done
+            print('The intruders won!')
             return True
+
 
         # and up the counter
         self.time_ticks += 1
+
+        if all_captured:
+            # we're done
+            return True
         # keep going...
         return False
+
+    def emit_random_noise(self):
+        # Rate parameter for one 25m^2 is 0.1 per minute -> divide by 60 to get the events per second
+        # Scale up the rate parameter to map size 6*(map_size/25)*2=64 (amount of 25m^2 squares in the map)
+        # I know, that the map size should be dynamic
+        event_rate = 0.1
+        random_events_per_second = (event_rate / 60) * (self.map.size[0] * self.map.size[1] / 25)
+        chance_to_emit = random_events_per_second * self.TIME_PER_TICK
+        if random.uniform(0, 1) < chance_to_emit:
+            # emit an event here
+            x = random.randint(0, self.map.size[0] - 1)
+            y = random.randint(0, self.map.size[1] - 1)
+
+            noise_event = NoiseEvent(Position(x, y))
+            self.add_noise(noise_event)
 
 
 class MarkerType(Enum):
@@ -290,8 +332,10 @@ class Message:
 class NoiseEvent:
     """Encapsulates a single noise event"""
 
-    def __init__(self, location: Position) -> None:
-        self._location = location
+    def __init__(self, location: Position, source=None, time=0) -> None:
+        self.time = time
+        self.location = location
+        self.source = source
 
     def perceived_angle(self, target_pos: Position):
         """
