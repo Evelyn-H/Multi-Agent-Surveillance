@@ -40,10 +40,24 @@ class Agent(metaclass=ABCMeta):
         # movement stuff
         self.location: Position = None
         self.heading: float = 0
-        self.move_speed: float = 1.4
+        self.base_speed: float = 1.4
+        self.move_speed: float = self.base_speed
         self.view_range: float = 6.0
         self.view_angle: float = 45.0
         self.turn_speed: float = 180
+        self.turn_speed_sprinting = 10
+        self._can_sprint: boolean = False
+        self._sprint_rest_time = 10
+        self._sprint_time = 5
+
+        
+        #I would like to move these into the intruder agent since only the intruder should be able to sprint
+        #Set the sprint cooldown to the tick that it started
+        self._sprint_stop_time = -100000
+        #Set the sprint time to the tick that the agent started sprinting
+        self._sprint_start_time = 0
+
+        
         # to keep track of movement commands and execute them in the background
         self._move_target: float = 0
         self._turn_target: float = 0
@@ -126,6 +140,48 @@ class Agent(metaclass=ABCMeta):
         else:
             self.turn_to(self.heading)
 
+    def set_movement_speed(self, speed):
+        """ Set the movement speed of the agent and ensure, that it is within the allowed bounds"""
+        #return true if still 
+        #Agent has to rest for 10 seconds after sprinting 
+        if speed < 0 or speed > 3:
+            raise Exception("Tried to set movement speed out of bounds: " + speed + " for agent " + self)
+        
+        if self.is_resting:
+            return
+        
+        if self.move_speed > self.base_speed and speed <= self.base_speed:
+            self._sprint_stop_time = self._world.time_ticks
+            self.log("Stop Sprinting and start resting")
+        
+        if not self.is_sprinting and speed > self.base_speed:
+            self._sprint_start_time = self._world.time_ticks
+            self.log("Start sprinting")
+            
+        self.move_speed = speed
+        #self._world tick rate and time per tick as a sprint time counter
+        
+    @property    
+    def is_resting(self):
+        return (self._world.time_ticks - self._sprint_stop_time) < self._sprint_rest_time/self._world.TIME_PER_TICK
+    
+    @property    
+    def is_sprinting(self):
+        return self.move_speed > self.base_speed
+    
+    #This should be called in each update of the agent method
+    def _update_sprint(self):
+        if not self._can_sprint:
+            return 
+        
+        if self.is_sprinting and (self._world.time_ticks - self._sprint_start_time) > self._sprint_time/self._world.TIME_PER_TICK:
+            self._sprint_stop_time = self._world.time_ticks        
+
+        #Check, if the agent has rested for enough -> ensure, that rests when if can't sprint
+        if self.is_resting:
+            self.move_speed = 0
+        
+    
     def move(self, distance):
         self._move_target = distance
 
@@ -141,10 +197,16 @@ class Agent(metaclass=ABCMeta):
 
     def _process_movement(self):
         """ Executes the last movement command """
+        self._update_sprint()
+
+        turn_speed = self.turn_speed
+        if self.is_sprinting:
+            turn_speed = self.turn_speed_sprinting
+            
         # process turning
         if not math.isclose(self._turn_target, self.heading):
             remaining = self.turn_remaining
-            self.heading += math.copysign(min(world.World.TIME_PER_TICK * self.turn_speed, abs(remaining)), remaining)
+            self.heading += math.copysign(min(world.World.TIME_PER_TICK * turn_speed, abs(remaining)), remaining)
             self.heading = (self.heading + 180) % 360 - 180
         # process walking/running
         if self._move_target != 0:
@@ -259,6 +321,8 @@ class IntruderAgent(Agent):
         self.ticks_in_target = 0.0
         self.ticks_since_target = 0.0
 
+        self._can_sprint = True
+        
     @abstractmethod
     def on_captured(self) -> None:
         """ Called once when the agent is captured """
