@@ -294,8 +294,17 @@ class Agent(metaclass=ABCMeta):
         event_rate = 0.1
         random_events_per_second = (event_rate / 60) * (self._world.map.size[0] * self._world.map.size[1] / 25)
         chance_to_emit = random_events_per_second * self._world.TIME_PER_TICK
+        radius = 0
+        if self.move_speed > 0:
+            radius = 1/2
+        if self.move_speed > 0.5:
+            radius = 3/2
+        if self.move_speed > 1:
+            radius = 5/2
+        if self.move_speed > 2:
+            radius = 10/2    
         if random.uniform(0, 1) < chance_to_emit:
-            noise_event = world.NoiseEvent(Position(self.location.x, self.location.y), self)
+            noise_event = world.NoiseEvent(Position(self.location.x, self.location.y), self, radius)
             self._world.add_noise(noise_event) 
         
 

@@ -332,10 +332,11 @@ class Message:
 class NoiseEvent:
     """Encapsulates a single noise event"""
 
-    def __init__(self, location: Position, source=None, time=0) -> None:
-        self.time = time
+    def __init__(self, location: Position, source=None, radius=5/2) -> None:
+        self.time = 0
         self.location = location
         self.source = source
+        self.radius = radius
 
     def perceived_angle(self, target_pos: Position):
         """

@@ -158,11 +158,11 @@ class PathfindingIntruder(IntruderAgent):
             # self.log('no path')
             pass
         
-#         try:
-#             self.set_movement_speed(3)
-#         except:
-#             self.log("Resting")
-#             pass
+#        try:
+#            self.set_movement_speed(3)
+#        except:
+#            self.log("Resting")
+#            pass
         
         if self.path and self.move_remaining == 0:
             next_pos = self.path[0]
