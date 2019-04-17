@@ -14,7 +14,7 @@ class SimpleGuard(GuardAgent):
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
-        return (random.random() * self.map.width, random.random() * self.map.height)
+        return random.random() * self.map.width, random.random() * self.map.height
 
     def on_noise(self, noise: world.NoiseEvent) -> None:
         """ Noise handler, will be called before `on_tick` """
@@ -50,9 +50,10 @@ class SimpleGuard(GuardAgent):
                 if self.ID != 1:
                     self.send_message(1, "I just turned!")
 
+
 class PatrollingGuard(GuardAgent):
     def make_patrol_route(self) -> List['Position']:
-        width  = [1.5, self.map.width - 1.5]
+        width = [1.5, self.map.width - 1.5]
         height = [1.5, self.map.height - 1.5]
         corner_points = [Position(vmath.Vector2(a, b)) for a in width for b in height]
         patrol_route = []
@@ -75,7 +76,7 @@ class PatrollingGuard(GuardAgent):
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
-        return (random.random() * self.map.width, random.random() * self.map.height)
+        return random.random() * self.map.width, random.random() * self.map.height
 
     def on_noise(self, noise: world.NoiseEvent) -> None:
         """ Noise handler, will be called before `on_tick` """
@@ -118,6 +119,7 @@ class PatrollingGuard(GuardAgent):
             self.move((next_pos - self.location).length)
             self.path = self.path[1:]
 
+
 class PathfindingIntruder(IntruderAgent):
     def on_setup(self):
         """ Agent setup """
@@ -125,7 +127,7 @@ class PathfindingIntruder(IntruderAgent):
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
-        return (random.random() * self.map.width, random.random() * self.map.height)
+        return random.random() * self.map.width, random.random() * self.map.height
 
     def on_captured(self) -> None:
         """ Called once when the agent is captured """

@@ -48,7 +48,7 @@ class MapView(pathfinding.Graph):
         self._map = map
 
         # fog-of-war map
-        self.fog = np.zeros((self._map.size[0], self._map.size[1]), dtype=np.bool) # self._map.size?
+        self.fog = np.zeros((self._map.size[0], self._map.size[1]), dtype=np.bool)  # self._map.size?
 
     @property
     def size(self):
@@ -93,33 +93,30 @@ class MapView(pathfinding.Graph):
         angle = (angle - heading + 180) % 360 - 180
         z[np.where(angle > view_angle / 2)] = 0
         z[np.where(angle < -view_angle / 2)] = 0
-        
+
         # but if it's close enough we can still see it
         z[np.where(dist <= 1.5)] = 1
-        
+
         # ---------------------------------------------------------------------
-        
+
         # vision of structures (targets, towers, gates, walls)
-            # if there is a line of vision, then walls and gates can be seen from <= 10 meters distance
-            # towers can be seen from <= 18 meters away
-            # guards on towers can only be seen within normal ranges
-        
-        
+        #    # if there is a line of vision, then walls and gates can be seen from <= 10 meters distance
+        #    # towers can be seen from <= 18 meters away
+        #    # guards on towers can only be seen within normal ranges
+
         # decreased vision areas (vision_modifier == 0.5)
-            # if agent is in decreased vision area for > 10 seconds, then it can only be seen from <= 1 meter distance
-            # if agent is in decreased vision range, then vision_range is decreased by 50%
-        
-        
+        #    # if agent is in decreased vision area for > 10 seconds, then it can only be seen from <= 1 meter distance
+        #    # if agent is in decreased vision range, then vision_range is decreased by 50%
+
         # vision when on towers (sentry towers aren't implemented yet)
-            # view_range should be between 2 and 15 meters
-            # view_angle should be 30
-            # entering/leaving a tower causes 3 seconds of blindness
-            # add on_tower before z[np.where(dist <= 1.5)] = 1
-            
-            
+        #    # if on tower, then view_range between 2 and 15 meters
+        #    # if on tower, then view_angle = 30
+        #    # if entering/leaving a tower, then vision_range = 0 for 3 seconds
+        #    # add if on_tower before z[np.where(dist <= 1.5)] = 1
+
         # decreased vision due to turning
-            # if turning > 45 degrees/second, then blind during turning and 0.5 seconds afterwards
-            
+        #    # if turning > 45 degrees/second, then vision_range = 0 while turning + 0.5 seconds afterwards
+
         # ---------------------------------------------------------------------
 
         # `paste` and `paste_slices` taken from:
@@ -133,7 +130,7 @@ class MapView(pathfinding.Graph):
                 block_max = max_w - max(pos + w, max_w)
                 block_max = block_max if block_max != 0 else None
                 return slice(wall_min, wall_max), slice(block_min, block_max)
-            
+
             loc_zip = zip(loc, block.shape, wall.shape)
             wall_slices, block_slices = zip(*map(paste_slices, loc_zip))
             wall[wall_slices] += block[block_slices]
@@ -146,7 +143,7 @@ class MapView(pathfinding.Graph):
         # self.fog[offset_x:width + offset_x, offset_y:width + offset_y] |= z
 
     def is_revealed(self, x: int, y: int):
-        if x >= 0 and y >= 0 and x < self._map.size[0] and y < self._map.size[1]:
+        if 0 <= x < self._map.size[0] and 0 <= y < self._map.size[1]:
             return self.fog[x][y]
         else:
             return True

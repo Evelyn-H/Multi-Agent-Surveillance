@@ -16,7 +16,7 @@ class Graph(metaclass=ABCMeta):
         pass
 
 
-class PriorityQueue():
+class PriorityQueue:
     def __init__(self):
         self.elements = []
 

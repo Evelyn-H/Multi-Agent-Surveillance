@@ -108,12 +108,11 @@ class World:
                 return None
             
         def circle_collision(x, y, r=0.5):
-                x, y = int(math.floor(x)), int(math.floor(y))
-                if self.map.is_wall(x, y):
-                    center = vmath.Vector2(x, y) + (0.5, 0.5)
-                    if (agent.location - center).length < (r + width / 2):
-                        return center + (agent.location - center).as_length(r + width / 2)
-
+            x, y = int(math.floor(x)), int(math.floor(y))
+            if self.map.is_wall(x, y):
+                center = vmath.Vector2(x, y) + (0.5, 0.5)
+                if (agent.location - center).length < (r + width / 2):
+                    return center + (agent.location - center).as_length(r + width / 2)
 
         for ID, agent in self.agents.items():
             # do a quick bounds check first so they stay on the map
@@ -278,7 +277,6 @@ class World:
             # we're done
             print('The intruders won!')
             return True
-
 
         # and up the counter
         self.time_ticks += 1
