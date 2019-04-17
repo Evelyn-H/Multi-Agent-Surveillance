@@ -51,6 +51,7 @@ class SimpleGuard(GuardAgent):
                     self.send_message(1, "I just turned!")
 
 
+# TODO: investigate why sometimes agents get stuck and don't seem to move anymore
 class PatrollingGuard(GuardAgent):
     def make_patrol_route(self) -> List['Position']:
         width = [1.5, self.map.width - 1.5]
@@ -110,8 +111,9 @@ class PatrollingGuard(GuardAgent):
         if seen_intruders:
             self.seen_intruder = seen_intruders[0].location
             self.chase = True
-        else:
-            self.chase = False 
+            print('Agent '+str(self.ID)+' saw an intruder!')
+        # else:
+            # self.chase = False
             
         if self.path and self.move_remaining == 0:
             next_pos = self.path[0]

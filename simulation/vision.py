@@ -95,7 +95,7 @@ class MapView(pathfinding.Graph):
         z[np.where(angle < -view_angle / 2)] = 0
 
         # but if it's close enough we can still see it
-        z[np.where(dist <= 1.5)] = 1
+        z[np.where(dist <= 1.5)] = 1  # is 1.5 maybe a bit high, considering this isn't actually allowed?
 
         # ---------------------------------------------------------------------
 
@@ -104,15 +104,10 @@ class MapView(pathfinding.Graph):
         #    # towers can be seen from <= 18 meters away
         #    # guards on towers can only be seen within normal ranges
 
-        # decreased vision areas (vision_modifier == 0.5)
-        #    # if agent is in decreased vision area for > 10 seconds, then it can only be seen from <= 1 meter distance
-        #    # if agent is in decreased vision range, then vision_range is decreased by 50%
-
         # vision when on towers (sentry towers aren't implemented yet)
         #    # if on tower, then view_range between 2 and 15 meters
         #    # if on tower, then view_angle = 30
         #    # if entering/leaving a tower, then vision_range = 0 for 3 seconds
-        #    # add if on_tower before z[np.where(dist <= 1.5)] = 1
 
         # decreased vision due to turning
         #    # if turning > 45 degrees/second, then vision_range = 0 while turning + 0.5 seconds afterwards

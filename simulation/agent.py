@@ -50,6 +50,7 @@ class Agent(metaclass=ABCMeta):
         self._can_sprint: bool = False
         self._sprint_rest_time = 10
         self._sprint_time = 5
+        self._dec_vision_time = 0
         
         # I would like to move these into the intruder agent since only the intruder should be able to sprint
         # Set the sprint cooldown to the tick that it started
@@ -206,6 +207,7 @@ class Agent(metaclass=ABCMeta):
             remaining = self.turn_remaining
             self.heading += math.copysign(min(world.World.TIME_PER_TICK * turn_speed, abs(remaining)), remaining)
             self.heading = (self.heading + 180) % 360 - 180
+
         # process walking/running
         if self._move_target != 0:
             distance = math.copysign(min(world.World.TIME_PER_TICK * self.move_speed, abs(self._move_target)), self._move_target)
@@ -214,10 +216,27 @@ class Agent(metaclass=ABCMeta):
         self.make_noise()
 
     def _update_vision(self, force=False) -> bool:
-        current_tile = (int(self.location.x), int(self.location.y))
+        current_x = int(self.location.x)
+        current_y = int(self.location.y)
+        current_tile = (current_x, current_y)
+
+        if self.map._map.vision_modifier[current_x-1][current_y-1] == 0.5:
+            # if agent is in decreased vision area, then vision_range is decreased by 50%
+            if self._dec_vision_time == 0:
+                self.view_range /= 2
+
+            # if agent is in decreased vision area for > 10s, then it can only be seen from <= 1 meter distance
+            if self._dec_vision_time*world.World.TIME_PER_TICK > 10:
+                # reduce range from which agent is visible
+                pass
+
+            self._dec_vision_time += 1
+        elif self._dec_vision_time > 0:
+            self._dec_vision_time = 0
+
         if force or self._last_tile != current_tile or abs(self.heading - self._last_heading) > 5:
             self._last_tile = current_tile
-            self.map._reveal_circle(current_tile[0], current_tile[1], self.view_range, self.view_angle, self.heading)
+            self.map._reveal_circle(current_x, current_y, self.view_range, self.view_angle, self.heading)
             self._last_heading = self.heading
             return True
         return False
@@ -247,6 +266,7 @@ class Agent(metaclass=ABCMeta):
 
         # reset collision tracking
         self._has_collided = False
+
         # and execute movement commands
         self._process_movement()
 
