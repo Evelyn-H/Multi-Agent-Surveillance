@@ -16,9 +16,12 @@ class SimpleGuard(GuardAgent):
         """ Must return a valid starting position for the agent """
         return (random.random() * self.map.width, random.random() * self.map.height)
 
-    def on_noise(self, noise: world.NoiseEvent) -> None:
+    def on_noise(self, noises: List['world.NoiseEvent']) -> None:
         """ Noise handler, will be called before `on_tick` """
-        ...
+        angle = super().on_noise(noises);
+        if(angle != None):
+            self.heading = (angle+180)%360
+
 
     def on_message(self, message: world.Message) -> None:
         """ Message handler, will be called before `on_tick` """
@@ -77,9 +80,11 @@ class PatrollingGuard(GuardAgent):
         """ Must return a valid starting position for the agent """
         return (random.random() * self.map.width, random.random() * self.map.height)
 
-    def on_noise(self, noise: world.NoiseEvent) -> None:
+    def on_noise(self, noises: List['world.NoiseEvent']) -> None:
         """ Noise handler, will be called before `on_tick` """
-        ...
+        angle = super().on_noise(noises);
+        if(angle != None):
+            self.heading = (angle+180)%360
 
     def on_message(self, message: world.Message) -> None:
         """ Message handler, will be called before `on_tick` """
@@ -131,9 +136,11 @@ class PathfindingIntruder(IntruderAgent):
         """ Called once when the agent is captured """
         self.log('I\'ve been captured... :(')
 
-    def on_noise(self, noise: world.NoiseEvent) -> None:
+    def on_noise(self, noises: List['world.NoiseEvent']) -> None:
         """ Noise handler, will be called before `on_tick` """
-        ...
+        angle = super().on_noise(noises);
+        if(angle != None):
+            self.heading = angle
 
     def on_message(self, message: world.Message) -> None:
         """ Message handler, will be called before `on_tick` """

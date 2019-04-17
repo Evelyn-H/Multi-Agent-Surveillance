@@ -263,8 +263,12 @@ class World:
                     visible_agents.append(simulation.vision.AgentView(other_agent))
             
             # and run the agent code
-            agent.tick(seen_agents=visible_agents, noises=[])
+            agent.tick(seen_agents=visible_agents)
         self._collision_check()
+
+        for ID, agent in self.agents.items():
+            agent.on_noise(self.noises);
+
 
         all_captured = self._capture_check()
 
@@ -293,7 +297,8 @@ class World:
         # Rate parameter for one 25m^2 is 0.1 per minute -> divide by 60 to get the events per second
         # Scale up the rate parameter to map size 6*(map_size/25)*2=64 (amount of 25m^2 squares in the map)
         # I know, that the map size should be dynamic
-        event_rate = 0.1
+#        event_rate = 0.1
+        event_rate = 10
         random_events_per_second = (event_rate / 60) * (self.map.size[0] * self.map.size[1] / 25)
         chance_to_emit = random_events_per_second * self.TIME_PER_TICK
         if random.uniform(0, 1) < chance_to_emit:

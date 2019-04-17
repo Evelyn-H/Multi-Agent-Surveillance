@@ -3,6 +3,7 @@ from abc import ABCMeta, abstractmethod
 import math
 import vectormath as vmath
 import random
+import numpy as np
 
 from .util import Position
 from . import vision
@@ -51,6 +52,9 @@ class Agent(metaclass=ABCMeta):
         self._sprint_rest_time = 10
         self._sprint_time = 5
         
+        #Guard agents interaction with towers
+        self._in_tower = False
+
         #I would like to move these into the intruder agent since only the intruder should be able to sprint
         #Set the sprint cooldown to the tick that it started
         self._sprint_stop_time = -100000
@@ -184,6 +188,13 @@ class Agent(metaclass=ABCMeta):
     def move(self, distance):
         self._move_target = distance
 
+    def enter_tower(self, tower):
+        return
+
+    @property
+    def in_tower_range(self):
+        ...
+        
     @property
     def turn_remaining(self) -> float:
         a = self._turn_target - self.heading
@@ -196,6 +207,9 @@ class Agent(metaclass=ABCMeta):
 
     def _process_movement(self):
         """ Executes the last movement command """
+#        if self.in_tower:
+#            return
+
         self._update_sprint()
 
         turn_speed = self.turn_speed
@@ -223,15 +237,11 @@ class Agent(metaclass=ABCMeta):
             return True
         return False
 
-    def tick(self, seen_agents: List['vision.AgentView'], noises: List['world.NoiseEvent']):
+    def tick(self, seen_agents: List['vision.AgentView']):
         # process vision
         has_updated = self._update_vision(force=(self.time_ticks == 0))
         if has_updated:
-            self.on_vision_update()
-
-        # noises
-        for noise in noises:
-            self.on_noise(noise)
+            self.on_vision_update()            
 
         # messages
         for message in self._message_queue_in:
@@ -271,9 +281,19 @@ class Agent(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def on_noise(self, noise: 'world.NoiseEvent') -> None:
-        """ Noise handler, will be called before `on_tick` """
-        pass
+    def on_noise(self, noises: List['world.NoiseEvent']) -> None:
+        """ Noise handler, that checks, if there a noise event occurs and where it is perceived  """
+        # noises
+        for noise in noises:
+            distance = math.sqrt((noise.location.x-self.location.x)**2+(noise.location.y-self.location.y)**2)
+            if(distance < noise.radius and noise.source != self):
+                dot = noise.location.x*self.location.x + noise.location.y*self.location.y      # dot product
+                det = noise.location.x*self.location.y - noise.location.y*self.location.x      # determinant
+                true_angle = math.atan2(det, dot)  
+                uncertainty = 10
+                perceived_angle = np.random.normal(true_angle, uncertainty)
+                return perceived_angle
+                    
 
     @abstractmethod
     def on_message(self, message: 'world.Message') -> None:
@@ -291,7 +311,8 @@ class Agent(metaclass=ABCMeta):
         pass
     
     def make_noise(self):
-        event_rate = 0.1
+#        event_rate = 0.1
+        event_rate = 0
         random_events_per_second = (event_rate / 60) * (self._world.map.size[0] * self._world.map.size[1] / 25)
         chance_to_emit = random_events_per_second * self._world.TIME_PER_TICK
         radius = 0
