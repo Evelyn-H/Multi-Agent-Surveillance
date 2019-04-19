@@ -3,8 +3,6 @@ import math
 import numpy as np
 import vectormath as vmath
 
-from profilehooks import profile
-
 from .util import Position
 from . import pathfinding
 import simulation
@@ -38,6 +36,23 @@ class AgentView:
     @property
     def is_intruder(self):
         return isinstance(self._agent, simulation.agent.IntruderAgent)
+
+# TODO: ---------------------------------------------------------------
+
+# vision of structures (targets, towers, gates, walls)
+#    # if there is a line of vision, then walls and gates can be seen from <= 10 meters distance
+#    # towers can be seen from <= 18 meters away
+#    # guards on towers can only be seen within normal ranges
+
+# vision when on towers (sentry towers aren't implemented yet)
+#    # if on tower, then view_range between 2 and 15 meters
+#    # if on tower, then view_angle = 30
+#    # if entering/leaving a tower, then vision_range = 0 for 3 seconds
+
+# decreased vision due to turning
+#    # if turning > 45 degrees/second, then vision_range = 0 while turning + 0.5 seconds afterwards
+
+# ---------------------------------------------------------------------
 
 
 class MapView(pathfinding.Graph):
@@ -107,10 +122,7 @@ class MapView(pathfinding.Graph):
     # see-through-walls version:    0.2 ms / call
     # same but without numpy:       0.4 ms / call
     # proper version:               0.6 ms / call
-    # @profile
     def _reveal_visible(self, x0: int, y0: int, radius: float, view_angle: float, heading: float):
-        # self._reveal_circle(x, y, radius, view_angle, heading)
-
         offset = int(math.ceil(radius)) + 1
         for x in range(x0 - offset, x0 + offset):
             for y in range(y0 - offset, y0 + offset):
@@ -130,78 +142,6 @@ class MapView(pathfinding.Graph):
                     continue
                 # tile is visible!
                 self.fog[x][y] = True
-
-    def _reveal_circle(self, x: int, y: int, radius: float, view_angle: float, heading: float):
-        # center = vmath.Vector2(x, y)
-        # min_x = max(0, int(x - radius - 1))
-        # max_x = min(self._map.size[0], int(x + radius + 1))
-        # min_y = max(0, int(y - radius - 1))
-        # max_y = min(self._map.size[1], int(y + radius + 1))
-        # for x in range(min_x, max_x):
-        #     for y in range(min_y, max_y):
-        #         if (center - (x + 0.5, y + 0.5)).length < radius:
-        #             self.fog[x][y] = True
-
-        radius = int(math.ceil(radius))
-
-        width = radius * 2 + 1
-        z = np.zeros((width, width), dtype=np.bool)
-
-        # calculate distance for each point in the matrix
-        X, Y = np.meshgrid(np.arange(z.shape[0]), np.arange(z.shape[1]))
-        dist = np.sqrt((X - width // 2)**2 + (Y - width // 2)**2)
-
-        # assign value of 1 to those points where `dist < radius`
-        z[np.where(dist <= radius)] = 1
-
-        # only see in the viewing cone
-        angle = np.arctan2((Y - width // 2), (X - width // 2)) * 180 / np.pi
-        angle = (angle - heading + 180) % 360 - 180
-        z[np.where(angle > view_angle / 2)] = 0
-        z[np.where(angle < -view_angle / 2)] = 0
-
-        # but if it's close enough we can still see it
-        z[np.where(dist <= 1.5)] = 1  # is 1.5 maybe a bit high, considering this isn't actually allowed?
-
-        # ---------------------------------------------------------------------
-
-        # vision of structures (targets, towers, gates, walls)
-        #    # if there is a line of vision, then walls and gates can be seen from <= 10 meters distance
-        #    # towers can be seen from <= 18 meters away
-        #    # guards on towers can only be seen within normal ranges
-
-        # vision when on towers (sentry towers aren't implemented yet)
-        #    # if on tower, then view_range between 2 and 15 meters
-        #    # if on tower, then view_angle = 30
-        #    # if entering/leaving a tower, then vision_range = 0 for 3 seconds
-
-        # decreased vision due to turning
-        #    # if turning > 45 degrees/second, then vision_range = 0 while turning + 0.5 seconds afterwards
-
-        # ---------------------------------------------------------------------
-
-        # `paste` and `paste_slices` taken from:
-        # https://stackoverflow.com/a/50692782
-        def paste(wall, block, loc):
-            def paste_slices(tup):
-                pos, w, max_w = tup
-                wall_min = max(pos, 0)
-                wall_max = min(pos + w, max_w)
-                block_min = -min(pos, 0)
-                block_max = max_w - max(pos + w, max_w)
-                block_max = block_max if block_max != 0 else None
-                return slice(wall_min, wall_max), slice(block_min, block_max)
-
-            loc_zip = zip(loc, block.shape, wall.shape)
-            wall_slices, block_slices = zip(*map(paste_slices, loc_zip))
-            wall[wall_slices] += block[block_slices]
-
-        paste(self.fog, z, (x - width // 2, y - width // 2))
-        # print('vision updated')
-
-        # offset_x = x - width // 2
-        # offset_y = y - width // 2
-        # self.fog[offset_x:width + offset_x, offset_y:width + offset_y] |= z
 
     def is_revealed(self, x: int, y: int):
         if 0 <= x < self._map.size[0] and 0 <= y < self._map.size[1]:
