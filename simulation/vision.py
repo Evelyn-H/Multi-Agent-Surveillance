@@ -3,6 +3,8 @@ import math
 import numpy as np
 import vectormath as vmath
 
+from profilehooks import profile
+
 from .util import Position
 from . import pathfinding
 import simulation
@@ -64,6 +66,70 @@ class MapView(pathfinding.Graph):
 
     def _reveal_all(self):
         self.fog = np.ones((self._map.size[0], self._map.size[1]), dtype=np.bool)
+
+    def _is_tile_visible_from(self, x0, y0, x, y):
+        # line code taken from:
+        # https://github.com/encukou/bresenham
+        def line(x0, y0, x1, y1):
+            dx = x1 - x0
+            dy = y1 - y0
+
+            xsign = 1 if dx > 0 else -1
+            ysign = 1 if dy > 0 else -1
+
+            dx = abs(dx)
+            dy = abs(dy)
+
+            if dx > dy:
+                xx, xy, yx, yy = xsign, 0, 0, ysign
+            else:
+                dx, dy = dy, dx
+                xx, xy, yx, yy = 0, ysign, xsign, 0
+
+            D = 2 * dy - dx
+            y = 0
+
+            for x in range(dx + 1):
+                yield x0 + x * xx + y * yx, y0 + x * xy + y * yy
+                if D >= 0:
+                    y += 1
+                    D -= 2 * dx
+                D += 2 * dy
+
+        for x_line, y_line in line(x0, y0, x, y):
+            # reached the last tile, so it's visible
+            if x == x_line and y == y_line:
+                return True
+            # if any tile along the way is a wall then the check failed
+            if self._map.is_wall(x_line, y_line):
+                return False
+
+    # see-through-walls version:    0.2 ms / call
+    # same but without numpy:       0.4 ms / call
+    # proper version:               0.6 ms / call
+    # @profile
+    def _reveal_visible(self, x0: int, y0: int, radius: float, view_angle: float, heading: float):
+        # self._reveal_circle(x, y, radius, view_angle, heading)
+
+        offset = int(math.ceil(radius)) + 1
+        for x in range(x0 - offset, x0 + offset):
+            for y in range(y0 - offset, y0 + offset):
+                # bounds check
+                if not self._map.in_bounds(x, y):
+                    continue
+                # distance check
+                if (x - x0)**2 + (y - y0)**2 > radius**2:
+                    continue
+                # angle check
+                angle = math.atan2(y0 - y, x0 - x) * 180 / np.pi
+                angle = (angle + heading + 90 + 180) % 360 - 180
+                if angle > view_angle / 2 or angle < -view_angle / 2:
+                    continue
+                # visibility check
+                if not self._is_tile_visible_from(x0, y0, x, y):
+                    continue
+                # tile is visible!
+                self.fog[x][y] = True
 
     def _reveal_circle(self, x: int, y: int, radius: float, view_angle: float, heading: float):
         # center = vmath.Vector2(x, y)

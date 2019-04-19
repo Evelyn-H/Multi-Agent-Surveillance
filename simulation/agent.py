@@ -236,7 +236,7 @@ class Agent(metaclass=ABCMeta):
 
         if force or self._last_tile != current_tile or abs(self.heading - self._last_heading) > 5:
             self._last_tile = current_tile
-            self.map._reveal_circle(current_x, current_y, self.current_view_range, self.view_angle, self.heading)
+            self.map._reveal_visible(current_x, current_y, self.current_view_range, self.view_angle, self.heading)
             self._last_heading = self.heading
             return True
         return False
