@@ -124,8 +124,8 @@ class MapView(pathfinding.Graph):
     # proper version:               0.6 ms / call
     def _reveal_visible(self, x0: int, y0: int, radius: float, view_angle: float, heading: float):
         offset = int(math.ceil(radius)) + 1
-        for x in range(x0 - offset, x0 + offset):
-            for y in range(y0 - offset, y0 + offset):
+        for x in range(x0 - offset, x0 + offset + 1):
+            for y in range(y0 - offset, y0 + offset + 1):
                 # bounds check
                 if not self._map.in_bounds(x, y):
                     continue
@@ -142,6 +142,12 @@ class MapView(pathfinding.Graph):
                     continue
                 # tile is visible!
                 self.fog[x][y] = True
+
+        # set neighbouring tiles as visible too
+        for x in range(x0 - 1, x0 + 2):
+            for y in range(y0 - 1, y0 + 2):
+                if self._map.in_bounds(x, y):
+                    self.fog[x][y] = True
 
     def is_revealed(self, x: int, y: int):
         if 0 <= x < self._map.size[0] and 0 <= y < self._map.size[1]:
