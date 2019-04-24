@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 import math
 import random
 from enum import Enum
@@ -202,7 +202,6 @@ class World:
         """
         # see if any intruders will reach the target now
         for ID_intruder, intruder in self.intruders.items():
-            # somehow agents don't get closer to the target than 0.7 or 0.64
             if (intruder.location - intruder.target).length < 0.5: 
                 if intruder.ticks_in_target == 0.0:
                     if (intruder.ticks_since_target * self.TIME_PER_TICK) >= 3.0 or intruder.times_visited_target == 0.0:
@@ -256,8 +255,9 @@ class World:
                     continue
                 d = other_agent.location - agent.location
                 angle_diff = abs((-math.degrees(math.atan2(d.y, d.x)) + 90 - agent.heading + 180) % 360 - 180)
-                if (d.length <= agent.view_range and angle_diff <= agent.view_angle) \
-                        or d.length <= 1.5:
+
+                if (d.length < other_agent.visibility_range and d.length <= agent.view_range and
+                        angle_diff <= agent.view_angle) or d.length <= 1.0:
                     # create a new `AgentView` event
                     visible_agents.append(simulation.vision.AgentView(other_agent))
             

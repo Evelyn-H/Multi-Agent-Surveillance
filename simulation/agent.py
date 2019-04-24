@@ -46,6 +46,7 @@ class Agent(metaclass=ABCMeta):
         self.move_speed: float = self.base_speed
         self.view_range: float = 6.0
         self.current_view_range = self.view_range
+        self.visibility_range = self.view_range
         self.view_angle: float = 45.0
         self.turn_speed: float = 180
         self.turn_speed_sprinting = 10
@@ -224,18 +225,17 @@ class Agent(metaclass=ABCMeta):
         current_tile = (int(self.location.x), int(self.location.y))
         current_x, current_y = current_tile
 
-        vision_modifier = self.map._map.vision_modifier[current_x][current_y]
+        vision_modifier = self.map._map.vision_modifier[current_x][current_y] # gives out of bounds exceptions sometimes
         self.current_view_range = self.view_range * vision_modifier
 
         # check if agent is in decreased vision area
         if vision_modifier < 1.0:
             self._dec_vision_time += 1
-            # if agent is in decreased vision area for > 10s, then it can only be seen from <= 1 meter distance
             if self._dec_vision_time * world.World.TIME_PER_TICK > 10:
-                # TODO: reduce range from which agent is visible
-                pass
+                self.visibility_range = 1.0
         else:
             self._dec_vision_time = 0
+            self.visibility_range = self.view_range
 
         # get the speed at which the agent will turn
         current_turn_speed = 0

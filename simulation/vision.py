@@ -38,7 +38,6 @@ class AgentView:
         return isinstance(self._agent, simulation.agent.IntruderAgent)
 
 # TODO: ---------------------------------------------------------------
-
 # vision of structures (towers, gates, walls)
 #    # if there is a line of vision, then walls and gates can be seen
 #      from <= 10 meters distance
@@ -49,10 +48,6 @@ class AgentView:
 #    # if on tower, then view_range between 2 and 15 meters
 #    # if on tower, then view_angle = 30
 #    # if entering/leaving a tower, then vision_range = 0 for 3 seconds
-
-# reducing the distance from where agents are visible if they've been
-# in a decreased vision area for more than 10 seconds
-
 # ---------------------------------------------------------------------
 
 
