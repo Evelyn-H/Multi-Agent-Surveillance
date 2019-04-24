@@ -52,6 +52,8 @@ class Agent(metaclass=ABCMeta):
         self._sprint_rest_time = 10
         self._sprint_time = 5
         self._dec_vision_time = 0
+        self._turn_blindness_time = 0
+        self._fast_turning: bool = False
 
         # I would like to move these into the intruder agent since only the intruder should be able to sprint
         # Set the sprint cooldown to the tick that it started
@@ -223,16 +225,32 @@ class Agent(metaclass=ABCMeta):
         vision_modifier = self.map._map.vision_modifier[current_x][current_y]
         self.current_view_range = self.view_range * vision_modifier
 
-        # if agent is in decreased vision area, then start the timer
+        # check if agent is in decreased vision area
         if vision_modifier < 1.0:
             self._dec_vision_time += 1
             # if agent is in decreased vision area for > 10s, then it can only be seen from <= 1 meter distance
             if self._dec_vision_time * world.World.TIME_PER_TICK > 10:
-                # reduce range from which agent is visible
+                # TODO: reduce range from which agent is visible
                 pass
-
         else:
             self._dec_vision_time = 0
+
+        # get the speed at which the agent will turn
+        current_turn_speed = 0
+        if not math.isclose(self._turn_target, self.heading):
+            current_turn_speed = min(self.turn_speed, abs(self.turn_remaining) / world.World.TIME_PER_TICK)
+
+        # check if agent will turn > 45 degrees/second
+        if current_turn_speed > 45:
+            self.current_view_range = 0
+            self._fast_turning = True
+        elif self._turn_blindness_time * world.World.TIME_PER_TICK < 0.5 and self._fast_turning:
+            self.current_view_range = 0
+            self._turn_blindness_time += 1
+
+            if self._turn_blindness_time * world.World.TIME_PER_TICK >= 0.5:
+                self._fast_turning = False
+                self._turn_blindness_time = 0
 
         if force or self._last_tile != current_tile or abs(self.heading - self._last_heading) > 5:
             self._last_tile = current_tile

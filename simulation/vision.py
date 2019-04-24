@@ -39,18 +39,19 @@ class AgentView:
 
 # TODO: ---------------------------------------------------------------
 
-# vision of structures (targets, towers, gates, walls)
-#    # if there is a line of vision, then walls and gates can be seen from <= 10 meters distance
+# vision of structures (towers, gates, walls)
+#    # if there is a line of vision, then walls and gates can be seen
+#      from <= 10 meters distance
 #    # towers can be seen from <= 18 meters away
 #    # guards on towers can only be seen within normal ranges
 
-# vision when on towers (sentry towers aren't implemented yet)
+# vision when on towers
 #    # if on tower, then view_range between 2 and 15 meters
 #    # if on tower, then view_angle = 30
 #    # if entering/leaving a tower, then vision_range = 0 for 3 seconds
 
-# decreased vision due to turning
-#    # if turning > 45 degrees/second, then vision_range = 0 while turning + 0.5 seconds afterwards
+# reducing the distance from where agents are visible if they've been
+# in a decreased vision area for more than 10 seconds
 
 # ---------------------------------------------------------------------
 
@@ -129,17 +130,21 @@ class MapView(pathfinding.Graph):
                 # bounds check
                 if not self._map.in_bounds(x, y):
                     continue
+
                 # distance check
                 if (x - x0)**2 + (y - y0)**2 > radius**2:
                     continue
+
                 # angle check
                 angle = math.atan2(y0 - y, x0 - x) * 180 / np.pi
                 angle = (angle + heading + 90 + 180) % 360 - 180
                 if angle > view_angle / 2 or angle < -view_angle / 2:
                     continue
+
                 # visibility check
                 if not self._is_tile_visible_from(x0, y0, x, y):
                     continue
+
                 # tile is visible!
                 self.fog[x][y] = True
 
