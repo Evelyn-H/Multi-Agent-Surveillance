@@ -50,7 +50,11 @@ class MapViewer(renderer.WindowComponent):
             self.agent_trails[agent].append((agent.location.x, agent.location.y))
 
         # register commands
-        self.parent.console.register_command('fow', lambda x: self.set_fog(int(x)))
+        def fow(input):
+            self.set_fog(int(input))
+            return f"Now viewing agent {int(input)}"
+
+        self.parent.console.register_command('fow', fow)
 
         # to track mouse motion
         self.mouse_x = 0
