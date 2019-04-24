@@ -41,6 +41,7 @@ class Agent(metaclass=ABCMeta):
         # movement stuff
         self.location: Position = None
         self.heading: float = 0
+        self._last_heading: float = 0
         self.base_speed: float = 1.4
         self.move_speed: float = self.base_speed
         self.view_range: float = 6.0
@@ -54,6 +55,7 @@ class Agent(metaclass=ABCMeta):
         self._dec_vision_time = 0
         self._turn_blindness_time = 0
         self._fast_turning: bool = False
+        self.path = None
 
         # I would like to move these into the intruder agent since only the intruder should be able to sprint
         # Set the sprint cooldown to the tick that it started

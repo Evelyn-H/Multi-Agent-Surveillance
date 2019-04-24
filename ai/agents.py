@@ -53,6 +53,17 @@ class SimpleGuard(GuardAgent):
 
 # TODO: investigate why sometimes agents get stuck and don't seem to move anymore
 class PatrollingGuard(GuardAgent):
+    def __init__(self) -> None:
+        super().__init__()
+        self.color = (0, 1, 1)  # cyan
+
+        self.patrol_route = None
+        self.patrol_idx = 0
+        self.patrol_point = None
+
+        self.seen_intruder = None
+        self.chase = False
+
     def make_patrol_route(self) -> List['Position']:
         width = [1.5, self.map.width - 1.5]
         height = [1.5, self.map.height - 1.5]
@@ -66,13 +77,8 @@ class PatrollingGuard(GuardAgent):
         
     def on_setup(self):
         """ Agent setup """
-        self.color = (0, 1, 1) # cyan
-        self.path = None
         self.patrol_route = self.make_patrol_route()
-        self.patrol_idx = 0
         self.patrol_point = self.patrol_route[self.patrol_idx]
-        self.seen_intruder = None
-        self.chase = False
         print('Guard', self.ID, 'Patrolling Route:', self.patrol_route)
 
     def on_pick_start(self) -> Tuple[float, float]:
@@ -111,7 +117,6 @@ class PatrollingGuard(GuardAgent):
         if seen_intruders:
             self.seen_intruder = seen_intruders[0].location
             self.chase = True
-            print('Agent '+str(self.ID)+' saw an intruder!')
         # else:
             # self.chase = False
             
@@ -125,7 +130,6 @@ class PatrollingGuard(GuardAgent):
 class PathfindingIntruder(IntruderAgent):
     def on_setup(self):
         """ Agent setup """
-        self.path = None
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
