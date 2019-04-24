@@ -51,10 +51,14 @@ class Agent(metaclass=ABCMeta):
         self._can_sprint: boolean = False
         self._sprint_rest_time = 10
         self._sprint_time = 5
+        self._is_deaf = False
         
         #Guard agents interaction with towers
         self._in_tower = False
-
+        self._interacting_with_tower = False
+        self._tower_interacction_time = 3
+        self._tower_start_time = 0
+        
         #I would like to move these into the intruder agent since only the intruder should be able to sprint
         #Set the sprint cooldown to the tick that it started
         self._sprint_stop_time = -100000
@@ -183,17 +187,57 @@ class Agent(metaclass=ABCMeta):
         #Check, if the agent has rested for enough -> ensure, that rests when if can't sprint
         if self.is_resting:
             self.move_speed = 0
+            
+    def update_tower(self):
+        #The agent has to take N seconds to interact with the tower
+        if (self._world.time_ticks - self._tower_start_time) < (self._tower_interacction_time/self._world.TIME_PER_TICK):
+            return
+        
+        #Sanity check. Return if the agent is not interacting with a tower
+        if not self._interacting_with_tower:
+            return 
+        
+        #Leaving the tower
+        if self._in_tower:
+            #Move the agent out of the tower range in the direction that he is heading
+#            self.location.x = self.location.x + self._width*1.2
+#            self.location.y = self.location.y + self._width*1.2
+            self.move_speed = self.base_speed
+            self.move(self._width*1.2)
+            print("Left tower")
+        else: 
+            print("Entered tower")
+
+        self._in_tower = not self._in_tower
+        self._is_deaf = False
+        self._interacting_with_tower = False
+        
+                                
+    def interact_with_tower(self, tower):
+        #Make sure, that it takes the agent 3 seconds to enter the tower
+        #TODO: Allow agents to leave the tower and make them able to target a tower
+        #if we are not in the range of the tower we do nothing
+        
+        if not self.in_tower_range(tower) or self._interacting_with_tower:
+            return
+        print("Interact with tower")
+        #Put agent on tower and deafen him
+        self._interacting_with_tower = True
+        self.location.x = tower[0]+self._width/2
+        self.location.y = tower[1]+self._width/2
+        self.move_speed = 0
+        self._tower_start_time = self._world.time_ticks
+        self._is_deaf = True
+
+    def in_tower_range(self, tower):
+        distance = math.sqrt((tower[0]-self.location.x)**2+(tower[1]-self.location.y)**2)
+        if(distance < self._width*1.1):
+            return True;
+       
         
     
     def move(self, distance):
         self._move_target = distance
-
-    def enter_tower(self, tower):
-        return
-
-    @property
-    def in_tower_range(self):
-        ...
         
     @property
     def turn_remaining(self) -> float:
@@ -207,8 +251,10 @@ class Agent(metaclass=ABCMeta):
 
     def _process_movement(self):
         """ Executes the last movement command """
-#        if self.in_tower:
-#            return
+        
+        self.update_tower();
+        if self._interacting_with_tower:
+            return
 
         self._update_sprint()
 
@@ -238,6 +284,11 @@ class Agent(metaclass=ABCMeta):
         return False
 
     def tick(self, seen_agents: List['vision.AgentView']):
+        #Random entering and leaving towers -> Prove of concept. self.interact_with_tower(tower) lets the agent interact with a tower 
+#        if np.random.random_sample() < 0.01:
+#            for tower in self._world.map.towers:
+#                self.interact_with_tower(tower)
+        
         # process vision
         has_updated = self._update_vision(force=(self.time_ticks == 0))
         if has_updated:
@@ -311,8 +362,7 @@ class Agent(metaclass=ABCMeta):
         pass
     
     def make_noise(self):
-#        event_rate = 0.1
-        event_rate = 0
+        event_rate = 0.1
         random_events_per_second = (event_rate / 60) * (self._world.map.size[0] * self._world.map.size[1] / 25)
         chance_to_emit = random_events_per_second * self._world.TIME_PER_TICK
         radius = 0
