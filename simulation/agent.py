@@ -200,27 +200,19 @@ class Agent(metaclass=ABCMeta):
         #Leaving the tower
         if self._in_tower:
             #Move the agent out of the tower range in the direction that he is heading
-#            self.location.x = self.location.x + self._width*1.2
-#            self.location.y = self.location.y + self._width*1.2
             self.move_speed = self.base_speed
             self.move(self._width*1.2)
-            print("Left tower")
-        else: 
-            print("Entered tower")
+            #TODO: Set vision range to normal (left tower)
 
         self._in_tower = not self._in_tower
         self._is_deaf = False
         self._interacting_with_tower = False
+        #TODO: Set vision range to [2,30] (in the tower)
         
                                 
     def interact_with_tower(self, tower):
-        #Make sure, that it takes the agent 3 seconds to enter the tower
-        #TODO: Allow agents to leave the tower and make them able to target a tower
-        #if we are not in the range of the tower we do nothing
-        
         if not self.in_tower_range(tower) or self._interacting_with_tower:
             return
-        print("Interact with tower")
         #Put agent on tower and deafen him
         self._interacting_with_tower = True
         self.location.x = tower[0]+self._width/2
@@ -334,6 +326,9 @@ class Agent(metaclass=ABCMeta):
     @abstractmethod
     def on_noise(self, noises: List['world.NoiseEvent']) -> None:
         """ Noise handler, that checks, if there a noise event occurs and where it is perceived  """
+        if self._is_deaf:
+            return
+        
         # noises
         for noise in noises:
             distance = math.sqrt((noise.location.x-self.location.x)**2+(noise.location.y-self.location.y)**2)
