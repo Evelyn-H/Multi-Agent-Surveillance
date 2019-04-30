@@ -106,7 +106,7 @@ class World:
                 return vmath.Vector2(x, y) + (0.5, 0.5)
             else:
                 return None
-            
+
         def circle_collision(x, y, r=0.5):
             x, y = int(math.floor(x)), int(math.floor(y))
             if self.map.is_wall(x, y):
@@ -196,7 +196,7 @@ class World:
         # check if all intruders are captured
         return all((intruder.is_captured for ID, intruder in self.intruders.items()))
 
-    def _target_check(self) -> bool: 
+    def _target_check(self) -> bool:
         """
         return: Whether or not all of the intruders have reached the target
         """
@@ -206,31 +206,31 @@ class World:
                 if intruder.ticks_in_target == 0.0:
                     if (intruder.ticks_since_target * self.TIME_PER_TICK) >= 3.0 or intruder.times_visited_target == 0.0:
                         intruder.times_visited_target += 1.0
-                        
+
                     intruder.ticks_since_target = 0.0
-                    
+
                 intruder.ticks_in_target += 1.0
-            
-            else:    
+
+            else:
                 if intruder.ticks_in_target > 0.0:
                     intruder.ticks_since_target += 1.0
                     intruder.ticks_in_target = 0.0
-                            
+
                 elif intruder.ticks_since_target > 0.0:
                     intruder.ticks_since_target += 1.0
-            
+
             # win type 1: the intruder has been in the target area for 3 seconds
             if (intruder.ticks_in_target * self.TIME_PER_TICK) >= 3.0:
                 intruder.reached_target = True
                 intruder.on_reached_target()
-            
+
             # win type 2: the intruder has visited the target area twice with at least 3 seconds inbetween
             elif intruder.times_visited_target >= 2.0:
                 intruder.reached_target = True
 
         # check if all intruders have reached the target
         return all((intruder.reached_target for ID, intruder in self.intruders.items()))
-    
+
     def setup(self):
         for ID, agent in self.agents.items():
             agent.setup(world=self)
@@ -260,9 +260,17 @@ class World:
                         angle_diff <= agent.view_angle) or d.length <= 1.0:
                     # create a new `AgentView` event
                     visible_agents.append(simulation.vision.AgentView(other_agent))
-            
+
+            perceived_noises = []
+            for noise in self.noises:
+                distance = (noise.location - agent.location).length
+                if distance < noise.radius and noise.source != agent:
+                    perceived_noises.append(PerceivedNoise(noise, agent))
+            if perceived_noises:
+                print("noises:", perceived_noises)
+
             # and run the agent code
-            agent.tick(seen_agents=visible_agents, noises=[])
+            agent.tick(seen_agents=visible_agents, noises=perceived_noises)
         self._collision_check()
 
         all_captured = self._capture_check()
@@ -271,7 +279,7 @@ class World:
             # we're done
             print('The guards won!')
             return True
-        
+
         all_reached_target = self._target_check()
         if all_reached_target:
             # we're done
@@ -330,14 +338,33 @@ class Message:
 class NoiseEvent:
     """Encapsulates a single noise event"""
 
-    def __init__(self, location: Position, source=None, time=0) -> None:
-        self.time = time
+    def __init__(self, location: Position, source=None, radius=5 / 2) -> None:
+        self.time = 0
         self.location = location
         self.source = source
+        self.radius = radius
 
-    def perceived_angle(self, target_pos: Position):
+
+class PerceivedNoise:
+    """Similar to a NoiseEvent, but tied to an observer"""
+
+    def __init__(self, noise: NoiseEvent, observer: Agent):
+        self._noise = noise
+        self._observer = observer
+
+    @property
+    def perceived_angle(self):
         """
         Calculates the perceived angle towards the noise from the perspective of the `target_pos`
         This also adds the uncertainty as described in the booklet
         """
-        ...
+
+        diff = self._noise.location - self._observer.location
+        if diff.length > 1e-5:
+            angle = vmath.Vector2(0, 1).angle(diff, unit='deg')
+            true_angle = angle if diff.x > 0 else -angle
+        else:
+            true_angle = 0
+
+        uncertainty = 10
+        return random.gauss(true_angle, uncertainty)
