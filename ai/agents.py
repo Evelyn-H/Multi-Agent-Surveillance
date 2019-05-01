@@ -35,6 +35,10 @@ class SimpleGuard(GuardAgent):
 
     def on_tick(self, seen_agents) -> None:
         """ Agent logic goes here """
+        # enter tower if possible
+        if self.enter_tower():
+            self.log("entered a tower!")
+
         # only try to chase intruders, not other guards
         seen_intruders = [a for a in seen_agents if a.is_intruder]
         if seen_intruders:
@@ -119,11 +123,12 @@ class PatrollingGuard(GuardAgent):
         # only try to chase intruders, not other guards
         seen_intruders = [a for a in seen_agents if a.is_intruder]
 
+        # TODO: look into extending the time that the guard is chasing (even after it loses sight of the intruder)
         if seen_intruders:
             self.seen_intruder = seen_intruders[0].location
             self.chase = True
-        # else:
-            # self.chase = False
+        else:
+            self.chase = False
 
         if self.path and self.move_remaining == 0:
             next_pos = self.path[0]

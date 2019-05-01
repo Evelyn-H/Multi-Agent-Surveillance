@@ -267,7 +267,7 @@ class World:
                 if distance < noise.radius and noise.source != agent:
                     perceived_noises.append(PerceivedNoise(noise, agent))
             if perceived_noises:
-                print("noises:", perceived_noises)
+                agent.log("perceived noises at", [perceived_noise.perceived_angle for perceived_noise in perceived_noises])
 
             # and run the agent code
             agent.tick(seen_agents=visible_agents, noises=perceived_noises)

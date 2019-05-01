@@ -43,9 +43,6 @@ class AgentView:
 #    # towers can be seen from <= 18 meters away
 #    # guards on towers can only be seen within normal ranges
 
-# TODO: vision when on tower
-#    # if on tower, then view_range between 2 and 15 meters
-
 
 class MapView(pathfinding.Graph):
     """
@@ -114,7 +111,7 @@ class MapView(pathfinding.Graph):
     # see-through-walls version:    0.2 ms / call
     # same but without numpy:       0.4 ms / call
     # proper version:               0.6 ms / call
-    def _reveal_visible(self, x0: int, y0: int, radius: float, view_angle: float, heading: float):
+    def _reveal_visible(self, x0: int, y0: int, radius: float, view_angle: float, heading: float, in_tower: bool):
         offset = int(math.ceil(radius)) + 1
         for x in range(x0 - offset, x0 + offset + 1):
             for y in range(y0 - offset, y0 + offset + 1):
@@ -133,7 +130,7 @@ class MapView(pathfinding.Graph):
                     continue
 
                 # visibility check
-                if not self._is_tile_visible_from(x0, y0, x, y):
+                if not self._is_tile_visible_from(x0, y0, x, y) and not in_tower:
                     continue
 
                 # tile is visible!

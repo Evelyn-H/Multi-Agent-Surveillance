@@ -70,16 +70,17 @@ class Agent(metaclass=ABCMeta):
         # vision stuff
         self.map: vision.MapView = None
         self._last_tile: Tuple[int, int] = None
+        self.tower_view_range: float = 15.0  # actually should be range between 2 and 15
         self.view_range: float = 6.0
         self.current_view_range: float = self.view_range
         self.visibility_range: float = self.view_range
+        self.decreased_visibility_range: float = 1.0
         self.base_view_angle: float = 45.0
         self.view_angle: float = self.base_view_angle
         self.tower_view_angle: float = 30.0
         self._dec_vision_time = 0
         self._fast_turning: bool = False
         self._turn_blindness_time = 0
-        self._is_tower_blind: bool = False
 
         # sound perception stuff
         self._is_deaf = False
@@ -212,13 +213,13 @@ class Agent(metaclass=ABCMeta):
         # done interacting!
         self._interacting_with_tower = False
 
-        # and we're no longer deaf or blind
+        # and we're no longer deaf
         self._is_deaf = False
-        self._is_tower_blind = False
 
         # set move speed and vision accordingly
         if self._in_tower:
-            # TODO: Set vision range to [2,30] (in the tower)
+            self.log("I'm in the tower and no longer blind")
+            self.current_view_range = self.tower_view_range
             ...
             self.move_speed = 0
         else:
@@ -243,7 +244,7 @@ class Agent(metaclass=ABCMeta):
 
         self._is_deaf = True
         self.view_angle = self.tower_view_angle
-        self._is_tower_blind = True
+        self.current_view_range = 0.0
         self.move_speed = 0
 
         # Put agent on tower
@@ -260,7 +261,7 @@ class Agent(metaclass=ABCMeta):
 
         self._is_deaf = True
         self.view_angle = self.base_view_angle
-        self._is_tower_blind = True
+        self.current_view_range = 0.0
         self.move_speed = 0
 
         # # Move the agent out of the tower range in the direction that he is heading
@@ -314,46 +315,42 @@ class Agent(metaclass=ABCMeta):
         current_tile = (int(self.location.x), int(self.location.y))
         current_x, current_y = current_tile
 
-        # TODO: check how to fix the following/if -1 is correct
-        # next line sometimes gives IndexError: index 51 is out of bounds for axis 0 with size 51
-        # (hence the -1, this is just a guess though)
-        vision_modifier = self.map._map.vision_modifier[current_x-1][current_y-1]
-        self.current_view_range = self.view_range * vision_modifier
-
-        # check if agent is settled in decreased vision area
-        if vision_modifier < 1.0 and self._move_target != 0:
-            self._dec_vision_time += 1
-            if self._dec_vision_time * world.World.TIME_PER_TICK > 10:
-                self.visibility_range = 1.0
-        else:
-            self._dec_vision_time = 0
-            self.visibility_range = self.view_range
-
         # get the speed at which the agent will turn
         current_turn_speed = 0
         if not math.isclose(self._turn_target, self.heading):
             current_turn_speed = min(self.turn_speed, abs(self.turn_remaining) / world.World.TIME_PER_TICK)
 
-        # check if agent will turn > 45 degrees/second
+        # agent is blind while turning >45 degrees/second + 0.5 seconds afterwards
         if current_turn_speed > 45:
             self._fast_turning = True
-
-        # agent is blind while turning >45 degrees/second + 0.5 seconds afterwards
-        if self._fast_turning and self._turn_blindness_time * world.World.TIME_PER_TICK < 0.5:
-            self.current_view_range = 0
-            self._turn_blindness_time += 1
-
-            if self._turn_blindness_time * world.World.TIME_PER_TICK >= 0.5:
+            self.current_view_range = 0.0
+        elif self._fast_turning:
+            if self._turn_blindness_time * world.World.TIME_PER_TICK < 0.5:
+                self.current_view_range = 0.0
+                self._turn_blindness_time += 1
+            else:
+                self.current_view_range = self.view_range
                 self._fast_turning = False
                 self._turn_blindness_time = 0
 
-        # check for tower blindness (3 seconds when entering or leaving)
-        if self._is_tower_blind:
-            self.current_view_range = 0
+        # TODO: the following line sometimes gives IndexError: index 51 is out of bounds for axis 0 with size 51
+        # vision_modifier is the only place where this index error occurs, happens when one of the agents is ouside
+        # of the board, -1 seems to solve this, check if correct
+        vision_modifier = self.map._map.vision_modifier[current_x-1][current_y-1]
+        self.current_view_range = self.current_view_range * vision_modifier
 
-        if force or self._last_tile != current_tile or abs(self.heading - self._last_heading) > 5:
+        # check if agent is settled in decreased vision area
+        if vision_modifier < 1.0 and self._move_target != 0:
+            if self._dec_vision_time * world.World.TIME_PER_TICK > 10:
+                self.visibility_range = self.decreased_visibility_range
+            self._dec_vision_time += 1
+        else:
+            self._dec_vision_time = 0
+            self.visibility_range = self.view_range
+
+        if force or self._last_tile != current_tile or abs(self.heading - self._last_heading) > 5 or self._in_tower:
             self._last_tile = current_tile
-            self.map._reveal_visible(current_x, current_y, self.current_view_range, self.view_angle, self.heading)
+            self.map._reveal_visible(current_x, current_y, self.current_view_range, self.view_angle, self.heading, self._in_tower)
             self._last_heading = self.heading
             return True
         return False
@@ -447,7 +444,6 @@ class Agent(metaclass=ABCMeta):
             self._world.add_noise(noise_event)
 
 
-# TODO: implement sentry tower
 class GuardAgent(Agent):
     def __init__(self) -> None:
         super().__init__()
