@@ -125,6 +125,68 @@ class PatrollingGuard(GuardAgent):
             self.path = self.path[1:]
 
 
+class CameraGuard(GuardAgent):
+    
+    def on_setup(self):
+        """ Agent setup """
+        self.base_speed = 0
+        self.move_speed = 0
+        self.view_range: float = 12.0
+                
+        self.color = (1, 0, 0)  # cyan
+        self.seen_intruder = None
+        print('Guard', self.ID, 'Camera guard')
+        
+    def on_message(self, message: world.Message) -> None:
+        """ Message handler, will be called before `on_tick` """
+        pass
+
+    def on_collide(self) -> None:
+        """ Collision handler """
+        pass
+
+    def on_pick_start(self) -> Tuple[float, float]:
+        """ Must return a valid starting position for the agent """
+        return (random.random() * self.map.width, random.random() * self.map.height)
+
+    def on_noise(self, noises: List['world.PerceivedNoise']) -> None:
+        """ Noise handler, will be called before `on_tick` """
+        self.turn_to(noises[0].perceived_angle)
+        self.log(f"turned to: {noises[0].perceived_angle}")
+
+
+    def on_vision_update(self) -> None:
+        pass
+
+    def on_tick(self, seen_agents) -> None:
+        """ Agent logic goes here """
+        
+        # Check, if the agent sees any intruders
+        seen_intruders = [a for a in seen_agents if a.is_intruder]
+        
+        #Turn to an intruder as long as we see him and send a message to the other agents
+        if seen_intruders:
+            print("Intruder seen")
+            self.turn_to_intruder(seen_intruders)
+            #Send a message of the intruders location
+        #Turn by a bit at each turn unless we precieved noise
+        else:
+            turn_target = (self._turn_target + 180) % 360 - 180
+            if(turn_target == self.heading):
+                self.turn_to(world.World.TIME_PER_TICK * self.turn_speed + self.heading)
+
+
+    def turn_to_intruder(self, seen_intruder):
+        """ get the angle of the intruder which the camera should turn to"""
+        diff = seen_intruder[0].location - self.location
+        if diff.length > 1e-5:
+            angle = vmath.Vector2(0, 1).angle(diff, unit='deg')
+            true_angle = angle if diff.x > 0 else -angle
+        else:
+            true_angle = 0
+        self.turn_to(true_angle)
+
+
 class PathfindingIntruder(IntruderAgent):
     def on_setup(self):
         """ Agent setup """
