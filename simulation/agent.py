@@ -325,10 +325,7 @@ class Agent(metaclass=ABCMeta):
                 self._fast_turning = False
                 self._turn_blindness_time = 0
 
-        # TODO: the following line sometimes gives IndexError: index 51 is out of bounds for axis 0 with size 51
-        # vision_modifier is the only place where this index error occurs, happens when one of the agents is outside
-        # of the board, -1 seems to solve this, check if correct
-        vision_modifier = self.map._map.vision_modifier[current_x-1][current_y-1]
+        vision_modifier = self.map._map.get_vision_modifier(current_x, current_y)
         self.current_view_range = self.current_view_range * vision_modifier
 
         # check if agent is settled in decreased vision area

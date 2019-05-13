@@ -107,6 +107,12 @@ class Map:
         else:
             return True
 
+    def get_vision_modifier(self, x: int, y: int) -> float:
+        if self.in_bounds(x, y):
+            return self.vision_modifier[x][y]
+        else:
+            return 0.0
+
     def set_wall_rectangle(self, x0, y0, x1, y1, value=True):
         # make sure values are in the right order
         if x0 > x1:
