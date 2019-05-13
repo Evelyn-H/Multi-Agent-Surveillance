@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 import math
 import random
 from enum import Enum
@@ -21,6 +21,9 @@ class World:
     # time elapsed for each call to `on_tick`
     TIME_PER_TICK = 1.0 / TICK_RATE
 
+    # for generating agent ID's
+    next_agent_ID: AgentID = 1
+
     def __init__(self, map: Map):
         self.map: Map = map
         self.agents: Dict[AgentID, Agent] = dict()
@@ -31,6 +34,16 @@ class World:
 
         # to keep track of how many ticks have passed:
         self.time_ticks = 0
+
+        # bit hacky, but eh
+        # reset agent ID counter
+        World.next_agent_ID = 1
+
+    @classmethod
+    def generate_agent_ID(cls) -> AgentID:
+        ID = cls.next_agent_ID
+        cls.next_agent_ID += 1
+        return ID
 
     def save_map(self, name) -> None:
         data = {'map': self.map.to_dict()}
@@ -106,7 +119,7 @@ class World:
                 return vmath.Vector2(x, y) + (0.5, 0.5)
             else:
                 return None
-            
+
         def circle_collision(x, y, r=0.5):
                 x, y = int(math.floor(x)), int(math.floor(y))
                 if self.map.is_wall(x, y):
@@ -197,42 +210,42 @@ class World:
         # check if all intruders are captured
         return all((intruder.is_captured for ID, intruder in self.intruders.items()))
 
-    def _target_check(self) -> bool: 
+    def _target_check(self) -> bool:
         """
         return: Whether or not all of the intruders have reached the target
         """
         # see if any intruders will reach the target now
         for ID_intruder, intruder in self.intruders.items():
             # somehow agents don't get closer to the target than 0.7 or 0.64
-            if (intruder.location - intruder.target).length < 0.5: 
+            if (intruder.location - intruder.target).length < 0.5:
                 if intruder.ticks_in_target == 0.0:
                     if (intruder.ticks_since_target * self.TIME_PER_TICK) >= 3.0 or intruder.times_visited_target == 0.0:
                         intruder.times_visited_target += 1.0
-                        
+
                     intruder.ticks_since_target = 0.0
-                    
+
                 intruder.ticks_in_target += 1.0
-            
-            else:    
+
+            else:
                 if intruder.ticks_in_target > 0.0:
                     intruder.ticks_since_target += 1.0
                     intruder.ticks_in_target = 0.0
-                            
+
                 elif intruder.ticks_since_target > 0.0:
                     intruder.ticks_since_target += 1.0
-            
+
             # win type 1: the intruder has been in the target area for 3 seconds
             if (intruder.ticks_in_target * self.TIME_PER_TICK) >= 3.0:
                 intruder.reached_target = True
                 intruder.on_reached_target()
-            
+
             # win type 2: the intruder has visited the target area twice with at least 3 seconds inbetween
             elif intruder.times_visited_target >= 2.0:
                 intruder.reached_target = True
 
         # check if all intruders have reached the target
         return all((intruder.reached_target for ID, intruder in self.intruders.items()))
-    
+
     def setup(self):
         for ID, agent in self.agents.items():
             agent.setup(world=self)
@@ -261,7 +274,7 @@ class World:
                         or d.length <= 1.5:
                     # create a new `AgentView` event
                     visible_agents.append(simulation.vision.AgentView(other_agent))
-            
+
             # and run the agent code
             agent.tick(seen_agents=visible_agents, noises=[])
         self._collision_check()
@@ -270,12 +283,14 @@ class World:
 
         if all_captured:
             # we're done
+            simulation.logger.set_outcome(False, self.time_ticks * self.TIME_PER_TICK)
             print('The guards won!')
             return True
-        
+
         all_reached_target = self._target_check()
         if all_reached_target:
             # we're done
+            simulation.logger.set_outcome(True, self.time_ticks * self.TIME_PER_TICK)
             print('The intruders won!')
             return True
 

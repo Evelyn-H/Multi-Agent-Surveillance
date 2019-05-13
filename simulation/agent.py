@@ -16,21 +16,13 @@ AgentID = NewType('AgentID', int)
 class Agent(metaclass=ABCMeta):
     """Class to be subclassed by specific agent implementations."""
 
-    next_ID: AgentID = 1
-
-    @classmethod
-    def generate_new_ID(cls) -> AgentID:
-        ID: AgentID = Agent.next_ID
-        Agent.next_ID += 1
-        return ID
-
     def __init__(self) -> None:
         """
         `location`: (x, y) coordinates of the agent
         `heading`: heading of the agent in degrees, where 0 is up, -90 is left and 90 is right
         """
         # generate ID
-        self.ID = Agent.generate_new_ID()
+        self.ID = world.World.generate_agent_ID()
 
         # placeholder reference to the `World` the agent is in
         self._world = None
@@ -47,16 +39,16 @@ class Agent(metaclass=ABCMeta):
         self.view_angle: float = 45.0
         self.turn_speed: float = 180
         self.turn_speed_sprinting = 10
-        self._can_sprint: boolean = False
+        self._can_sprint: bool = False
         self._sprint_rest_time = 10
         self._sprint_time = 5
-        
+
         #I would like to move these into the intruder agent since only the intruder should be able to sprint
         #Set the sprint cooldown to the tick that it started
         self._sprint_stop_time = -100000
         #Set the sprint time to the tick that the agent started sprinting
         self._sprint_start_time = 0
-        
+
         # to keep track of movement commands and execute them in the background
         self._move_target: float = 0
         self._turn_target: float = 0
@@ -141,46 +133,46 @@ class Agent(metaclass=ABCMeta):
 
     def set_movement_speed(self, speed):
         """ Set the movement speed of the agent and ensure, that it is within the allowed bounds"""
-        #return true if still 
-        #Agent has to rest for 10 seconds after sprinting 
+        #return true if still
+        #Agent has to rest for 10 seconds after sprinting
         if speed < 0 or speed > 3:
             raise Exception("Tried to set movement speed out of bounds: " + speed + " for agent " + self)
-        
+
         if self.is_resting:
             return
-        
+
         if self.move_speed > self.base_speed and speed <= self.base_speed:
             self._sprint_stop_time = self._world.time_ticks
             self.log("Stop Sprinting and start resting")
-        
+
         if not self.is_sprinting and speed > self.base_speed:
             self._sprint_start_time = self._world.time_ticks
             self.log("Start sprinting")
-            
+
         self.move_speed = speed
         #self._world tick rate and time per tick as a sprint time counter
-        
-    @property    
+
+    @property
     def is_resting(self):
         return (self._world.time_ticks - self._sprint_stop_time) < self._sprint_rest_time/self._world.TIME_PER_TICK
-    
-    @property    
+
+    @property
     def is_sprinting(self):
         return self.move_speed > self.base_speed
-    
+
     #This should be called in each update of the agent method
     def _update_sprint(self):
         if not self._can_sprint:
-            return 
-        
+            return
+
         if self.is_sprinting and (self._world.time_ticks - self._sprint_start_time) > self._sprint_time/self._world.TIME_PER_TICK:
-            self._sprint_stop_time = self._world.time_ticks        
+            self._sprint_stop_time = self._world.time_ticks
 
         #Check, if the agent has rested for enough -> ensure, that rests when if can't sprint
         if self.is_resting:
             self.move_speed = 0
-        
-    
+
+
     def move(self, distance):
         self._move_target = distance
 
@@ -201,7 +193,7 @@ class Agent(metaclass=ABCMeta):
         turn_speed = self.turn_speed
         if self.is_sprinting:
             turn_speed = self.turn_speed_sprinting
-            
+
         # process turning
         if not math.isclose(self._turn_target, self.heading):
             remaining = self.turn_remaining
@@ -289,15 +281,15 @@ class Agent(metaclass=ABCMeta):
     def on_tick(self, seen_agents: List['vision.AgentView']) -> None:
         """ Agent logic goes here """
         pass
-    
+
     def make_noise(self):
         event_rate = 0.1
         random_events_per_second = (event_rate / 60) * (self._world.map.size[0] * self._world.map.size[1] / 25)
         chance_to_emit = random_events_per_second * self._world.TIME_PER_TICK
         if random.uniform(0, 1) < chance_to_emit:
             noise_event = world.NoiseEvent(Position(self.location.x, self.location.y), self)
-            self._world.add_noise(noise_event) 
-        
+            self._world.add_noise(noise_event)
+
 
 # TODO: implement sentry tower
 class GuardAgent(Agent):
@@ -305,11 +297,11 @@ class GuardAgent(Agent):
         super().__init__()
         self.color = (0, 1, 0) # green
         self.view_range: float = 6.0
-        
+
     def setup(self, world):
         super().setup(world)
         self.other_guards = [vision.AgentView(guard) for ID, guard in self._world.guards.items() if not ID == self.ID]
-        
+
 # TODO: implement sprinting
 class IntruderAgent(Agent):
     def __init__(self) -> None:
@@ -317,11 +309,11 @@ class IntruderAgent(Agent):
         self.color = (1, 1, 0) # yellow
         self.view_range: float = 7.5
         self.target = Position(vmath.Vector2((1.5, 1.5))) # must be .5 (center of tile)
-                
+
         # are we captured yet?
         self.is_captured = False
         self._prev_is_captured = False
-        
+
         # has the target been reached?
         self.reached_target = False
         self._prev_reached_target = False
@@ -330,14 +322,13 @@ class IntruderAgent(Agent):
         self.ticks_since_target = 0.0
 
         self._can_sprint = True
-        
+
     @abstractmethod
     def on_captured(self) -> None:
         """ Called once when the agent is captured """
         pass
-    
+
     @abstractmethod
     def on_reached_target(self) -> None:
         """ Called once the agent has reached its target """
         pass
-    
