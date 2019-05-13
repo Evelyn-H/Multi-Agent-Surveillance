@@ -16,21 +16,13 @@ AgentID = NewType('AgentID', int)
 class Agent(metaclass=ABCMeta):
     """Class to be subclassed by specific agent implementations."""
 
-    next_ID: AgentID = 1
-
-    @classmethod
-    def generate_new_ID(cls) -> AgentID:
-        ID: AgentID = Agent.next_ID
-        Agent.next_ID += 1
-        return ID
-
     def __init__(self) -> None:
         """
         `location`: (x, y) coordinates of the agent
         `heading`: heading of the agent in degrees, where 0 is up, -90 is left and 90 is right
         """
         # generate ID
-        self.ID = Agent.generate_new_ID()
+        self.ID = world.World.generate_agent_ID()
 
         # placeholder reference to the `World` the agent is in
         self._world = None
@@ -161,8 +153,8 @@ class Agent(metaclass=ABCMeta):
 
     def set_movement_speed(self, speed):
         """ Set the movement speed of the agent and ensure, that it is within the allowed bounds"""
-        # return true if still
-        # Agent has to rest for 10 seconds after sprinting
+        #return true if still
+        #Agent has to rest for 10 seconds after sprinting
         if speed < 0 or speed > 3:
             raise Exception("Tried to set movement speed out of bounds: " + speed + " for agent " + self)
 
@@ -178,22 +170,22 @@ class Agent(metaclass=ABCMeta):
             self.log("Start sprinting")
 
         self.move_speed = speed
-        # self._world tick rate and time per tick as a sprint time counter
+        #self._world tick rate and time per tick as a sprint time counter
 
     @property
     def is_resting(self):
-        return (self._world.time_ticks - self._sprint_stop_time) < self._sprint_rest_time / self._world.TIME_PER_TICK
+        return (self._world.time_ticks - self._sprint_stop_time) < self._sprint_rest_time/self._world.TIME_PER_TICK
 
     @property
     def is_sprinting(self):
         return self.move_speed > self.base_speed
 
-    # This should be called in each update of the agent method
+    #This should be called in each update of the agent method
     def _update_sprint(self):
         if not self._can_sprint:
             return
 
-        if self.is_sprinting and (self._world.time_ticks - self._sprint_start_time) > self._sprint_time / self._world.TIME_PER_TICK:
+        if self.is_sprinting and (self._world.time_ticks - self._sprint_start_time) > self._sprint_time/self._world.TIME_PER_TICK:
             self._sprint_stop_time = self._world.time_ticks
 
         # Check, if the agent has rested for enough -> ensure, that rests when if can't sprint
@@ -461,7 +453,7 @@ class IntruderAgent(Agent):
         super().__init__()
         self.color = (1, 1, 0)  # yellow
         self.view_range: float = 7.5
-        self.target = Position(vmath.Vector2((1.5, 1.5)))  # must be .5 (center of tile)
+        self.target = Position(vmath.Vector2((1.5, 1.5))) # must be .5 (center of tile)
 
         # are we captured yet?
         self.is_captured = False

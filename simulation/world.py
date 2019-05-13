@@ -21,6 +21,9 @@ class World:
     # time elapsed for each call to `on_tick`
     TIME_PER_TICK = 1.0 / TICK_RATE
 
+    # for generating agent ID's
+    next_agent_ID: AgentID = 1
+
     def __init__(self, map: Map):
         self.map: Map = map
         self.agents: Dict[AgentID, Agent] = dict()
@@ -31,6 +34,16 @@ class World:
 
         # to keep track of how many ticks have passed:
         self.time_ticks = 0
+
+        # bit hacky, but eh
+        # reset agent ID counter
+        World.next_agent_ID = 1
+
+    @classmethod
+    def generate_agent_ID(cls) -> AgentID:
+        ID = cls.next_agent_ID
+        cls.next_agent_ID += 1
+        return ID
 
     def save_map(self, name) -> None:
         data = {'map': self.map.to_dict()}
@@ -277,12 +290,14 @@ class World:
 
         if all_captured:
             # we're done
+            simulation.logger.set_outcome(False, self.time_ticks * self.TIME_PER_TICK)
             print('The guards won!')
             return True
 
         all_reached_target = self._target_check()
         if all_reached_target:
             # we're done
+            simulation.logger.set_outcome(True, self.time_ticks * self.TIME_PER_TICK)
             print('The intruders won!')
             return True
 
