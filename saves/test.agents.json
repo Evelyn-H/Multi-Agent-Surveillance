@@ -1,6 +1,5 @@
 {
     "agents": [
-        "SimpleGuard",
         "PatrollingGuard",
         "PatrollingGuard",
         "PatrollingGuard",

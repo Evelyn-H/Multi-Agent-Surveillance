@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 import math
 import random
 from enum import Enum
@@ -108,11 +108,11 @@ class World:
                 return None
 
         def circle_collision(x, y, r=0.5):
-                x, y = int(math.floor(x)), int(math.floor(y))
-                if self.map.is_wall(x, y):
-                    center = vmath.Vector2(x, y) + (0.5, 0.5)
-                    if (agent.location - center).length < (r + width / 2):
-                        return center + (agent.location - center).as_length(r + width / 2)
+            x, y = int(math.floor(x)), int(math.floor(y))
+            if self.map.is_wall(x, y):
+                center = vmath.Vector2(x, y) + (0.5, 0.5)
+                if (agent.location - center).length < (r + width / 2):
+                    return center + (agent.location - center).as_length(r + width / 2)
 
         for ID, agent in self.agents.items():
             # do a quick bounds check first so they stay on the map
@@ -202,8 +202,7 @@ class World:
         """
         # see if any intruders will reach the target now
         for ID_intruder, intruder in self.intruders.items():
-            # somehow agents don't get closer to the target than 0.7 or 0.64
-            if (intruder.location - intruder.target).length < 0.5:
+            if (intruder.location - intruder.target).length < 0.5: 
                 if intruder.ticks_in_target == 0.0:
                     if (intruder.ticks_since_target * self.TIME_PER_TICK) >= 3.0 or intruder.times_visited_target == 0.0:
                         intruder.times_visited_target += 1.0
@@ -256,8 +255,9 @@ class World:
                     continue
                 d = other_agent.location - agent.location
                 angle_diff = abs((-math.degrees(math.atan2(d.y, d.x)) + 90 - agent.heading + 180) % 360 - 180)
-                if (d.length <= agent.view_range and angle_diff <= agent.view_angle) \
-                        or d.length <= 1.5:
+
+                if (d.length < other_agent.visibility_range and d.length <= agent.view_range and
+                        angle_diff <= agent.view_angle) or d.length <= 1.0:
                     # create a new `AgentView` event
                     visible_agents.append(simulation.vision.AgentView(other_agent))
 
@@ -267,7 +267,7 @@ class World:
                 if distance < noise.radius and noise.source != agent:
                     perceived_noises.append(PerceivedNoise(noise, agent))
             if perceived_noises:
-                print("noises:", perceived_noises)
+                agent.log("perceived noises at", [perceived_noise.perceived_angle for perceived_noise in perceived_noises])
 
             # and run the agent code
             agent.tick(seen_agents=visible_agents, noises=perceived_noises)

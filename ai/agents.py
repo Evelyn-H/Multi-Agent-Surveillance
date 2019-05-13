@@ -14,7 +14,7 @@ class SimpleGuard(GuardAgent):
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
-        return (random.random() * self.map.width, random.random() * self.map.height)
+        return random.random() * self.map.width, random.random() * self.map.height
 
     def on_noise(self, noises: List['world.PerceivedNoise']) -> None:
         """ Noise handler, will be called before `on_tick` """
@@ -35,6 +35,10 @@ class SimpleGuard(GuardAgent):
 
     def on_tick(self, seen_agents) -> None:
         """ Agent logic goes here """
+        # enter tower if possible
+        if self.enter_tower():
+            self.log("entered a tower!")
+
         # only try to chase intruders, not other guards
         seen_intruders = [a for a in seen_agents if a.is_intruder]
         if seen_intruders:
@@ -51,7 +55,19 @@ class SimpleGuard(GuardAgent):
                     self.send_message(1, "I just turned!")
 
 
+# TODO: investigate why sometimes agents get stuck and don't seem to move anymore
 class PatrollingGuard(GuardAgent):
+    def __init__(self) -> None:
+        super().__init__()
+        self.color = (0, 1, 1)  # cyan
+
+        self.patrol_route = None
+        self.patrol_idx = 0
+        self.patrol_point = None
+
+        self.seen_intruder = None
+        self.chase = False
+
     def make_patrol_route(self) -> List['Position']:
         width = [1.5, self.map.width - 1.5]
         height = [1.5, self.map.height - 1.5]
@@ -65,18 +81,13 @@ class PatrollingGuard(GuardAgent):
 
     def on_setup(self):
         """ Agent setup """
-        self.color = (0, 1, 1)  # cyan
-        self.path = None
         self.patrol_route = self.make_patrol_route()
-        self.patrol_idx = 0
         self.patrol_point = self.patrol_route[self.patrol_idx]
-        self.seen_intruder = None
-        self.chase = False
         print('Guard', self.ID, 'Patrolling Route:', self.patrol_route)
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
-        return (random.random() * self.map.width, random.random() * self.map.height)
+        return random.random() * self.map.width, random.random() * self.map.height
 
     def on_noise(self, noises: List['world.PerceivedNoise']) -> None:
         """ Noise handler, will be called before `on_tick` """
@@ -112,6 +123,7 @@ class PatrollingGuard(GuardAgent):
         # only try to chase intruders, not other guards
         seen_intruders = [a for a in seen_agents if a.is_intruder]
 
+        # TODO: look into extending the time that the guard is chasing (even after it loses sight of the intruder)
         if seen_intruders:
             self.seen_intruder = seen_intruders[0].location
             self.chase = True
@@ -128,11 +140,10 @@ class PatrollingGuard(GuardAgent):
 class PathfindingIntruder(IntruderAgent):
     def on_setup(self):
         """ Agent setup """
-        self.path = None
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
-        return (random.random() * self.map.width, random.random() * self.map.height)
+        return random.random() * self.map.width, random.random() * self.map.height
 
     def on_captured(self) -> None:
         """ Called once when the agent is captured """
