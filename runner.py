@@ -2,6 +2,7 @@ import numpy as np
 from simulation.world import World
 from simulation import logger
 
+
 def load_world(files):
     names = files.split()
     if len(names) > 1:
@@ -21,12 +22,10 @@ def main():
         return
 
     total_runs = int(input('how many runs? '))
-
-
     intruder_wins = 0
     times = []
-    for run in range(total_runs):
 
+    for run in range(total_runs):
         print(f"\n ======== Run {run+1}  ======== ")
 
         # load world and agents

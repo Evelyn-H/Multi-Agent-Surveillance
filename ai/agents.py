@@ -159,13 +159,12 @@ class CameraGuard(GuardAgent):
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
-        return (random.random() * self.map.width, random.random() * self.map.height)
+        return random.random() * self.map.width, random.random() * self.map.height
 
     def on_noise(self, noises: List['world.PerceivedNoise']) -> None:
         """ Noise handler, will be called before `on_tick` """
         self.turn_to(noises[0].perceived_angle)
         self.log(f"turned to: {noises[0].perceived_angle}")
-
 
     def on_vision_update(self) -> None:
         pass
@@ -176,17 +175,16 @@ class CameraGuard(GuardAgent):
         # Check, if the agent sees any intruders
         seen_intruders = [a for a in seen_agents if a.is_intruder]
         
-        #Turn to an intruder as long as we see him and send a message to the other agents
+        # Turn to an intruder as long as we see him and send a message to the other agents
         if seen_intruders:
             print("Intruder seen")
             self.turn_to_intruder(seen_intruders)
-            #Send a message of the intruders location
-        #Turn by a bit at each turn unless we precieved noise
+            # Send a message of the intruders location
+        # Turn by a bit at each turn unless we precieved noise
         else:
             turn_target = (self._turn_target + 180) % 360 - 180
-            if(turn_target == self.heading):
+            if turn_target == self.heading:
                 self.turn_to(world.World.TIME_PER_TICK * self.turn_speed + self.heading)
-
 
     def turn_to_intruder(self, seen_intruder):
         """ get the angle of the intruder which the camera should turn to"""

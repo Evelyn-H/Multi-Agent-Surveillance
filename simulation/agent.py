@@ -153,8 +153,8 @@ class Agent(metaclass=ABCMeta):
 
     def set_movement_speed(self, speed):
         """ Set the movement speed of the agent and ensure, that it is within the allowed bounds"""
-        #return true if still
-        #Agent has to rest for 10 seconds after sprinting
+        # return true if still
+        # Agent has to rest for 10 seconds after sprinting
         if speed < 0 or speed > 3:
             raise Exception("Tried to set movement speed out of bounds: " + speed + " for agent " + self)
 
@@ -170,7 +170,7 @@ class Agent(metaclass=ABCMeta):
             self.log("Start sprinting")
 
         self.move_speed = speed
-        #self._world tick rate and time per tick as a sprint time counter
+        # self._world tick rate and time per tick as a sprint time counter
 
     @property
     def is_resting(self):
@@ -180,7 +180,7 @@ class Agent(metaclass=ABCMeta):
     def is_sprinting(self):
         return self.move_speed > self.base_speed
 
-    #This should be called in each update of the agent method
+    # This should be called in each update of the agent method
     def _update_sprint(self):
         if not self._can_sprint:
             return
@@ -326,7 +326,7 @@ class Agent(metaclass=ABCMeta):
                 self._turn_blindness_time = 0
 
         # TODO: the following line sometimes gives IndexError: index 51 is out of bounds for axis 0 with size 51
-        # vision_modifier is the only place where this index error occurs, happens when one of the agents is ouside
+        # vision_modifier is the only place where this index error occurs, happens when one of the agents is outside
         # of the board, -1 seems to solve this, check if correct
         vision_modifier = self.map._map.vision_modifier[current_x-1][current_y-1]
         self.current_view_range = self.current_view_range * vision_modifier
@@ -453,7 +453,7 @@ class IntruderAgent(Agent):
         super().__init__()
         self.color = (1, 1, 0)  # yellow
         self.view_range: float = 7.5
-        self.target = Position(vmath.Vector2((1.5, 1.5))) # must be .5 (center of tile)
+        self.target = Position(vmath.Vector2((1.5, 1.5)))  # must be .5 (center of tile)
 
         # are we captured yet?
         self.is_captured = False
