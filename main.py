@@ -6,7 +6,7 @@ from ai import agents
 
 if __name__ == '__main__':
     i = input('Load save? ')
-    
+
     # load from file
     if i:
         names = i.split()
@@ -15,15 +15,15 @@ if __name__ == '__main__':
             world.load_agents(names[1])
         else:
             world = World.from_file(names[0], load_agents=True)
-    
+
     # or build a new map
     else:
         m = MapGenerator.random(size=(51, 51))
         world = World(m)
 
-        world.add_agent(agents.SimpleGuard)
-        world.add_agent(agents.SimpleGuard)
-        world.add_agent(agents.SimpleGuard)
+        world.add_agent(agents.PatrollingGuard)
+        world.add_agent(agents.PatrollingGuard)
+        world.add_agent(agents.PatrollingGuard)
         world.add_agent(agents.PathfindingIntruder)
         world.add_agent(agents.PathfindingIntruder)
 

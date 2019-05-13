@@ -127,7 +127,6 @@ class World:
                     if (agent.location - center).length < (r + width / 2):
                         return center + (agent.location - center).as_length(r + width / 2)
 
-
         for ID, agent in self.agents.items():
             # do a quick bounds check first so they stay on the map
             if agent.location.x < 0:
@@ -275,8 +274,16 @@ class World:
                     # create a new `AgentView` event
                     visible_agents.append(simulation.vision.AgentView(other_agent))
 
+            perceived_noises = []
+            for noise in self.noises:
+                distance = (noise.location - agent.location).length
+                if distance < noise.radius and noise.source != agent:
+                    perceived_noises.append(PerceivedNoise(noise, agent))
+            if perceived_noises:
+                print("noises:", perceived_noises)
+
             # and run the agent code
-            agent.tick(seen_agents=visible_agents, noises=[])
+            agent.tick(seen_agents=visible_agents, noises=perceived_noises)
         self._collision_check()
 
         all_captured = self._capture_check()
@@ -293,7 +300,6 @@ class World:
             simulation.logger.set_outcome(True, self.time_ticks * self.TIME_PER_TICK)
             print('The intruders won!')
             return True
-
 
         # and up the counter
         self.time_ticks += 1
@@ -347,14 +353,33 @@ class Message:
 class NoiseEvent:
     """Encapsulates a single noise event"""
 
-    def __init__(self, location: Position, source=None, time=0) -> None:
-        self.time = time
+    def __init__(self, location: Position, source=None, radius=5 / 2) -> None:
+        self.time = 0
         self.location = location
         self.source = source
+        self.radius = radius
 
-    def perceived_angle(self, target_pos: Position):
+
+class PerceivedNoise:
+    """Similar to a NoiseEvent, but tied to an observer"""
+
+    def __init__(self, noise: NoiseEvent, observer: Agent):
+        self._noise = noise
+        self._observer = observer
+
+    @property
+    def perceived_angle(self):
         """
         Calculates the perceived angle towards the noise from the perspective of the `target_pos`
         This also adds the uncertainty as described in the booklet
         """
-        ...
+
+        diff = self._noise.location - self._observer.location
+        if diff.length > 1e-5:
+            angle = vmath.Vector2(0, 1).angle(diff, unit='deg')
+            true_angle = angle if diff.x > 0 else -angle
+        else:
+            true_angle = 0
+
+        uncertainty = 10
+        return random.gauss(true_angle, uncertainty)

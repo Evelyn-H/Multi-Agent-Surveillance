@@ -42,11 +42,18 @@ class Agent(metaclass=ABCMeta):
         self._can_sprint: bool = False
         self._sprint_rest_time = 10
         self._sprint_time = 5
+        self._is_deaf = False
 
-        #I would like to move these into the intruder agent since only the intruder should be able to sprint
-        #Set the sprint cooldown to the tick that it started
+        # Guard agents interaction with towers
+        self._in_tower = False
+        self._interacting_with_tower = False
+        self._tower_interaction_time = 3
+        self._tower_start_time = 0
+
+        # I would like to move these into the intruder agent since only the intruder should be able to sprint
+        # Set the sprint cooldown to the tick that it started
         self._sprint_stop_time = -100000
-        #Set the sprint time to the tick that the agent started sprinting
+        # Set the sprint time to the tick that the agent started sprinting
         self._sprint_start_time = 0
 
         # to keep track of movement commands and execute them in the background
@@ -168,10 +175,77 @@ class Agent(metaclass=ABCMeta):
         if self.is_sprinting and (self._world.time_ticks - self._sprint_start_time) > self._sprint_time/self._world.TIME_PER_TICK:
             self._sprint_stop_time = self._world.time_ticks
 
-        #Check, if the agent has rested for enough -> ensure, that rests when if can't sprint
+        # Check, if the agent has rested for enough -> ensure, that rests when if can't sprint
         if self.is_resting:
             self.move_speed = 0
 
+    def _update_tower_interaction(self):
+        if not self._interacting_with_tower:
+            # do nothing if we're not interacting
+            return
+
+        # is the interaction time over?
+        if (self._world.time_ticks - self._tower_start_time) < (self._tower_interaction_time / self._world.TIME_PER_TICK):
+            # nope, keep waiting...
+            return
+
+        # done interacting!
+        self._interacting_with_tower = False
+
+        # and we're no longer deaf
+        self._is_deaf = False
+
+        # set move speed and vision accordingly
+        if self._in_tower:
+            # TODO: Set vision range to [2,30] (in the tower)
+            ...
+            self.move_speed = 0
+        else:
+            # TODO: Set vision range to normal (left tower)
+            ...
+            self.move_speed = self.base_speed
+
+    def enter_tower(self) -> bool:
+        if self._in_tower or self._interacting_with_tower:
+            return False
+
+        viable_towers = [tower_pos for tower_pos in self.map._map.towers if self.in_tower_range(tower_pos)]
+
+        if len(viable_towers) < 1:
+            return False
+
+        tower_pos = viable_towers[0]  # just pick the first viable tower
+
+        self._in_tower = True
+        self._interacting_with_tower = True
+        self._tower_start_time = self._world.time_ticks
+
+        self._is_deaf = True
+        self.move_speed = 0
+
+        # Put agent on tower
+        self.location = tower_pos + (self._width / 2, self._width / 2)
+        return True
+
+    def leave_tower(self):
+        if not self._in_tower or self._interacting_with_tower:
+            return False
+
+        self._in_tower = False
+        self._interacting_with_tower = True
+        self._tower_start_time = self._world.time_ticks
+
+        self._is_deaf = True
+        self.move_speed = 0
+
+        # # Move the agent out of the tower range in the direction that he is heading
+        # self.move(self._width * 1.2)
+        return True
+
+    def in_tower_range(self, tower):
+        if (tower - self.location).length < self._width * 1.1:
+            return True
+        return False
 
     def move(self, distance):
         self._move_target = distance
@@ -188,6 +262,10 @@ class Agent(metaclass=ABCMeta):
 
     def _process_movement(self):
         """ Executes the last movement command """
+        # don't think this is needed
+        # if self._interacting_with_tower:
+        #     return
+
         self._update_sprint()
 
         turn_speed = self.turn_speed
@@ -215,15 +293,18 @@ class Agent(metaclass=ABCMeta):
             return True
         return False
 
-    def tick(self, seen_agents: List['vision.AgentView'], noises: List['world.NoiseEvent']):
+    def tick(self, seen_agents: List['vision.AgentView'], noises: List['world.PerceivedNoise']):
+        # tower interaction
+        self._update_tower_interaction()
+
         # process vision
         has_updated = self._update_vision(force=(self.time_ticks == 0))
         if has_updated:
             self.on_vision_update()
 
         # noises
-        for noise in noises:
-            self.on_noise(noise)
+        if not self._is_deaf and len(noises) > 0:
+            self.on_noise(noises)
 
         # messages
         for message in self._message_queue_in:
@@ -263,8 +344,8 @@ class Agent(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def on_noise(self, noise: 'world.NoiseEvent') -> None:
-        """ Noise handler, will be called before `on_tick` """
+    def on_noise(self, noises: List['world.PerceivedNoise']) -> None:
+        """ Noise handler, that checks, if there a noise event occurs and where it is perceived  """
         pass
 
     @abstractmethod
@@ -286,8 +367,17 @@ class Agent(metaclass=ABCMeta):
         event_rate = 0.1
         random_events_per_second = (event_rate / 60) * (self._world.map.size[0] * self._world.map.size[1] / 25)
         chance_to_emit = random_events_per_second * self._world.TIME_PER_TICK
+        radius = 0
+        if self.move_speed > 0:
+            radius = 1 / 2
+        if self.move_speed > 0.5:
+            radius = 3 / 2
+        if self.move_speed > 1:
+            radius = 5 / 2
+        if self.move_speed > 2:
+            radius = 10 / 2
         if random.uniform(0, 1) < chance_to_emit:
-            noise_event = world.NoiseEvent(Position(self.location.x, self.location.y), self)
+            noise_event = world.NoiseEvent(Position(self.location.x, self.location.y), self, radius)
             self._world.add_noise(noise_event)
 
 
@@ -295,7 +385,7 @@ class Agent(metaclass=ABCMeta):
 class GuardAgent(Agent):
     def __init__(self) -> None:
         super().__init__()
-        self.color = (0, 1, 0) # green
+        self.color = (0, 1, 0)  # green
         self.view_range: float = 6.0
 
     def setup(self, world):
@@ -303,10 +393,12 @@ class GuardAgent(Agent):
         self.other_guards = [vision.AgentView(guard) for ID, guard in self._world.guards.items() if not ID == self.ID]
 
 # TODO: implement sprinting
+
+
 class IntruderAgent(Agent):
     def __init__(self) -> None:
         super().__init__()
-        self.color = (1, 1, 0) # yellow
+        self.color = (1, 1, 0)  # yellow
         self.view_range: float = 7.5
         self.target = Position(vmath.Vector2((1.5, 1.5))) # must be .5 (center of tile)
 
