@@ -13,6 +13,7 @@ from . import world
 AgentID = NewType('AgentID', int)
 
 
+# TODO: make sure agents are not placed outside of the map at the beginning
 class Agent(metaclass=ABCMeta):
     """Class to be subclassed by specific agent implementations."""
 

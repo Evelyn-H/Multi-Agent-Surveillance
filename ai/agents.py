@@ -60,6 +60,7 @@ class SimpleGuard(GuardAgent):
 
 
 # TODO: set starting position of guard to somewhere within their patrolling area
+# TODO: implement communication with cameras about seen intruders and perceived noises
 class PatrollingGuard(GuardAgent):
     def __init__(self) -> None:
         super().__init__()
@@ -148,6 +149,9 @@ class PatrollingGuard(GuardAgent):
             self.path = self.path[1:]
 
 
+# TODO: place cameras in sentry towers
+# TODO: add zoning (distribute cameras as evenly as possible over the map)
+# TODO: check how fast the cameras are turning (turning blindness)
 class CameraGuard(GuardAgent):
     def __init__(self) -> None:
         super().__init__()
