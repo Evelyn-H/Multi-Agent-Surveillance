@@ -5,7 +5,7 @@ import vectormath as vmath
 
 from .util import Position
 from . import pathfinding
-import simulation
+import simulation.agent
 
 
 class AgentView:
@@ -37,6 +37,13 @@ class AgentView:
     def is_intruder(self):
         return isinstance(self._agent, simulation.agent.IntruderAgent)
 
+    @property
+    def is_captured(self):
+        if isinstance(self._agent, simulation.agent.IntruderAgent):
+            return self._agent.is_captured
+        else:
+            return False
+
 # TODO: vision of structures
 #    # if there is a line of vision, then walls and gates can be seen
 #      from <= 10 meters distance
@@ -67,6 +74,9 @@ class MapView(pathfinding.Graph):
     @property
     def height(self):
         return self._map.size[1]
+
+    def get_vision_modifier(self, x: int, y: int) -> float:
+        return self._map.get_vision_modifier(x, y)
 
     def _reveal_all(self):
         self.fog = np.ones((self._map.size[0], self._map.size[1]), dtype=np.bool)

@@ -23,6 +23,7 @@ class Agent(metaclass=ABCMeta):
         """
         # generate ID
         self.ID = world.World.generate_agent_ID()
+        self.type = 'Agent'
 
         # placeholder reference to the `World` the agent is in
         self._world = None
@@ -325,7 +326,7 @@ class Agent(metaclass=ABCMeta):
                 self._fast_turning = False
                 self._turn_blindness_time = 0
 
-        vision_modifier = self.map._map.get_vision_modifier(current_x, current_y)
+        vision_modifier = self.map.get_vision_modifier(current_x, current_y)
         self.current_view_range = self.current_view_range * vision_modifier
 
         # check if agent is settled in decreased vision area
@@ -436,7 +437,9 @@ class Agent(metaclass=ABCMeta):
 class GuardAgent(Agent):
     def __init__(self) -> None:
         super().__init__()
-        self.color = (0, 1, 0)  # green
+
+        self.type = 'GuardAgent'
+        self.color = (0, 20, 65)  # mint-green
         self.view_range: float = 6.0
 
     def setup(self, world):
@@ -448,13 +451,14 @@ class GuardAgent(Agent):
 class IntruderAgent(Agent):
     def __init__(self) -> None:
         super().__init__()
-        self.color = (1, 1, 0)  # yellow
+
+        self.type = 'IntruderAgent'
+        self.color = (1, 155, 0)  # orange
         self.view_range: float = 7.5
         self.target = Position(vmath.Vector2((1.5, 1.5)))  # must be .5 (center of tile)
 
         # are we captured yet?
         self.is_captured = False
-        self._prev_is_captured = False
 
         # has the target been reached?
         self.reached_target = False

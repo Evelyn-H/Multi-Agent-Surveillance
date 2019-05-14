@@ -1,6 +1,10 @@
 {
     "agents": [
-        "SimpleGuard",
+        "PatrollingGuard",
+        "PatrollingGuard",
+        "PatrollingGuard",
+        "CameraGuard",
+        "CameraGuard",
         "SimpleGuard",
         "PathfindingIntruder"
     ]

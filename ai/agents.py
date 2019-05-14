@@ -8,6 +8,10 @@ from simulation.agent import GuardAgent, IntruderAgent
 
 
 class SimpleGuard(GuardAgent):
+    def __init__(self) -> None:
+        super().__init__()
+        self.type = 'SimpleGuard'
+
     def on_setup(self):
         """ Agent setup """
         self.turn(45)
@@ -55,11 +59,13 @@ class SimpleGuard(GuardAgent):
                     self.send_message(1, "I just turned!")
 
 
-# TODO: investigate why sometimes agents get stuck and don't seem to move anymore
+# TODO: set starting position of guard to somewhere within their patrolling area
 class PatrollingGuard(GuardAgent):
     def __init__(self) -> None:
         super().__init__()
-        self.color = (0, 1, 1)  # cyan
+
+        self.type = 'PatrollingGuard'
+        self.color = (205, 95, 160)  # green
 
         self.patrol_route = None
         self.patrol_idx = 0
@@ -68,20 +74,24 @@ class PatrollingGuard(GuardAgent):
         self.seen_intruder = None
         self.chase = False
 
-    def make_patrol_route(self) -> List['Position']:
-        width = [1.5, self.map.width - 1.5]
-        height = [1.5, self.map.height - 1.5]
-        corner_points = [Position(vmath.Vector2(a, b)) for a in width for b in height]
-        patrol_route = []
-
-        for i in range(3):
-            route_point = corner_points.pop(random.randint(0, len(corner_points) - 1))
-            patrol_route.append(route_point)
-        return patrol_route
-
     def on_setup(self):
         """ Agent setup """
-        self.patrol_route = self.make_patrol_route()
+        pass
+
+    def setup_patrol_route(self, patrol_area):
+        point_a = patrol_area[0]
+        point_b = (patrol_area[1][0], patrol_area[0][1])
+        point_c = patrol_area[1]
+        point_d = (patrol_area[0][1], patrol_area[1][0])
+
+        self.patrol_route = [point_a, point_c, point_b, point_d, point_a]
+        self.patrol_route = [Position(vmath.Vector2(patrol_point)) for patrol_point in self.patrol_route]
+        # random.shuffle(self.patrol_route)
+
+        # for i in range(3):
+        #     route_point = corner_points.pop(random.randint(0, len(corner_points) - 1))
+        #     self.patrol_route.append(route_point)
+
         self.patrol_point = self.patrol_route[self.patrol_idx]
         print('Guard', self.ID, 'Patrolling Route:', self.patrol_route)
 
@@ -104,7 +114,7 @@ class PatrollingGuard(GuardAgent):
 
     def on_vision_update(self) -> None:
         """ Called when vision is updated """
-        if (self.location - self.patrol_point).length < 0.5:
+        if (self.location - self.patrol_point).length < 1:
             self.log('I\'ve reached corner point', self.patrol_idx, 'of my patrolling route.')
             self.patrol_idx = (self.patrol_idx + 1) % len(self.patrol_route)
             self.patrol_point = self.patrol_route[self.patrol_idx]
@@ -124,11 +134,12 @@ class PatrollingGuard(GuardAgent):
         seen_intruders = [a for a in seen_agents if a.is_intruder]
 
         # TODO: look into extending the time that the guard is chasing (even after it loses sight of the intruder)
+        self.chase = False
         if seen_intruders:
-            self.seen_intruder = seen_intruders[0].location
-            self.chase = True
-        else:
-            self.chase = False
+            for intruder in seen_intruders:
+                if not intruder.is_captured:
+                    self.seen_intruder = intruder.location
+                    self.chase = True
 
         if self.path and self.move_remaining == 0:
             next_pos = self.path[0]
@@ -138,15 +149,19 @@ class PatrollingGuard(GuardAgent):
 
 
 class CameraGuard(GuardAgent):
+    def __init__(self) -> None:
+        super().__init__()
+
+        self.type = 'CameraGuard'
+        self.color = (115, 55, 0)  # light-green
+        self.seen_intruder = None
     
     def on_setup(self):
         """ Agent setup """
         self.base_speed = 0
         self.move_speed = 0
         self.view_range: float = 12.0
-                
-        self.color = (1, 0, 0)  # cyan
-        self.seen_intruder = None
+
         print('Guard', self.ID, 'Camera guard')
         
     def on_message(self, message: world.Message) -> None:
@@ -171,15 +186,13 @@ class CameraGuard(GuardAgent):
 
     def on_tick(self, seen_agents) -> None:
         """ Agent logic goes here """
-        
         # Check, if the agent sees any intruders
         seen_intruders = [a for a in seen_agents if a.is_intruder]
         
         # Turn to an intruder as long as we see him and send a message to the other agents
         if seen_intruders:
-            print("Intruder seen")
             self.turn_to_intruder(seen_intruders)
-            # Send a message of the intruders location
+            # TODO: Send a message of the intruders location
         # Turn by a bit at each turn unless we precieved noise
         else:
             turn_target = (self._turn_target + 180) % 360 - 180
@@ -196,8 +209,16 @@ class CameraGuard(GuardAgent):
             true_angle = 0
         self.turn_to(true_angle)
 
+    def on_capture(self) -> None:
+        """ Called once when the guard has captured an intruder """
+        pass
+
 
 class PathfindingIntruder(IntruderAgent):
+    def __init__(self) -> None:
+        super().__init__()
+        self.type = 'PathfindingIntruder'
+
     def on_setup(self):
         """ Agent setup """
 
@@ -207,7 +228,11 @@ class PathfindingIntruder(IntruderAgent):
 
     def on_captured(self) -> None:
         """ Called once when the agent is captured """
-        self.log('I\'ve been captured... :(')
+        if not self.is_captured:
+            self.is_captured = True
+            self.log('I\'ve been captured... :(')
+
+        self.move_speed = 0  # intruders that have been caught should stop moving
 
     def on_noise(self, noises: List['world.PerceivedNoise']) -> None:
         """ Noise handler, will be called before `on_tick` """
@@ -222,8 +247,9 @@ class PathfindingIntruder(IntruderAgent):
 
     def on_reached_target(self) -> None:
         """ Called once the intruder has reached its target """
-        self.log('I\'ve reached the target! :)')
-        # pass
+        if not self.reached_target:
+            self.reached_target = True
+            self.log('I\'ve reached the target! :)')
 
     def on_vision_update(self) -> None:
         """ Called when vision is updated """

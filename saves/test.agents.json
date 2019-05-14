@@ -3,7 +3,9 @@
         "PatrollingGuard",
         "PatrollingGuard",
         "PatrollingGuard",
-        "PatrollingGuard",
+        "CameraGuard",
+        "CameraGuard",
+        "SimpleGuard",
         "PathfindingIntruder"
     ]
 }
