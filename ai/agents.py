@@ -166,25 +166,14 @@ class CameraGuard(GuardAgent):
         
         #Turn to an intruder as long as we see him and send a message to the other agents
         if seen_intruders:
-            print("Intruder seen")
-            self.turn_to_intruder(seen_intruders)
+            self.log("Intruder seen")
+            target = seen_intruders[0].location
+            self.turn_to_point(target)            
             #Send a message of the intruders location
+        
         #Turn by a bit at each turn unless we precieved noise
         else:
-            turn_target = (self._turn_target + 180) % 360 - 180
-            if(turn_target == self.heading):
-                self.turn_to(world.World.TIME_PER_TICK * self.turn_speed + self.heading)
-
-
-    def turn_to_intruder(self, seen_intruder):
-        """ get the angle of the intruder which the camera should turn to"""
-        diff = seen_intruder[0].location - self.location
-        if diff.length > 1e-5:
-            angle = vmath.Vector2(0, 1).angle(diff, unit='deg')
-            true_angle = angle if diff.x > 0 else -angle
-        else:
-            true_angle = 0
-        self.turn_to(true_angle)
+            self.turn(45)
 
 
 class PathfindingIntruder(IntruderAgent):
