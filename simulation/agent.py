@@ -13,16 +13,9 @@ from . import world
 AgentID = NewType('AgentID', int)
 
 
+# TODO: make sure agents are not placed outside of the map at the beginning
 class Agent(metaclass=ABCMeta):
     """Class to be subclassed by specific agent implementations."""
-
-    next_ID: AgentID = 1
-
-    @classmethod
-    def generate_new_ID(cls) -> AgentID:
-        ID: AgentID = Agent.next_ID
-        Agent.next_ID += 1
-        return ID
 
     def __init__(self) -> None:
         """
@@ -30,7 +23,8 @@ class Agent(metaclass=ABCMeta):
         `heading`: heading of the agent in degrees, where 0 is up, -90 is left and 90 is right
         """
         # generate ID
-        self.ID = Agent.generate_new_ID()
+        self.ID = world.World.generate_agent_ID()
+        self.type = 'Agent'
 
         # placeholder reference to the `World` the agent is in
         self._world = None
@@ -41,16 +35,15 @@ class Agent(metaclass=ABCMeta):
         # movement stuff
         self.location: Position = None
         self.heading: float = 0
+        self._last_heading: float = 0
         self.base_speed: float = 1.4
         self.move_speed: float = self.base_speed
-        self.view_range: float = 6.0
-        self.view_angle: float = 45.0
         self.turn_speed: float = 180
         self.turn_speed_sprinting = 10
         self._can_sprint: bool = False
         self._sprint_rest_time = 10
         self._sprint_time = 5
-        self._is_deaf = False
+        self.path = None
 
         # Guard agents interaction with towers
         self._in_tower = False
@@ -58,7 +51,7 @@ class Agent(metaclass=ABCMeta):
         self._tower_interaction_time = 3
         self._tower_start_time = 0
 
-        # I would like to move these into the intruder agent since only the intruder should be able to sprint
+        # TODO: I would like to move these into the intruder agent since only the intruder should be able to sprint
         # Set the sprint cooldown to the tick that it started
         self._sprint_stop_time = -100000
         # Set the sprint time to the tick that the agent started sprinting
@@ -71,6 +64,20 @@ class Agent(metaclass=ABCMeta):
         # vision stuff
         self.map: vision.MapView = None
         self._last_tile: Tuple[int, int] = None
+        self.tower_view_range: float = 15.0  # actually should be range between 2 and 15
+        self.view_range: float = 6.0
+        self.current_view_range: float = self.view_range
+        self.visibility_range: float = self.view_range
+        self.decreased_visibility_range: float = 1.0
+        self.base_view_angle: float = 45.0
+        self.view_angle: float = self.base_view_angle
+        self.tower_view_angle: float = 30.0
+        self._dec_vision_time = 0
+        self._fast_turning: bool = False
+        self._turn_blindness_time = 0
+
+        # sound perception stuff
+        self._is_deaf = False
 
         # for collision detection
         self._width = 0.9
@@ -156,7 +163,7 @@ class Agent(metaclass=ABCMeta):
         if self.is_resting:
             return
 
-        if self.move_speed > self.base_speed and speed <= self.base_speed:
+        if self.move_speed > self.base_speed >= speed:
             self._sprint_stop_time = self._world.time_ticks
             self.log("Stop Sprinting and start resting")
 
@@ -169,7 +176,7 @@ class Agent(metaclass=ABCMeta):
 
     @property
     def is_resting(self):
-        return (self._world.time_ticks - self._sprint_stop_time) < self._sprint_rest_time / self._world.TIME_PER_TICK
+        return (self._world.time_ticks - self._sprint_stop_time) < self._sprint_rest_time/self._world.TIME_PER_TICK
 
     @property
     def is_sprinting(self):
@@ -180,7 +187,7 @@ class Agent(metaclass=ABCMeta):
         if not self._can_sprint:
             return
 
-        if self.is_sprinting and (self._world.time_ticks - self._sprint_start_time) > self._sprint_time / self._world.TIME_PER_TICK:
+        if self.is_sprinting and (self._world.time_ticks - self._sprint_start_time) > self._sprint_time/self._world.TIME_PER_TICK:
             self._sprint_stop_time = self._world.time_ticks
 
         # Check, if the agent has rested for enough -> ensure, that rests when if can't sprint
@@ -205,11 +212,12 @@ class Agent(metaclass=ABCMeta):
 
         # set move speed and vision accordingly
         if self._in_tower:
-            # TODO: Set vision range to [2,30] (in the tower)
+            self.log("I'm in the tower and no longer blind")
+            self.current_view_range = self.tower_view_range
             ...
             self.move_speed = 0
         else:
-            # TODO: Set vision range to normal (left tower)
+            self.current_view_range = self.view_range
             ...
             self.move_speed = self.base_speed
 
@@ -229,6 +237,8 @@ class Agent(metaclass=ABCMeta):
         self._tower_start_time = self._world.time_ticks
 
         self._is_deaf = True
+        self.view_angle = self.tower_view_angle
+        self.current_view_range = 0.0
         self.move_speed = 0
 
         # Put agent on tower
@@ -244,6 +254,8 @@ class Agent(metaclass=ABCMeta):
         self._tower_start_time = self._world.time_ticks
 
         self._is_deaf = True
+        self.view_angle = self.base_view_angle
+        self.current_view_range = 0.0
         self.move_speed = 0
 
         # # Move the agent out of the tower range in the direction that he is heading
@@ -285,6 +297,7 @@ class Agent(metaclass=ABCMeta):
             remaining = self.turn_remaining
             self.heading += math.copysign(min(world.World.TIME_PER_TICK * turn_speed, abs(remaining)), remaining)
             self.heading = (self.heading + 180) % 360 - 180
+
         # process walking/running
         if self._move_target != 0:
             distance = math.copysign(min(world.World.TIME_PER_TICK * self.move_speed, abs(self._move_target)), self._move_target)
@@ -294,9 +307,41 @@ class Agent(metaclass=ABCMeta):
 
     def _update_vision(self, force=False) -> bool:
         current_tile = (int(self.location.x), int(self.location.y))
-        if force or self._last_tile != current_tile or abs(self.heading - self._last_heading) > 5:
+        current_x, current_y = current_tile
+
+        # get the speed at which the agent will turn
+        current_turn_speed = 0
+        if not math.isclose(self._turn_target, self.heading):
+            current_turn_speed = min(self.turn_speed, abs(self.turn_remaining) / world.World.TIME_PER_TICK)
+
+        # agent is blind while turning >45 degrees/second + 0.5 seconds afterwards
+        if current_turn_speed > 45:
+            self._fast_turning = True
+            self.current_view_range = 0.0
+        elif self._fast_turning:
+            if self._turn_blindness_time * world.World.TIME_PER_TICK < 0.5:
+                self.current_view_range = 0.0
+                self._turn_blindness_time += 1
+            else:
+                self.current_view_range = self.view_range
+                self._fast_turning = False
+                self._turn_blindness_time = 0
+
+        vision_modifier = self.map.get_vision_modifier(current_x, current_y)
+        self.current_view_range = self.current_view_range * vision_modifier
+
+        # check if agent is settled in decreased vision area
+        if vision_modifier < 1.0 and self._move_target != 0:
+            if self._dec_vision_time * world.World.TIME_PER_TICK > 10:
+                self.visibility_range = self.decreased_visibility_range
+            self._dec_vision_time += 1
+        else:
+            self._dec_vision_time = 0
+            self.visibility_range = self.view_range
+
+        if force or self._last_tile != current_tile or abs(self.heading - self._last_heading) > 5 or self._in_tower:
             self._last_tile = current_tile
-            self.map._reveal_circle(current_tile[0], current_tile[1], self.view_range, self.view_angle, self.heading)
+            self.map._reveal_visible(current_x, current_y, self.current_view_range, self.view_angle, self.heading, self._in_tower)
             self._last_heading = self.heading
             return True
         return False
@@ -329,6 +374,7 @@ class Agent(metaclass=ABCMeta):
 
         # reset collision tracking
         self._has_collided = False
+
         # and execute movement commands
         self._process_movement()
 
@@ -389,30 +435,31 @@ class Agent(metaclass=ABCMeta):
             self._world.add_noise(noise_event)
 
 
-# TODO: implement sentry tower
 class GuardAgent(Agent):
     def __init__(self) -> None:
         super().__init__()
-        self.color = (0, 1, 0)  # green
+
+        self.type = 'GuardAgent'
+        self.color = (0, 20, 65)  # mint-green
         self.view_range: float = 6.0
 
     def setup(self, world):
         super().setup(world)
         self.other_guards = [vision.AgentView(guard) for ID, guard in self._world.guards.items() if not ID == self.ID]
 
+
 # TODO: implement sprinting
-
-
 class IntruderAgent(Agent):
     def __init__(self) -> None:
         super().__init__()
-        self.color = (1, 1, 0)  # yellow
+
+        self.type = 'IntruderAgent'
+        self.color = (1, 155, 0)  # orange
         self.view_range: float = 7.5
         self.target = Position(vmath.Vector2((1.5, 1.5)))  # must be .5 (center of tile)
 
         # are we captured yet?
         self.is_captured = False
-        self._prev_is_captured = False
 
         # has the target been reached?
         self.reached_target = False

@@ -1,11 +1,13 @@
-from typing import Dict
+from typing import Dict, List
 import math
 import random
 from enum import Enum
+import numpy as np
 import vectormath as vmath
 import json_tricks as jt
 
-import simulation
+import simulation.logger
+import simulation.vision
 from .environment import Map
 from .agent import Agent, AgentID, GuardAgent, IntruderAgent
 from .util import Position
@@ -21,16 +23,29 @@ class World:
     # time elapsed for each call to `on_tick`
     TIME_PER_TICK = 1.0 / TICK_RATE
 
+    # for generating agent ID's
+    next_agent_ID: AgentID = 1
+
     def __init__(self, map: Map):
         self.map: Map = map
         self.agents: Dict[AgentID, Agent] = dict()
 
-        self.noises: List['simulation.world.NoiseEvent'] = []
+        self.noises: List['NoiseEvent'] = []
         # to keep track of past noise events
-        self.old_noises: List['simulation.world.NoiseEvent'] = []
+        self.old_noises: List['NoiseEvent'] = []
 
         # to keep track of how many ticks have passed:
         self.time_ticks = 0
+
+        # bit hacky, but eh
+        # reset agent ID counter
+        World.next_agent_ID = 1
+
+    @classmethod
+    def generate_agent_ID(cls) -> AgentID:
+        ID = cls.next_agent_ID
+        cls.next_agent_ID += 1
+        return ID
 
     def save_map(self, name) -> None:
         data = {'map': self.map.to_dict()}
@@ -108,11 +123,11 @@ class World:
                 return None
 
         def circle_collision(x, y, r=0.5):
-                x, y = int(math.floor(x)), int(math.floor(y))
-                if self.map.is_wall(x, y):
-                    center = vmath.Vector2(x, y) + (0.5, 0.5)
-                    if (agent.location - center).length < (r + width / 2):
-                        return center + (agent.location - center).as_length(r + width / 2)
+            x, y = int(math.floor(x)), int(math.floor(y))
+            if self.map.is_wall(x, y):
+                center = vmath.Vector2(x, y) + (0.5, 0.5)
+                if (agent.location - center).length < (r + width / 2):
+                    return center + (agent.location - center).as_length(r + width / 2)
 
         for ID, agent in self.agents.items():
             # do a quick bounds check first so they stay on the map
@@ -188,9 +203,11 @@ class World:
         # see if any intruders will be captured now
         for ID_intruder, intruder in self.intruders.items():
             for ID_guard, guard in self.guards.items():
-                # still needs check for whether intruder is in sight
-                if (intruder.location - guard.location).length < 0.5:
-                    intruder.is_captured = True
+                guard_x, guard_y = int(guard.location.x), int(guard.location.y)
+                intruder_x, intruder_y = int(intruder.location.x), int(intruder.location.y)
+
+                if (intruder.location - guard.location).length <= 0.5 and \
+                        guard.map._is_tile_visible_from(guard_x, guard_y, intruder_x, intruder_y):
                     intruder.on_captured()
 
         # check if all intruders are captured
@@ -202,10 +219,10 @@ class World:
         """
         # see if any intruders will reach the target now
         for ID_intruder, intruder in self.intruders.items():
-            # somehow agents don't get closer to the target than 0.7 or 0.64
-            if (intruder.location - intruder.target).length < 0.5:
+            if (intruder.location - intruder.target).length < 0.5: 
                 if intruder.ticks_in_target == 0.0:
-                    if (intruder.ticks_since_target * self.TIME_PER_TICK) >= 3.0 or intruder.times_visited_target == 0.0:
+                    if (intruder.ticks_since_target * self.TIME_PER_TICK) >= 3.0 or \
+                            intruder.times_visited_target == 0.0:
                         intruder.times_visited_target += 1.0
 
                     intruder.ticks_since_target = 0.0
@@ -222,19 +239,48 @@ class World:
 
             # win type 1: the intruder has been in the target area for 3 seconds
             if (intruder.ticks_in_target * self.TIME_PER_TICK) >= 3.0:
-                intruder.reached_target = True
                 intruder.on_reached_target()
 
             # win type 2: the intruder has visited the target area twice with at least 3 seconds inbetween
             elif intruder.times_visited_target >= 2.0:
-                intruder.reached_target = True
+                intruder.on_reached_target()
 
-        # check if all intruders have reached the target
-        return all((intruder.reached_target for ID, intruder in self.intruders.items()))
+        # check if any intruders has reached the target
+        return any((intruder.reached_target for ID, intruder in self.intruders.items()))
 
     def setup(self):
+        patrolling_areas = self.create_patrolling_areas()
+        idx = 0
+
         for ID, agent in self.agents.items():
             agent.setup(world=self)
+            if agent.type == 'PatrollingGuard':
+                agent.setup_patrol_route(patrolling_areas[idx % len(patrolling_areas)])
+                idx += 1
+
+    def create_patrolling_areas(self):
+        patrolling_guards = []
+        patrolling_areas = []
+
+        for ID, agent in self.agents.items():
+            if agent.type == 'PatrollingGuard':
+                patrolling_guards.append(agent)
+
+        x_cuts = int(np.floor(np.sqrt(len(patrolling_guards))))
+        y_cuts = x_cuts
+        if x_cuts ** 2 < len(patrolling_guards):
+            if x_cuts ** 2 < (x_cuts + 1) * x_cuts <= len(patrolling_guards):
+                y_cuts = x_cuts + 1
+
+        map_x_length, map_y_length = self.map.size
+        offset = 1.5
+        for x in range(x_cuts):
+            for y in range(y_cuts):
+                bl_corner = (x/x_cuts * map_x_length + offset, y/y_cuts * map_y_length + offset)
+                tr_corner = ((x + 1)/x_cuts * map_x_length - offset, (y + 1)/y_cuts * map_y_length - offset)
+                patrolling_areas.append((bl_corner, tr_corner))
+
+        return patrolling_areas
 
     def tick(self) -> bool:
         """
@@ -256,8 +302,9 @@ class World:
                     continue
                 d = other_agent.location - agent.location
                 angle_diff = abs((-math.degrees(math.atan2(d.y, d.x)) + 90 - agent.heading + 180) % 360 - 180)
-                if (d.length <= agent.view_range and angle_diff <= agent.view_angle) \
-                        or d.length <= 1.5:
+
+                if (d.length < other_agent.visibility_range and d.length <= agent.view_range and
+                        angle_diff <= agent.view_angle) or d.length <= 1.0:
                     # create a new `AgentView` event
                     visible_agents.append(simulation.vision.AgentView(other_agent))
 
@@ -267,7 +314,7 @@ class World:
                 if distance < noise.radius and noise.source != agent:
                     perceived_noises.append(PerceivedNoise(noise, agent))
             if perceived_noises:
-                print("noises:", perceived_noises)
+                agent.log("perceived noises at", [noise.perceived_angle for noise in perceived_noises])
 
             # and run the agent code
             agent.tick(seen_agents=visible_agents, noises=perceived_noises)
@@ -277,12 +324,14 @@ class World:
 
         if all_captured:
             # we're done
+            simulation.logger.set_outcome(False, self.time_ticks * self.TIME_PER_TICK)
             print('The guards won!')
             return True
 
         all_reached_target = self._target_check()
         if all_reached_target:
             # we're done
+            simulation.logger.set_outcome(True, self.time_ticks * self.TIME_PER_TICK)
             print('The intruders won!')
             return True
 

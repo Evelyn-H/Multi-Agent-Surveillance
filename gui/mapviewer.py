@@ -176,7 +176,7 @@ class MapViewer(renderer.WindowComponent):
         # draw noises
         for noise in self.world.noises + self.world.old_noises:
             radius = max(0, noise.radius - (self.world.time_ticks - noise.time) * self.world.TIME_PER_TICK * 0.5 * noise.radius)
-            if radius > 0:# and not noise.drawn:
+            if radius > 0:  # and not noise.drawn:
                 arcade.draw_ellipse_outline(noise.location.x, noise.location.y, radius, radius, arcade.color.AIR_FORCE_BLUE, border_width=0.2)
          
         # draw agent trails

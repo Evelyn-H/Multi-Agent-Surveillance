@@ -3,6 +3,7 @@ from typing import List, Tuple, Dict
 
 from .util import Position
 
+
 class Gate:
     """
     Superclass for doors and windows and such,
@@ -28,10 +29,10 @@ class Map:
 
     def __init__(self,
                  size: Tuple[int, int],
-                 targets: List[Position]=None,
+                 targets: List[Position] = None,
                  gates=None,
-                 towers: List[Position]=None,
-                 markers: List['simulation.world.Marker']=None
+                 towers: List[Position] = None,
+                 markers: List['simulation.world.Marker'] = None
                  ) -> None:
 
         # metadata about the map
@@ -78,7 +79,7 @@ class Map:
         return self.size[1]
 
     def in_bounds(self, x: int, y: int) -> bool:
-        return x >= 0 and y >= 0 and x < self.size[0] and y < self.size[1]
+        return 0 <= x < self.size[0] and 0 <= y < self.size[1]
 
     def add_target(self, x: int, y: int):
         self.targets.append(Position(x, y))
@@ -105,6 +106,12 @@ class Map:
             return self.walls[x][y]
         else:
             return True
+
+    def get_vision_modifier(self, x: int, y: int) -> float:
+        if self.in_bounds(x, y):
+            return self.vision_modifier[x][y]
+        else:
+            return 0.0
 
     def set_wall_rectangle(self, x0, y0, x1, y1, value=True):
         # make sure values are in the right order

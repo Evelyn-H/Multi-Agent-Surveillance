@@ -5,7 +5,7 @@ import vectormath as vmath
 
 from .util import Position
 from . import pathfinding
-import simulation
+import simulation.agent
 
 
 class AgentView:
@@ -37,6 +37,19 @@ class AgentView:
     def is_intruder(self):
         return isinstance(self._agent, simulation.agent.IntruderAgent)
 
+    @property
+    def is_captured(self):
+        if isinstance(self._agent, simulation.agent.IntruderAgent):
+            return self._agent.is_captured
+        else:
+            return False
+
+# TODO: vision of structures
+#    # if there is a line of vision, then walls and gates can be seen
+#      from <= 10 meters distance
+#    # towers can be seen from <= 18 meters away
+#    # guards on towers can only be seen within normal ranges
+
 
 class MapView(pathfinding.Graph):
     """
@@ -48,7 +61,7 @@ class MapView(pathfinding.Graph):
         self._map = map
 
         # fog-of-war map
-        self.fog = np.zeros((self._map.size[0], self._map.size[1]), dtype=np.bool)
+        self.fog = np.zeros((self._map.size[0], self._map.size[1]), dtype=np.bool)  # self._map.size?
 
     @property
     def size(self):
@@ -62,64 +75,85 @@ class MapView(pathfinding.Graph):
     def height(self):
         return self._map.size[1]
 
+    def get_vision_modifier(self, x: int, y: int) -> float:
+        return self._map.get_vision_modifier(x, y)
+
     def _reveal_all(self):
         self.fog = np.ones((self._map.size[0], self._map.size[1]), dtype=np.bool)
 
-    def _reveal_circle(self, x: int, y: int, radius: float, view_angle: float, heading: float):
-        # center = vmath.Vector2(x, y)
-        # min_x = max(0, int(x - radius - 1))
-        # max_x = min(self._map.size[0], int(x + radius + 1))
-        # min_y = max(0, int(y - radius - 1))
-        # max_y = min(self._map.size[1], int(y + radius + 1))
-        # for x in range(min_x, max_x):
-        #     for y in range(min_y, max_y):
-        #         if (center - (x + 0.5, y + 0.5)).length < radius:
-        #             self.fog[x][y] = True
+    def _is_tile_visible_from(self, x0, y0, x, y):
+        # line code taken from:
+        # https://github.com/encukou/bresenham
+        def line(x0, y0, x1, y1):
+            dx = x1 - x0
+            dy = y1 - y0
 
-        radius = int(math.ceil(radius))
+            xsign = 1 if dx > 0 else -1
+            ysign = 1 if dy > 0 else -1
 
-        width = radius * 2 + 1
-        z = np.zeros((width, width), dtype=np.bool)
+            dx = abs(dx)
+            dy = abs(dy)
 
-        # calculate distance for each point in the matrix
-        X, Y = np.meshgrid(np.arange(z.shape[0]), np.arange(z.shape[1]))
-        dist = np.sqrt((X - width // 2)**2 + (Y - width // 2)**2)
+            if dx > dy:
+                xx, xy, yx, yy = xsign, 0, 0, ysign
+            else:
+                dx, dy = dy, dx
+                xx, xy, yx, yy = 0, ysign, xsign, 0
 
-        # assign value of 1 to those points where `dist < radius`
-        z[np.where(dist <= radius)] = 1
+            D = 2 * dy - dx
+            y = 0
 
-        # only see in the viewing cone
-        angle = np.arctan2((Y - width // 2), (X - width // 2)) * 180 / np.pi
-        angle = (angle - heading + 180) % 360 - 180
-        z[np.where(angle > view_angle / 2)] = 0
-        z[np.where(angle < -view_angle / 2)] = 0
-        # but if it's close enough we can still see it
-        z[np.where(dist <= 1.5)] = 1
+            for x in range(dx + 1):
+                yield x0 + x * xx + y * yx, y0 + x * xy + y * yy
+                if D >= 0:
+                    y += 1
+                    D -= 2 * dx
+                D += 2 * dy
 
-        # `paste` and `paste_slices` taken from:
-        # https://stackoverflow.com/a/50692782
-        def paste(wall, block, loc):
-            def paste_slices(tup):
-                pos, w, max_w = tup
-                wall_min = max(pos, 0)
-                wall_max = min(pos + w, max_w)
-                block_min = -min(pos, 0)
-                block_max = max_w - max(pos + w, max_w)
-                block_max = block_max if block_max != 0 else None
-                return slice(wall_min, wall_max), slice(block_min, block_max)
-            loc_zip = zip(loc, block.shape, wall.shape)
-            wall_slices, block_slices = zip(*map(paste_slices, loc_zip))
-            wall[wall_slices] += block[block_slices]
+        for x_line, y_line in line(x0, y0, x, y):
+            # reached the last tile, so it's visible
+            if x == x_line and y == y_line:
+                return True
+            # if any tile along the way is a wall then the check failed
+            if self._map.is_wall(x_line, y_line):
+                return False
 
-        paste(self.fog, z, (x - width // 2, y - width // 2))
-        # print('vision updated')
+    # see-through-walls version:    0.2 ms / call
+    # same but without numpy:       0.4 ms / call
+    # proper version:               0.6 ms / call
+    def _reveal_visible(self, x0: int, y0: int, radius: float, view_angle: float, heading: float, in_tower: bool):
+        offset = int(math.ceil(radius)) + 1
+        for x in range(x0 - offset, x0 + offset + 1):
+            for y in range(y0 - offset, y0 + offset + 1):
+                # bounds check
+                if not self._map.in_bounds(x, y):
+                    continue
 
-        # offset_x = x - width // 2
-        # offset_y = y - width // 2
-        # self.fog[offset_x:width + offset_x, offset_y:width + offset_y] |= z
+                # distance check
+                if (x - x0)**2 + (y - y0)**2 > radius**2:
+                    continue
+
+                # angle check
+                angle = math.atan2(y0 - y, x0 - x) * 180 / np.pi
+                angle = (angle + heading + 90 + 180) % 360 - 180
+                if angle > view_angle / 2 or angle < -view_angle / 2:
+                    continue
+
+                # visibility check
+                if not self._is_tile_visible_from(x0, y0, x, y) and not in_tower:
+                    continue
+
+                # tile is visible!
+                self.fog[x][y] = True
+
+        # set neighbouring tiles as visible too
+        for x in range(x0 - 1, x0 + 2):
+            for y in range(y0 - 1, y0 + 2):
+                if self._map.in_bounds(x, y):
+                    self.fog[x][y] = True
 
     def is_revealed(self, x: int, y: int):
-        if x >= 0 and y >= 0 and x < self._map.size[0] and y < self._map.size[1]:
+        if 0 <= x < self._map.size[0] and 0 <= y < self._map.size[1]:
             return self.fog[x][y]
         else:
             return True
