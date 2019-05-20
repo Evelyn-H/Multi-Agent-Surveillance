@@ -87,12 +87,6 @@ class PatrollingGuard(GuardAgent):
 
         self.patrol_route = [point_a, point_c, point_b, point_d, point_a]
         self.patrol_route = [Position(vmath.Vector2(patrol_point)) for patrol_point in self.patrol_route]
-        # random.shuffle(self.patrol_route)
-
-        # for i in range(3):
-        #     route_point = corner_points.pop(random.randint(0, len(corner_points) - 1))
-        #     self.patrol_route.append(route_point)
-
         self.patrol_point = self.patrol_route[self.patrol_idx]
         print('Guard', self.ID, 'Patrolling Route:', self.patrol_route)
 
@@ -198,11 +192,11 @@ class CameraGuard(GuardAgent):
             self.log("Intruder seen")
             target = seen_intruders[0].location
             self.turn_to_point(target)            
-            #Send a message of the intruders location
+            # Send a message of the intruders location
         
-        #Turn by a bit at each turn unless we precieved noise
+        # Turn by a bit at each turn unless we precieved noise
         else:
-            self.turn(45)
+            self.turn(5)  # 45
 
     def on_capture(self) -> None:
         """ Called once when the guard has captured an intruder """
