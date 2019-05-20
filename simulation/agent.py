@@ -13,7 +13,6 @@ from . import world
 AgentID = NewType('AgentID', int)
 
 
-# TODO: make sure agents are not placed outside of the map at the beginning
 class Agent(metaclass=ABCMeta):
     """Class to be subclassed by specific agent implementations."""
 
@@ -95,14 +94,6 @@ class Agent(metaclass=ABCMeta):
 
         # pick entry point
         start = self.on_pick_start()
-        # start = (int(start.x), int(start.y))
-        # # must be on the map
-        # if start.x < 0 or start.x >= self.map.width or start.y < 0 or start.y >= self.map.height:
-        #     raise Exception(f"Starting position for Agent {self.ID} is not on the map.")
-        # # must be along the outer edge
-        # if (start.x != 0 and start.x != self.map.width - 1) or (start.y != 0 and start.y != self.map.height - 1):
-        #     raise Exception(f"Starting position for Agent {self.ID} is not along the outer edge.")
-        # found a valid starting location!
         self.location = Position(start[0], start[1])
 
         # to track when to update the vision
@@ -328,7 +319,6 @@ class Agent(metaclass=ABCMeta):
                 self._turn_blindness_time = 0
 
         vision_modifier = self.map.get_vision_modifier(current_x, current_y)
-        self.current_view_range = self.current_view_range * vision_modifier
 
         # check if agent is settled in decreased vision area
         if vision_modifier < 1.0 and self._move_target != 0:
@@ -341,7 +331,8 @@ class Agent(metaclass=ABCMeta):
 
         if force or self._last_tile != current_tile or abs(self.heading - self._last_heading) > 5 or self._in_tower:
             self._last_tile = current_tile
-            self.map._reveal_visible(current_x, current_y, self.current_view_range, self.view_angle, self.heading, self._in_tower)
+            self.map._reveal_visible(current_x, current_y, self.current_view_range*vision_modifier,
+                                     self.view_angle, self.heading, self._in_tower)
             self._last_heading = self.heading
             return True
         return False

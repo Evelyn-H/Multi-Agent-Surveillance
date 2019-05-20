@@ -250,13 +250,17 @@ class World:
 
     def setup(self):
         patrolling_areas = self.create_patrolling_areas()
-        idx = 0
+        idx_pa = 0
+        idx_st = 0
 
         for ID, agent in self.agents.items():
             agent.setup(world=self)
             if agent.type == 'PatrollingGuard':
-                agent.setup_patrol_route(patrolling_areas[idx % len(patrolling_areas)])
-                idx += 1
+                agent.setup_patrol_route(patrolling_areas[idx_pa % len(patrolling_areas)])
+                idx_pa += 1
+            elif agent.type == 'CameraGuard':
+                agent.place_in_tower(self.map.towers[idx_st])
+                idx_st += 1
 
     def create_patrolling_areas(self):
         patrolling_guards = []

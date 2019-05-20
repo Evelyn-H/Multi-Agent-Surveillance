@@ -18,7 +18,7 @@ class SimpleGuard(GuardAgent):
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
-        return random.random() * self.map.width, random.random() * self.map.height
+        return 1 + random.random() * (self.map.width-2), 1 + random.random() * (self.map.height-2)
 
     def on_noise(self, noises: List['world.PerceivedNoise']) -> None:
         """ Noise handler, will be called before `on_tick` """
@@ -41,12 +41,11 @@ class SimpleGuard(GuardAgent):
         """ Agent logic goes here """
         # enter tower if possible
         if self.enter_tower():
-            self.log("entered a tower!")
+            self.log("Entered a tower!")
 
         # only try to chase intruders, not other guards
         seen_intruders = [a for a in seen_agents if a.is_intruder]
         if seen_intruders:
-            # chase!
             target = seen_intruders[0].location
             self.turn_to_point(target)
             self.move((target - self.location).length)
@@ -59,7 +58,7 @@ class SimpleGuard(GuardAgent):
                     self.send_message(1, "I just turned!")
 
 
-# TODO: set starting position of guard to somewhere within their patrolling area
+# TODO: look into extending the time that the guard is chasing (even after it loses sight of the intruder)
 # TODO: implement communication with cameras about seen intruders and perceived noises
 class PatrollingGuard(GuardAgent):
     def __init__(self) -> None:
@@ -79,20 +78,17 @@ class PatrollingGuard(GuardAgent):
         """ Agent setup """
         pass
 
-    def setup_patrol_route(self, patrol_area):
-        point_a = patrol_area[0]
-        point_b = (patrol_area[1][0], patrol_area[0][1])
-        point_c = patrol_area[1]
-        point_d = (patrol_area[0][1], patrol_area[1][0])
-
-        self.patrol_route = [point_a, point_c, point_b, point_d, point_a]
+    def setup_patrol_route(self, pa):
+        self.patrol_route = [pa[0], pa[1], (pa[1][0], pa[0][1]), (pa[0][1], pa[1][0]), pa[0]]
         self.patrol_route = [Position(vmath.Vector2(patrol_point)) for patrol_point in self.patrol_route]
+        print('Guard', self.ID, 'Patrolling guard, route:', self.patrol_route)
+
         self.patrol_point = self.patrol_route[self.patrol_idx]
-        print('Guard', self.ID, 'Patrolling Route:', self.patrol_route)
+        self.location = Position(((pa[0][0] + pa[1][0])/2, (pa[0][1] + pa[1][1])/2))
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
-        return random.random() * self.map.width, random.random() * self.map.height
+        return 1 + random.random() * (self.map.width-2), 1 + random.random() * (self.map.height-2)
 
     def on_noise(self, noises: List['world.PerceivedNoise']) -> None:
         """ Noise handler, will be called before `on_tick` """
@@ -115,7 +111,6 @@ class PatrollingGuard(GuardAgent):
             self.patrol_point = self.patrol_route[self.patrol_idx]
 
         target = self.patrol_point if not self.chase else self.seen_intruder
-
         self.path = self.map.find_path(self.location, target)
         self.path = self.path and self.path[1:]
 
@@ -123,12 +118,11 @@ class PatrollingGuard(GuardAgent):
         """ Agent logic goes here """
         # enter tower if possible
         if self.enter_tower():
-            self.log("entered a tower!")
+            self.log("Entered a tower!")
 
         # only try to chase intruders, not other guards
         seen_intruders = [a for a in seen_agents if a.is_intruder]
 
-        # TODO: look into extending the time that the guard is chasing (even after it loses sight of the intruder)
         self.chase = False
         if seen_intruders:
             for intruder in seen_intruders:
@@ -143,9 +137,7 @@ class PatrollingGuard(GuardAgent):
             self.path = self.path[1:]
 
 
-# TODO: place cameras in sentry towers
-# TODO: add zoning (distribute cameras as evenly as possible over the map)
-# TODO: check how fast the cameras are turning (turning blindness)
+# TODO: add zoning for cameras (distribute cameras as evenly as possible over the map)
 class CameraGuard(GuardAgent):
     def __init__(self) -> None:
         super().__init__()
@@ -161,7 +153,11 @@ class CameraGuard(GuardAgent):
         self.view_range: float = 12.0
 
         print('Guard', self.ID, 'Camera guard')
-        
+
+    def place_in_tower(self, location):
+        self.location = location
+        self.enter_tower()
+
     def on_message(self, message: world.Message) -> None:
         """ Message handler, will be called before `on_tick` """
         pass
@@ -172,7 +168,7 @@ class CameraGuard(GuardAgent):
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
-        return random.random() * self.map.width, random.random() * self.map.height
+        return 1 + random.random() * (self.map.width-2), 1 + random.random() * (self.map.height-2)
 
     def on_noise(self, noises: List['world.PerceivedNoise']) -> None:
         """ Noise handler, will be called before `on_tick` """
@@ -189,14 +185,14 @@ class CameraGuard(GuardAgent):
         
         # Turn to an intruder as long as we see him and send a message to the other agents
         if seen_intruders:
-            self.log("Intruder seen")
+            # self.log("Intruder seen")
             target = seen_intruders[0].location
             self.turn_to_point(target)            
             # Send a message of the intruders location
         
         # Turn by a bit at each turn unless we precieved noise
         else:
-            self.turn(5)  # 45
+            self.turn(10)  # turning faster will cause blindness
 
     def on_capture(self) -> None:
         """ Called once when the guard has captured an intruder """
@@ -213,7 +209,7 @@ class PathfindingIntruder(IntruderAgent):
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
-        return random.random() * self.map.width, random.random() * self.map.height
+        return 1 + random.random() * (self.map.width-2), 1 + random.random() * (self.map.height-2)
 
     def on_captured(self) -> None:
         """ Called once when the agent is captured """
