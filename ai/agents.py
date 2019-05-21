@@ -58,8 +58,6 @@ class SimpleGuard(GuardAgent):
                     self.send_message(1, "I just turned!")
 
 
-# TODO: look into extending the time that the guard is chasing (even after it loses sight of the intruder)
-# TODO: implement communication with cameras about seen intruders and perceived noises
 class PatrollingGuard(GuardAgent):
     def __init__(self) -> None:
         super().__init__()
@@ -97,7 +95,12 @@ class PatrollingGuard(GuardAgent):
 
     def on_message(self, message: world.Message) -> None:
         """ Message handler, will be called before `on_tick` """
-        self.log(f'received message from agent {message.source} on tick {self.time_ticks}: {message.message}')
+        if message.message[:9] == 'Intruder@':
+            intruder = [float(x) for x in message.message[10:-1].split(sep=' ') if x != '']
+            if (self.location - intruder).length < 20:
+                self.seen_intruder = intruder
+        else:
+            self.log(f'received message from agent {message.source} on tick {self.time_ticks}: {message.message}')
 
     def on_collide(self) -> None:
         """ Collision handler """
@@ -117,13 +120,16 @@ class PatrollingGuard(GuardAgent):
     def on_tick(self, seen_agents) -> None:
         """ Agent logic goes here """
         # enter tower if possible
-        if self.enter_tower():
-            self.log("Entered a tower!")
+        # if self.enter_tower():
+        #     self.log("Entered a tower!")
 
         # only try to chase intruders, not other guards
         seen_intruders = [a for a in seen_agents if a.is_intruder]
 
         self.chase = False
+        if self.seen_intruder is not None and (self.location - self.seen_intruder).length > 0.05:
+            self.chase = True
+
         if seen_intruders:
             for intruder in seen_intruders:
                 if not intruder.is_captured:
@@ -183,14 +189,12 @@ class CameraGuard(GuardAgent):
         # Check, if the agent sees any intruders
         seen_intruders = [a for a in seen_agents if a.is_intruder]
         
-        # Turn to an intruder as long as we see him and send a message to the other agents
+        # Turn to an intruder as long as we see it and send a message to the other agents
         if seen_intruders:
-            # self.log("Intruder seen")
             target = seen_intruders[0].location
-            self.turn_to_point(target)            
-            # Send a message of the intruders location
-        
-        # Turn by a bit at each turn unless we precieved noise
+            self.turn_to_point(target)
+            for guard_id in self.other_patrol_guards:
+                self.send_message(guard_id, 'Intruder@'+str(target))
         else:
             self.turn(10)  # turning faster will cause blindness
 

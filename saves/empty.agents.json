@@ -5,7 +5,6 @@
         "PatrollingGuard",
         "CameraGuard",
         "CameraGuard",
-        "SimpleGuard",
         "PathfindingIntruder"
     ]
 }

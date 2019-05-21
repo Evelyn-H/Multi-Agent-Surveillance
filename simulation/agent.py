@@ -434,9 +434,13 @@ class GuardAgent(Agent):
         self.color = (0, 20, 65)  # mint-green
         self.view_range: float = 6.0
 
+        self.other_guards = List['vision.AgentView']
+        self.other_patrol_guards = List['vision.AgentView']
+
     def setup(self, world):
         super().setup(world)
         self.other_guards = [vision.AgentView(guard) for ID, guard in self._world.guards.items() if not ID == self.ID]
+        self.other_patrol_guards = [ID for ID, guard in self._world.guards.items() if not ID == self.ID and guard.type == 'PatrollingGuard']
 
 
 # TODO: implement sprinting
