@@ -1,5 +1,6 @@
 from typing import Tuple, List
 import random
+import numpy as np
 import vectormath as vmath
 
 from simulation.util import Position
@@ -82,7 +83,8 @@ class PatrollingGuard(GuardAgent):
         print('Guard', self.ID, 'Patrolling guard, route:', self.patrol_route)
 
         self.patrol_point = self.patrol_route[self.patrol_idx]
-        self.location = Position(((pa[0][0] + pa[1][0])/2, (pa[0][1] + pa[1][1])/2))
+        self.location = Position((pa[0][0] + np.abs(pa[0][0] - pa[1][0])*random.random(),
+                                  pa[0][1] + np.abs(pa[0][1] - pa[1][1])*random.random()))
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
