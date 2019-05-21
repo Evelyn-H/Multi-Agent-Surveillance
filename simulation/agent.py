@@ -23,6 +23,7 @@ class Agent(metaclass=ABCMeta):
         """
         # generate ID
         self.ID = world.World.generate_agent_ID()
+        self.type = 'Agent'
 
         # placeholder reference to the `World` the agent is in
         self._world = None
@@ -93,14 +94,6 @@ class Agent(metaclass=ABCMeta):
 
         # pick entry point
         start = self.on_pick_start()
-        # start = (int(start.x), int(start.y))
-        # # must be on the map
-        # if start.x < 0 or start.x >= self.map.width or start.y < 0 or start.y >= self.map.height:
-        #     raise Exception(f"Starting position for Agent {self.ID} is not on the map.")
-        # # must be along the outer edge
-        # if (start.x != 0 and start.x != self.map.width - 1) or (start.y != 0 and start.y != self.map.height - 1):
-        #     raise Exception(f"Starting position for Agent {self.ID} is not along the outer edge.")
-        # found a valid starting location!
         self.location = Position(start[0], start[1])
 
         # to track when to update the vision
@@ -153,8 +146,8 @@ class Agent(metaclass=ABCMeta):
 
     def set_movement_speed(self, speed):
         """ Set the movement speed of the agent and ensure, that it is within the allowed bounds"""
-        #return true if still
-        #Agent has to rest for 10 seconds after sprinting
+        # return true if still
+        # Agent has to rest for 10 seconds after sprinting
         if speed < 0 or speed > 3:
             raise Exception("Tried to set movement speed out of bounds: " + speed + " for agent " + self)
 
@@ -170,7 +163,7 @@ class Agent(metaclass=ABCMeta):
             self.log("Start sprinting")
 
         self.move_speed = speed
-        #self._world tick rate and time per tick as a sprint time counter
+        # self._world tick rate and time per tick as a sprint time counter
 
     @property
     def is_resting(self):
@@ -180,7 +173,7 @@ class Agent(metaclass=ABCMeta):
     def is_sprinting(self):
         return self.move_speed > self.base_speed
 
-    #This should be called in each update of the agent method
+    # This should be called in each update of the agent method
     def _update_sprint(self):
         if not self._can_sprint:
             return
@@ -325,11 +318,7 @@ class Agent(metaclass=ABCMeta):
                 self._fast_turning = False
                 self._turn_blindness_time = 0
 
-        # TODO: the following line sometimes gives IndexError: index 51 is out of bounds for axis 0 with size 51
-        # vision_modifier is the only place where this index error occurs, happens when one of the agents is ouside
-        # of the board, -1 seems to solve this, check if correct
-        vision_modifier = self.map._map.vision_modifier[current_x-1][current_y-1]
-        self.current_view_range = self.current_view_range * vision_modifier
+        vision_modifier = self.map.get_vision_modifier(current_x, current_y)
 
         # check if agent is settled in decreased vision area
         if vision_modifier < 1.0 and self._move_target != 0:
@@ -342,7 +331,8 @@ class Agent(metaclass=ABCMeta):
 
         if force or self._last_tile != current_tile or abs(self.heading - self._last_heading) > 5 or self._in_tower:
             self._last_tile = current_tile
-            self.map._reveal_visible(current_x, current_y, self.current_view_range, self.view_angle, self.heading, self._in_tower)
+            self.map._reveal_visible(current_x, current_y, self.current_view_range*vision_modifier,
+                                     self.view_angle, self.heading, self._in_tower)
             self._last_heading = self.heading
             return True
         return False
@@ -439,25 +429,32 @@ class Agent(metaclass=ABCMeta):
 class GuardAgent(Agent):
     def __init__(self) -> None:
         super().__init__()
-        self.color = (0, 1, 0)  # green
+
+        self.type = 'GuardAgent'
+        self.color = (0, 20, 65)  # mint-green
         self.view_range: float = 6.0
+
+        self.other_guards = List['vision.AgentView']
+        self.other_patrol_guards = List['vision.AgentView']
 
     def setup(self, world):
         super().setup(world)
         self.other_guards = [vision.AgentView(guard) for ID, guard in self._world.guards.items() if not ID == self.ID]
+        self.other_patrol_guards = [ID for ID, guard in self._world.guards.items() if not ID == self.ID and guard.type == 'PatrollingGuard']
 
 
 # TODO: implement sprinting
 class IntruderAgent(Agent):
     def __init__(self) -> None:
         super().__init__()
-        self.color = (1, 1, 0)  # yellow
+
+        self.type = 'IntruderAgent'
+        self.color = (1, 155, 0)  # orange
         self.view_range: float = 7.5
-        self.target = Position(vmath.Vector2((1.5, 1.5))) # must be .5 (center of tile)
+        self.target = Position(vmath.Vector2((1.5, 1.5)))  # must be .5 (center of tile)
 
         # are we captured yet?
         self.is_captured = False
-        self._prev_is_captured = False
 
         # has the target been reached?
         self.reached_target = False

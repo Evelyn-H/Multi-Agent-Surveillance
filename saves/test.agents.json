@@ -2,8 +2,8 @@
     "agents": [
         "PatrollingGuard",
         "PatrollingGuard",
-        "PatrollingGuard",
-        "PatrollingGuard",
+        "CameraGuard",
+        "CameraGuard",
         "PathfindingIntruder"
     ]
 }

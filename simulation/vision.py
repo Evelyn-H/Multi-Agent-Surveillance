@@ -5,7 +5,7 @@ import vectormath as vmath
 
 from .util import Position
 from . import pathfinding
-import simulation
+import simulation.agent
 
 
 class AgentView:
@@ -37,11 +37,12 @@ class AgentView:
     def is_intruder(self):
         return isinstance(self._agent, simulation.agent.IntruderAgent)
 
-# TODO: vision of structures
-#    # if there is a line of vision, then walls and gates can be seen
-#      from <= 10 meters distance
-#    # towers can be seen from <= 18 meters away
-#    # guards on towers can only be seen within normal ranges
+    @property
+    def is_captured(self):
+        if isinstance(self._agent, simulation.agent.IntruderAgent):
+            return self._agent.is_captured
+        else:
+            return False
 
 
 class MapView(pathfinding.Graph):
@@ -67,6 +68,9 @@ class MapView(pathfinding.Graph):
     @property
     def height(self):
         return self._map.size[1]
+
+    def get_vision_modifier(self, x: int, y: int) -> float:
+        return self._map.get_vision_modifier(x, y)
 
     def _reveal_all(self):
         self.fog = np.ones((self._map.size[0], self._map.size[1]), dtype=np.bool)
@@ -112,15 +116,13 @@ class MapView(pathfinding.Graph):
     # same but without numpy:       0.4 ms / call
     # proper version:               0.6 ms / call
     def _reveal_visible(self, x0: int, y0: int, radius: float, view_angle: float, heading: float, in_tower: bool):
-        offset = int(math.ceil(radius)) + 1
+        vision_modifier = self._map.get_vision_modifier(x0, y0)
+        offset = int(math.ceil(18*vision_modifier))  # + 1
+
         for x in range(x0 - offset, x0 + offset + 1):
             for y in range(y0 - offset, y0 + offset + 1):
                 # bounds check
                 if not self._map.in_bounds(x, y):
-                    continue
-
-                # distance check
-                if (x - x0)**2 + (y - y0)**2 > radius**2:
                     continue
 
                 # angle check
@@ -129,8 +131,24 @@ class MapView(pathfinding.Graph):
                 if angle > view_angle / 2 or angle < -view_angle / 2:
                     continue
 
+                # distance check
+                distance = (x - x0)**2 + (y - y0)**2
+                if distance > (18*vision_modifier)**2:
+                    continue
+                elif self._map.is_tower(x, y) and radius > 0:
+                    self.fog[x][y] = True
+                    continue
+                elif distance > radius**2:
+                    if distance > (10*vision_modifier)**2:
+                        continue
+                    elif not self._map.is_wall(x, y) or radius == 0:  # or not self._map.is_gate(x, y)
+                        continue
+                elif in_tower:
+                    self.fog[x][y] = True
+                    continue
+
                 # visibility check
-                if not self._is_tile_visible_from(x0, y0, x, y) and not in_tower:
+                if not self._is_tile_visible_from(x0, y0, x, y):  # and not in_tower:
                     continue
 
                 # tile is visible!

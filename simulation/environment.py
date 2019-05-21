@@ -45,6 +45,7 @@ class Map:
         # structures and stuff on the map
         self.targets: List[Position] = targets if targets else []
         self.towers: List[Position] = towers if towers else []
+        self.tower_map = np.zeros((size[0], size[1]), dtype=np.bool)
         self.gates: List[Gate] = gates if gates else []
         self.markers: List['world.Marker'] = markers if markers else []
 
@@ -66,6 +67,10 @@ class Map:
         m = Map(data['size'], data['targets'], data['gates'], data['towers'], data['markers'])
         m.targets = list(map(lambda x: Position(x[0], x[1]), m.targets))
         m.towers = list(map(lambda x: Position(x[0], x[1]), m.towers))
+        m.tower_map = np.zeros((m.size[0], m.size[1]), dtype=np.bool)
+        for tower in m.towers:
+            m.tower_map[int(tower[0]), int(tower[1])] = True
+
         m.walls = data['walls']
         m.vision_modifier = data['vision_modifier']
         return m
@@ -91,11 +96,19 @@ class Map:
 
     def add_tower(self, x: int, y: int):
         self.towers.append(Position(x, y))
+        self.tower_map[x, y] = True
 
     def remove_tower(self, x: int, y: int):
+        self.tower_map[x, y] = False
         for i, tower in enumerate(self.towers):
             if abs(tower.x - x) + abs(tower.y - y) <= 2:
                 del self.towers[i]
+
+    def is_tower(self, x: int, y: int) -> bool:
+        if self.in_bounds(x, y):
+            return self.tower_map[x, y]  # any([all(Position(x, y) == tower) for tower in self.towers])
+        else:
+            return False
 
     def set_wall(self, x: int, y: int, value=True):
         if self.in_bounds(x, y):
@@ -106,6 +119,12 @@ class Map:
             return self.walls[x][y]
         else:
             return True
+
+    def get_vision_modifier(self, x: int, y: int) -> float:
+        if self.in_bounds(x, y):
+            return self.vision_modifier[x][y]
+        else:
+            return 0.0
 
     def set_wall_rectangle(self, x0, y0, x1, y1, value=True):
         # make sure values are in the right order
