@@ -215,7 +215,21 @@ class PathfindingIntruder(IntruderAgent):
 
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
-        return 1 + random.random() * (self.map.width-2), 1 + random.random() * (self.map.height-2)
+        edge = random.randint(0,3)
+        #Left wall
+        if edge == 0:
+           return 1, random.randint(1,self.map.height-1) 
+        #Right wall
+        if edge == 1:
+           return self.map.width-1, random.randint(1,self.map.height-1) 
+        #Left wall
+        if edge == 2:
+           return random.randint(1,self.map.width-1), self.map.height-1 
+        #Right wall
+        if edge == 3:
+           return random.randint(1,self.map.width-1), 1 
+                       
+#        return 1 + random.random() * (self.map.width-2), 1 + random.random() * (self.map.height-2)
 
     def on_captured(self) -> None:
         """ Called once when the agent is captured """

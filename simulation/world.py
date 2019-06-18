@@ -219,7 +219,7 @@ class World:
         """
         # see if any intruders will reach the target now
         for ID_intruder, intruder in self.intruders.items():
-            if (intruder.location - intruder.target).length < 0.5: 
+            if (intruder.location - intruder.target).length < 1: 
                 if intruder.ticks_in_target == 0.0:
                     if (intruder.ticks_since_target * self.TIME_PER_TICK) >= 3.0 or \
                             intruder.times_visited_target == 0.0:

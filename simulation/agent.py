@@ -451,7 +451,7 @@ class IntruderAgent(Agent):
         self.type = 'IntruderAgent'
         self.color = (1, 155, 0)  # orange
         self.view_range: float = 7.5
-        self.target = Position(vmath.Vector2((1.5, 1.5)))  # must be .5 (center of tile)
+#        self.target = Position(vmath.Vector2((1.5, 1.5)))  # must be .5 (center of tile)
 
         # are we captured yet?
         self.is_captured = False
@@ -464,6 +464,10 @@ class IntruderAgent(Agent):
         self.ticks_since_target = 0.0
 
         self._can_sprint = True
+        
+    @property
+    def target(self):
+        return self._world.map.targets[0]
 
     @abstractmethod
     def on_captured(self) -> None:
