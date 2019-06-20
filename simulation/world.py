@@ -94,7 +94,10 @@ class World:
         if load_agents:
             world.load_agents(name)
         return world
-
+    
+    def clear_agents(self):
+        self.agents: Dict[AgentID, Agent] = dict()
+        
     def add_agent(self, agent_type):
         agent = agent_type()
         self.agents[agent.ID] = agent
@@ -219,7 +222,7 @@ class World:
         """
         # see if any intruders will reach the target now
         for ID_intruder, intruder in self.intruders.items():
-            if (intruder.location - intruder.target).length < 1: 
+            if (intruder.location - intruder.target).length < 2: 
                 if intruder.ticks_in_target == 0.0:
                     if (intruder.ticks_since_target * self.TIME_PER_TICK) >= 3.0 or \
                             intruder.times_visited_target == 0.0:
