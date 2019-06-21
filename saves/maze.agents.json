@@ -1,0 +1,9 @@
+{
+    "agents": [
+        "PatrollingGuard",
+        "PatrollingGuard",
+        "CameraGuard",
+        "CameraGuard",
+        "PathfindingIntruder"
+    ]
+}

@@ -19,6 +19,9 @@ def load_world(files, ia, sa):
         world.add_agent(agents.PathfindingIntruder)
 
     for s in range(1, sa+1):
+        world.add_agent(agents.CameraGuard)
+    
+    for s in range(sa, 5):
         world.add_agent(agents.PatrollingGuard)
     
     return world
@@ -34,44 +37,52 @@ def main():
     total_runs = int(input('how many runs? '))
     intruder_wins = 0
     times = []
-    for sa in range(1,6):
-        for ia in range(1,6):
-            intruder_wins = 0
-            times = []
-            for run in range(total_runs):
-                print(f"\n ======== Run {run+1}  ======== ")
-        
-                # load world and agents
-                world = load_world(files, ia, sa)
-        
-                # initialise the world
-                world.setup()
-        
-                # and run until the end
-                is_finished = False
-                while not is_finished:
-                    is_finished = world.tick()
-        
-                # process results
-                print(f"Won by: {'intruders' if logger.intruder_win else 'guards'}")
-                print(f'Time taken: {logger.time_taken}')
-                if logger.intruder_win:
-                    intruder_wins += 1
-                times.append(logger.time_taken)
-        
-            # aggregate data
-            print()
-            print(str(sa) + ' Surveilance agents, ' + str(ia) + ' Intruders')
-            print(f'Intruder win percentage: {intruder_wins / total_runs * 100}')
-            print('Time taken (5-number summary):', np.percentile(times, [0, 25, 50, 75, 100]))
+    for sa in range(0,4):
+        for ia in range(2,3):
             logFile = open("log.txt", "a")
-            logFile.write(str(sa) + ' Surveilance agents, ' + str(ia) + ' Intruders\n')
-            logFile.write(f'Intruder win percentage: {intruder_wins / total_runs * 100}\n')
-            logFile.write('Time taken (5-number summary):')
-            logFile.write('[')
-            logFile.write(', '.join(map(str, np.percentile(times, [0, 25, 50, 75, 100]))))
-            logFile.write(']\n\n')
-            logFile.close()             
+            logFile.write('======== ' + str(5-sa) + ' Patrolling Agents, ' + str(sa) + ' Camera agents, ' + str(ia) + ' Intruders ========\n')
+            logFile.close()                 
+            for run in range(total_runs):
+                intruder_wins = 0
+                times = []
+                batchSize = 20
+                logFile = open("log.txt", "a")
+                logFile.write('======== Run ' + str(run+1) + '========\n')
+                logFile.close()                 
+                for x in range(1,batchSize+1):
+                    print(f"\n ======== Run {run+1},{x} ======== ")
+            
+                    # load world and agents
+                    world = load_world(files, ia, sa)
+            
+                    # initialise the world
+                    world.setup()
+            
+                    # and run until the end
+                    is_finished = False
+                    while not is_finished:
+                        is_finished = world.tick()
+            
+                    # process results
+                    print(f"Won by: {'intruders' if logger.intruder_win else 'guards'}")
+                    print(f'Time taken: {logger.time_taken}')
+                    if logger.intruder_win:
+                        intruder_wins += 1
+                    times.append(logger.time_taken)
+            
+                # aggregate data
+                print()
+                print(str(sa) + ' Surveilance agents, ' + str(ia) + ' Intruders')
+                print(f'Intruder win percentage: {intruder_wins / batchSize * 100}')
+                print('Time taken (5-number summary):', np.percentile(times, [0, 25, 50, 75, 100]))
+                logFile = open("log.txt", "a")
+                logFile.write(str(5-sa) + ' Patrolling Agents, ' + str(sa) + ' Camera agents, ' + str(ia) + ' Intruders\n')
+                logFile.write(f'Intruder win percentage: {intruder_wins / batchSize * 100}\n')
+                logFile.write('Time taken (5-number summary):')
+                logFile.write('[')
+                logFile.write(', '.join(map(str, np.percentile(times, [0, 25, 50, 75, 100]))))
+                logFile.write(']\n\n')
+                logFile.close()             
     frequency = 2500  # Set Frequency To 2500 Hertz
     duration = 1000  # Set Duration To 1000 ms == 1 second
     while True:

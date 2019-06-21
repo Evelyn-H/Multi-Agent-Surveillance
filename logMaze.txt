@@ -1,0 +1,100 @@
+1 Surveilance agents, 1 Intruders
+Intruder win percentage: 67.2
+Time taken (5-number summary):[1.6500000000000001, 31.55, 82.30000000000001, 145.26250000000002, 404.5]
+
+1 Surveilance agents, 2 Intruders
+Intruder win percentage: 82.8
+Time taken (5-number summary):[5.0, 22.55, 44.650000000000006, 110.15, 403.75]
+
+1 Surveilance agents, 3 Intruders
+Intruder win percentage: 87.4
+Time taken (5-number summary):[5.0, 15.8, 33.050000000000004, 90.65, 400.6]
+
+1 Surveilance agents, 4 Intruders
+Intruder win percentage: 94.6
+Time taken (5-number summary):[5.0, 12.8, 24.8, 48.35, 382.75]
+
+1 Surveilance agents, 5 Intruders
+Intruder win percentage: 97.6
+Time taken (5-number summary):[5.0, 12.100000000000001, 18.8, 40.25, 364.65000000000003]
+
+2 Surveilance agents, 1 Intruders
+Intruder win percentage: 53.0
+Time taken (5-number summary):[0.0, 25.425, 47.35, 100.4, 334.1]
+
+2 Surveilance agents, 2 Intruders
+Intruder win percentage: 74.2
+Time taken (5-number summary):[5.0, 19.55, 45.225, 102.67500000000001, 404.5]
+
+2 Surveilance agents, 3 Intruders
+Intruder win percentage: 84.39999999999999
+Time taken (5-number summary):[5.0, 15.05, 32.550000000000004, 92.15, 385.8]
+
+2 Surveilance agents, 4 Intruders
+Intruder win percentage: 91.0
+Time taken (5-number summary):[5.0, 12.9, 26.650000000000002, 49.1, 385.8]
+
+2 Surveilance agents, 5 Intruders
+Intruder win percentage: 93.8
+Time taken (5-number summary):[5.0, 12.100000000000001, 22.55, 44.650000000000006, 401.35]
+
+3 Surveilance agents, 1 Intruders
+Intruder win percentage: 39.800000000000004
+Time taken (5-number summary):[2.0, 24.875, 45.150000000000006, 94.025, 385.05]
+
+3 Surveilance agents, 2 Intruders
+Intruder win percentage: 59.4
+Time taken (5-number summary):[3.8000000000000003, 22.05, 47.6, 105.9, 384.20000000000005]
+
+3 Surveilance agents, 3 Intruders
+Intruder win percentage: 76.4
+Time taken (5-number summary):[5.0, 16.55, 35.85, 101.91250000000001, 355.70000000000005]
+
+3 Surveilance agents, 4 Intruders
+Intruder win percentage: 81.39999999999999
+Time taken (5-number summary):[5.0, 13.55, 27.05, 84.2, 402.85]
+
+3 Surveilance agents, 5 Intruders
+Intruder win percentage: 89.60000000000001
+Time taken (5-number summary):[5.0, 10.9, 22.55, 44.35, 400.6]
+
+4 Surveilance agents, 1 Intruders
+Intruder win percentage: 37.2
+Time taken (5-number summary):[1.3, 20.3, 40.22500000000001, 83.0375, 381.20000000000005]
+
+4 Surveilance agents, 2 Intruders
+Intruder win percentage: 60.8
+Time taken (5-number summary):[5.0, 18.8, 40.400000000000006, 83.22500000000001, 401.35]
+
+4 Surveilance agents, 3 Intruders
+Intruder win percentage: 72.8
+Time taken (5-number summary):[5.0, 13.55, 34.15, 83.0, 385.05]
+
+4 Surveilance agents, 4 Intruders
+Intruder win percentage: 82.39999999999999
+Time taken (5-number summary):[5.0, 12.4, 26.650000000000002, 82.30000000000001, 332.15000000000003]
+
+4 Surveilance agents, 5 Intruders
+Intruder win percentage: 87.2
+Time taken (5-number summary):[5.0, 10.700000000000001, 22.150000000000002, 79.55000000000001, 403.6]
+
+5 Surveilance agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[0.7000000000000001, 20.337500000000002, 37.2, 71.025, 333.0]
+
+5 Surveilance agents, 2 Intruders
+Intruder win percentage: 48.8
+Time taken (5-number summary):[4.55, 22.150000000000002, 42.800000000000004, 80.0, 403.6]
+
+5 Surveilance agents, 3 Intruders
+Intruder win percentage: 64.60000000000001
+Time taken (5-number summary):[5.0, 16.0625, 31.55, 83.7875, 306.5]
+
+5 Surveilance agents, 4 Intruders
+Intruder win percentage: 73.0
+Time taken (5-number summary):[5.0, 12.9, 27.450000000000003, 81.2625, 403.75]
+
+5 Surveilance agents, 5 Intruders
+Intruder win percentage: 78.8
+Time taken (5-number summary):[5.0, 12.4, 25.55, 79.2125, 401.35]
+
