@@ -67,7 +67,7 @@ class Agent(metaclass=ABCMeta):
         self.tower_view_range: float = 15.0  # actually should be range between 2 and 15
         self.view_range: float = 6.0
         self.current_view_range: float = self.view_range
-        self.visibility_range: float = self.view_range
+        self.visibility_range: float = self.tower_view_range  # self.view_range
         self.decreased_visibility_range: float = 1.0
         self.base_view_angle: float = 45.0
         self.view_angle: float = self.base_view_angle
@@ -328,7 +328,7 @@ class Agent(metaclass=ABCMeta):
             self._dec_vision_time += 1
         else:
             self._dec_vision_time = 0
-            self.visibility_range = self.view_range
+            self.visibility_range = self.tower_view_range  # self.view_range
 
         if force or self._last_tile != current_tile or abs(self.heading - self._last_heading) > 5 or self._in_tower:
             self._last_tile = current_tile
