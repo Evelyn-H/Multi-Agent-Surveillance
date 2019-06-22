@@ -37,11 +37,12 @@ def main():
     total_runs = int(input('how many runs? '))
     intruder_wins = 0
     times = []
-    for sa in range(0,4):
+    for sa in range(0,1):
         for ia in range(1,2):
             logFile = open("log.txt", "a")
             logFile.write('======== ' + str(5-sa) + ' Patrolling Agents, ' + str(sa) + ' Camera agents, ' + str(ia) + ' Intruders ========\n')
-            logFile.close()                 
+            logFile.close()
+            winrate = 0                 
             for run in range(total_runs):
                 intruder_wins = 0
                 times = []
@@ -74,6 +75,7 @@ def main():
                 print()
                 print(str(sa) + ' Surveilance agents, ' + str(ia) + ' Intruders')
                 print(f'Intruder win percentage: {intruder_wins / batchSize * 100}')
+                winrate += (intruder_wins / batchSize)
                 print('Time taken (5-number summary):', np.percentile(times, [0, 25, 50, 75, 100]))
                 logFile = open("log.txt", "a")
                 logFile.write(str(5-sa) + ' Patrolling Agents, ' + str(sa) + ' Camera agents, ' + str(ia) + ' Intruders\n')
@@ -82,7 +84,12 @@ def main():
                 logFile.write('[')
                 logFile.write(', '.join(map(str, np.percentile(times, [0, 25, 50, 75, 100]))))
                 logFile.write(']\n\n')
-                logFile.close()             
+                logFile.close()       
+            winrate = winrate/total_runs      
+            logFile = open("log.txt", "a")
+            logFile.write(str(5-sa) + ' Patrolling Agents, ' + str(sa) + ' Camera agents, ' + str(ia) + ' Intruders\n')
+            logFile.write('Winrate over ' + str(total_runs) + ' :' + str(winrate) + '\n')
+            logFile.close()
     frequency = 2500  # Set Frequency To 2500 Hertz
     duration = 1000  # Set Duration To 1000 ms == 1 second
     while True:
