@@ -43,7 +43,8 @@ class Agent(metaclass=ABCMeta):
         self._sprint_rest_time = 10
         self._sprint_time = 5
         self.path = None
-
+        self.is_captured = False
+        
         # Guard agents interaction with towers
         self._in_tower = False
         self._interacting_with_tower = False

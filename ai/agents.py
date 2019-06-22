@@ -99,7 +99,7 @@ class PatrollingGuard(GuardAgent):
         """ Message handler, will be called before `on_tick` """
         if message.message[:9] == 'Intruder@':
             intruder = [float(x) for x in message.message[10:-1].split(sep=' ') if x != '']
-            if (self.location - intruder).length < 20:
+            if (self.location - intruder).length < 71:
                 self.seen_intruder = intruder
         else:
             self.log(f'received message from agent {message.source} on tick {self.time_ticks}: {message.message}')
@@ -158,7 +158,7 @@ class CameraGuard(GuardAgent):
         """ Agent setup """
         self.base_speed = 0
         self.move_speed = 0
-        self.view_range: float = 12.0
+        self.view_range: float = 15.0
 
         print('Guard', self.ID, 'Camera guard')
 

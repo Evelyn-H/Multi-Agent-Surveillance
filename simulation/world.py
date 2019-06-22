@@ -310,8 +310,9 @@ class World:
                 d = other_agent.location - agent.location
                 angle_diff = abs((-math.degrees(math.atan2(d.y, d.x)) + 90 - agent.heading + 180) % 360 - 180)
 
-                if (d.length < other_agent.visibility_range and d.length <= agent.view_range and
-                        angle_diff <= agent.view_angle) or d.length <= 1.0:
+#                if (d.length < other_agent.visibility_range and 
+                if(d.length <= agent.view_range and not other_agent.is_captured and
+                        angle_diff <= agent.view_angle) or d.length <= 1.0 and not other_agent.is_captured:
                     # create a new `AgentView` event
                     visible_agents.append(simulation.vision.AgentView(other_agent))
 

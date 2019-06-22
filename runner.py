@@ -38,7 +38,7 @@ def main():
     intruder_wins = 0
     times = []
     for sa in range(0,4):
-        for ia in range(2,3):
+        for ia in range(1,2):
             logFile = open("log.txt", "a")
             logFile.write('======== ' + str(5-sa) + ' Patrolling Agents, ' + str(sa) + ' Camera agents, ' + str(ia) + ' Intruders ========\n')
             logFile.close()                 
