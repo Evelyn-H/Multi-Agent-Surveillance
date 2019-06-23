@@ -266,7 +266,6 @@ class PathfindingIntruder(IntruderAgent):
         self.path = self.map.find_path(self.location, self.target)
         self.path = self.path and self.path[1:]  # remove starting node
 
-
     def on_tick(self, seen_agents) -> None:
         """ Agent logic goes here """
         if not self.path:
@@ -285,7 +284,6 @@ class PathfindingIntruder(IntruderAgent):
                 self.path = self.path[1:]
         elif not self.is_captured:
             if self.move_remaining == 0:
-                self.log('Fleeing '+str(self.heading)+' '+str(seen_guards[0].heading))
                 d = 3
                 a = 45
 
