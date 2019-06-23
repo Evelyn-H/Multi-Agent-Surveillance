@@ -98,8 +98,8 @@ class PatrollingGuard(GuardAgent):
     def on_message(self, message: world.Message) -> None:
         """ Message handler, will be called before `on_tick` """
         if message.message[:9] == 'Intruder@':
-            intruder = [float(x) for x in message.message[10:-1].split(sep=' ') if x != '']
-            if (self.location - intruder).length < 71:
+            intruder = self._world.agents[int(message.message[9:])]
+            if (self.location - intruder.location).length < 30:
                 self.seen_intruder = intruder
         else:
             self.log(f'received message from agent {message.source} on tick {self.time_ticks}: {message.message}')
@@ -110,12 +110,12 @@ class PatrollingGuard(GuardAgent):
 
     def on_vision_update(self) -> None:
         """ Called when vision is updated """
-        if (self.location - self.patrol_point).length < 1:
+        if (self.location - self.patrol_point).length <= 2:
             self.log('I\'ve reached corner point', self.patrol_idx, 'of my patrolling route.')
             self.patrol_idx = (self.patrol_idx + 1) % len(self.patrol_route)
             self.patrol_point = self.patrol_route[self.patrol_idx]
 
-        target = self.patrol_point if not self.chase else self.seen_intruder
+        target = self.patrol_point if not self.chase else self.seen_intruder.location
         self.path = self.map.find_path(self.location, target)
         self.path = self.path and self.path[1:]
 
@@ -124,19 +124,20 @@ class PatrollingGuard(GuardAgent):
         # enter tower if possible
         # if self.enter_tower():
         #     self.log("Entered a tower!")
+        if self.seen_intruder is not None and self.seen_intruder.is_captured:
+            self.seen_intruder = None
 
         # only try to chase intruders, not other guards
         seen_intruders = [a for a in seen_agents if a.is_intruder]
 
         self.chase = False
-        if self.seen_intruder is not None and (self.location - self.seen_intruder).length > 0.05:
+        if self.seen_intruder is not None and (self.location - self.seen_intruder.location).length > 0.05:
             self.chase = True
 
-        if seen_intruders:
-            for intruder in seen_intruders:
-                if not intruder.is_captured:
-                    self.seen_intruder = intruder.location
-                    self.chase = True
+        for intruder in seen_intruders:
+            if not intruder.is_captured:
+                self.seen_intruder = intruder
+                self.chase = True
 
         if self.path and self.move_remaining == 0:
             next_pos = self.path[0]
@@ -158,7 +159,7 @@ class CameraGuard(GuardAgent):
         """ Agent setup """
         self.base_speed = 0
         self.move_speed = 0
-        self.view_range: float = 15.0
+        # self.view_range: float = 15.0
 
         print('Guard', self.ID, 'Camera guard')
 
@@ -193,10 +194,13 @@ class CameraGuard(GuardAgent):
         
         # Turn to an intruder as long as we see it and send a message to the other agents
         if seen_intruders:
-            target = seen_intruders[0].location
-            self.turn_to_point(target)
-            for guard_id in self.other_patrol_guards:
-                self.send_message(guard_id, 'Intruder@'+str(target))
+            for intruder in seen_intruders:
+                if not intruder.is_captured:
+                    target = intruder.location
+                    self.turn_to_point(target)
+                    for guard_id in self.other_patrol_guards:
+                        self.send_message(guard_id, 'Intruder@'+str(seen_intruders[0].ID))
+                    break
         else:
             self.turn(10)  # turning faster will cause blindness
 
@@ -216,18 +220,18 @@ class PathfindingIntruder(IntruderAgent):
     def on_pick_start(self) -> Tuple[float, float]:
         """ Must return a valid starting position for the agent """
         edge = random.randint(0,3)
-        #Left wall
+        # Left wall
         if edge == 0:
-           return 1, random.randint(1,self.map.height-1) 
-        #Right wall
+            return 1, random.randint(1,self.map.height-1)
+        # Right wall
         if edge == 1:
-           return self.map.width-1, random.randint(1,self.map.height-1) 
-        #Left wall
+            return self.map.width-1, random.randint(1,self.map.height-1)
+        # Left wall
         if edge == 2:
-           return random.randint(1,self.map.width-1), self.map.height-1 
-        #Right wall
+            return random.randint(1,self.map.width-1), self.map.height-1
+        # Right wall
         if edge == 3:
-           return random.randint(1,self.map.width-1), 1 
+            return random.randint(1,self.map.width-1), 1
                        
 #        return 1 + random.random() * (self.map.width-2), 1 + random.random() * (self.map.height-2)
 
