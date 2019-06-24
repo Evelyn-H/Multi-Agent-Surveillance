@@ -160,11 +160,11 @@ class MapGenerator:
         m = Map(size=size)
 
         # percentage of wall tiles to add
-        wall_ratio = 0.02
+        wall_ratio = 0.2
         # percentage of low vision tiles to add
-        low_vis_ratio = 0.02
+        low_vis_ratio = 0.2
         # number of targets and towers to add
-        num_targets = 4
+        num_targets = 1
         num_towers = 10
 
         for _ in range(int(wall_ratio * m.size[0] * m.size[1])):

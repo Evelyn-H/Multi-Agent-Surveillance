@@ -271,7 +271,8 @@ class PathfindingIntruder(IntruderAgent):
         if not self.path:
             # self.log('no path')
             pass
-
+        if not self.is_sprinting:
+            self.set_movement_speed(self.base_speed)
         # check if any guards in sight
         seen_guards = [a for a in seen_agents if a.is_guard]
         fleeing = True if seen_guards else False
@@ -292,6 +293,7 @@ class PathfindingIntruder(IntruderAgent):
                         a = -a
                 else:
                     a * ((-1)**random.randrange(2))
-
+                if self._can_sprint:
+                    self.set_movement_speed(3)        
                 self.turn(a)
                 self.move(d)

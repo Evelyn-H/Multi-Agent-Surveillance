@@ -181,11 +181,11 @@ class Agent(metaclass=ABCMeta):
 
         if self.is_sprinting and (self._world.time_ticks - self._sprint_start_time) > self._sprint_time/self._world.TIME_PER_TICK:
             self._sprint_stop_time = self._world.time_ticks
-
+            
         # Check, if the agent has rested for enough -> ensure, that rests when if can't sprint
         if self.is_resting:
             self.move_speed = 0
-
+        
     def _update_tower_interaction(self):
         if not self._interacting_with_tower:
             # do nothing if we're not interacting
