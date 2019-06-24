@@ -124,6 +124,7 @@ class PatrollingGuard(GuardAgent):
         # enter tower if possible
         # if self.enter_tower():
         #     self.log("Entered a tower!")
+
         if self.seen_intruder is not None and self.seen_intruder.is_captured:
             self.seen_intruder = None
 
@@ -267,21 +268,30 @@ class PathfindingIntruder(IntruderAgent):
 
     def on_tick(self, seen_agents) -> None:
         """ Agent logic goes here """
-
         if not self.path:
             # self.log('no path')
             pass
 
-#        try:
-#            self.set_movement_speed(3)
-#        except:
-#            self.log("Resting")
-#            pass
+        # check if any guards in sight
+        seen_guards = [a for a in seen_agents if a.is_guard]
+        fleeing = True if seen_guards else False
 
-        if self.path and self.move_remaining == 0:
-            next_pos = self.path[0]
-            self.turn_to_point(next_pos)
-            # self.log(self.location, self.path[0], self.path[1], self.turn_remaining)
-            # if self.turn_remaining == 0:
-            self.move((next_pos - self.location).length)
-            self.path = self.path[1:]
+        if not fleeing:
+            if self.path and self.move_remaining == 0:
+                next_pos = self.path[0]
+                self.turn_to_point(next_pos)
+                self.move((next_pos - self.location).length)
+                self.path = self.path[1:]
+        elif not self.is_captured:
+            if self.move_remaining == 0:
+                d = 3
+                a = 45
+
+                if random.random() < 0.9 and self.heading != seen_guards[0].heading:
+                    if self.heading < seen_guards[0].heading:
+                        a = -a
+                else:
+                    a * ((-1)**random.randrange(2))
+
+                self.turn(a)
+                self.move(d)
