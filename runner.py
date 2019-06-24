@@ -37,7 +37,7 @@ def main():
     total_runs = int(input('how many runs? '))
     intruder_wins = 0
     times = []
-    for sa in range(0,1):
+    for sa in range(3,4):
         for ia in range(1,2):
             logFile = open("log.txt", "a")
             logFile.write('======== ' + str(5-sa) + ' Patrolling Agents, ' + str(sa) + ' Camera agents, ' + str(ia) + ' Intruders ========\n')
@@ -67,6 +67,9 @@ def main():
                     # process results
                     print(f"Won by: {'intruders' if logger.intruder_win else 'guards'}")
                     print(f'Time taken: {logger.time_taken}')
+                    logFile = open("log.txt", "a")
+                    logFile.write(f"Won by: {'intruders' if logger.intruder_win else 'guards'}\n")
+                    logFile.close()
                     if logger.intruder_win:
                         intruder_wins += 1
                     times.append(logger.time_taken)
