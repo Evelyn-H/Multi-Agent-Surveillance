@@ -94,7 +94,10 @@ class World:
         if load_agents:
             world.load_agents(name)
         return world
-
+    
+    def clear_agents(self):
+        self.agents: Dict[AgentID, Agent] = dict()
+        
     def add_agent(self, agent_type):
         agent = agent_type()
         self.agents[agent.ID] = agent
@@ -219,7 +222,7 @@ class World:
         """
         # see if any intruders will reach the target now
         for ID_intruder, intruder in self.intruders.items():
-            if (intruder.location - intruder.target).length < 0.5: 
+            if (intruder.location - intruder.target).length < 2: 
                 if intruder.ticks_in_target == 0.0:
                     if (intruder.ticks_since_target * self.TIME_PER_TICK) >= 3.0 or \
                             intruder.times_visited_target == 0.0:
@@ -259,7 +262,8 @@ class World:
                 agent.setup_patrol_route(patrolling_areas[idx_pa % len(patrolling_areas)])
                 idx_pa += 1
             elif agent.type == 'CameraGuard':
-                agent.place_in_tower(self.map.towers[idx_st])
+                if len(self.map.towers) > idx_st:
+                    agent.place_in_tower(self.map.towers[idx_st])
                 idx_st += 1
 
     def create_patrolling_areas(self):
@@ -307,8 +311,9 @@ class World:
                 d = other_agent.location - agent.location
                 angle_diff = abs((-math.degrees(math.atan2(d.y, d.x)) + 90 - agent.heading + 180) % 360 - 180)
 
-                if (d.length < other_agent.visibility_range and d.length <= agent.view_range and
-                        angle_diff <= agent.view_angle) or d.length <= 1.0:
+#                if (d.length < other_agent.visibility_range and
+                if ((d.length <= agent.view_range and d.length <= other_agent.visibility_range and
+                   angle_diff <= agent.view_angle) or d.length <= 1.0) and not other_agent.is_captured:
                     # create a new `AgentView` event
                     visible_agents.append(simulation.vision.AgentView(other_agent))
 

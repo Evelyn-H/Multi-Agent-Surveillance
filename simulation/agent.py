@@ -43,7 +43,8 @@ class Agent(metaclass=ABCMeta):
         self._sprint_rest_time = 10
         self._sprint_time = 5
         self.path = None
-
+        self.is_captured = False
+        
         # Guard agents interaction with towers
         self._in_tower = False
         self._interacting_with_tower = False
@@ -66,7 +67,7 @@ class Agent(metaclass=ABCMeta):
         self.tower_view_range: float = 15.0  # actually should be range between 2 and 15
         self.view_range: float = 6.0
         self.current_view_range: float = self.view_range
-        self.visibility_range: float = self.view_range
+        self.visibility_range: float = self.tower_view_range  # self.view_range
         self.decreased_visibility_range: float = 1.0
         self.base_view_angle: float = 45.0
         self.view_angle: float = self.base_view_angle
@@ -180,11 +181,11 @@ class Agent(metaclass=ABCMeta):
 
         if self.is_sprinting and (self._world.time_ticks - self._sprint_start_time) > self._sprint_time/self._world.TIME_PER_TICK:
             self._sprint_stop_time = self._world.time_ticks
-
+            
         # Check, if the agent has rested for enough -> ensure, that rests when if can't sprint
         if self.is_resting:
             self.move_speed = 0
-
+        
     def _update_tower_interaction(self):
         if not self._interacting_with_tower:
             # do nothing if we're not interacting
@@ -327,7 +328,7 @@ class Agent(metaclass=ABCMeta):
             self._dec_vision_time += 1
         else:
             self._dec_vision_time = 0
-            self.visibility_range = self.view_range
+            self.visibility_range = self.tower_view_range  # self.view_range
 
         if force or self._last_tile != current_tile or abs(self.heading - self._last_heading) > 5 or self._in_tower:
             self._last_tile = current_tile
@@ -451,7 +452,7 @@ class IntruderAgent(Agent):
         self.type = 'IntruderAgent'
         self.color = (1, 155, 0)  # orange
         self.view_range: float = 7.5
-        self.target = Position(vmath.Vector2((1.5, 1.5)))  # must be .5 (center of tile)
+#        self.target = Position(vmath.Vector2((1.5, 1.5)))  # must be .5 (center of tile)
 
         # are we captured yet?
         self.is_captured = False
@@ -464,6 +465,10 @@ class IntruderAgent(Agent):
         self.ticks_since_target = 0.0
 
         self._can_sprint = True
+        
+    @property
+    def target(self):
+        return self._world.map.targets[0]
 
     @abstractmethod
     def on_captured(self) -> None:

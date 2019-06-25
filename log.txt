@@ -1,0 +1,5558 @@
+======== 5 Patrolling Agents, 0 Camera agents, 1 Intruders ========
+======== Run 1========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[5.75, 18.4875, 26.85, 30.025, 43.75]
+
+======== Run 2========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[4.6000000000000005, 20.275, 26.200000000000003, 31.137500000000003, 47.900000000000006]
+
+======== Run 3========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[0.75, 18.7375, 27.025, 30.1, 42.35]
+
+======== Run 4========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[7.800000000000001, 25.5125, 28.4, 32.9375, 45.85]
+
+======== Run 5========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[8.8, 27.550000000000004, 33.8, 36.175, 43.85]
+
+======== Run 6========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[4.15, 25.6875, 28.450000000000003, 37.337500000000006, 47.45]
+
+======== Run 7========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[13.05, 20.5, 25.9, 30.650000000000002, 42.75]
+
+======== Run 8========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[3.1, 19.825000000000003, 27.225, 36.5625, 48.85]
+
+======== Run 9========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[5.300000000000001, 21.8125, 29.075000000000003, 36.849999999999994, 40.1]
+
+======== Run 10========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[14.15, 22.4125, 28.325000000000003, 35.1625, 45.800000000000004]
+
+======== Run 11========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[14.3, 22.175, 27.475, 34.300000000000004, 45.75]
+
+======== Run 12========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[5.1000000000000005, 27.125000000000004, 28.475, 34.7625, 40.1]
+
+======== Run 13========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[9.75, 27.7375, 35.525000000000006, 38.362500000000004, 46.5]
+
+======== Run 14========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[3.5500000000000003, 25.137500000000003, 27.875, 34.925, 45.300000000000004]
+
+======== Run 15========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[5.15, 24.25, 28.0, 36.675, 47.0]
+
+======== Run 16========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[9.700000000000001, 27.1, 30.725, 35.8875, 44.2]
+
+======== Run 17========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[5.2, 24.0375, 28.175, 36.712500000000006, 47.050000000000004]
+
+======== Run 18========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[1.6500000000000001, 26.462500000000002, 28.65, 34.75, 46.050000000000004]
+
+======== Run 19========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[1.4000000000000001, 26.3125, 29.125, 35.875, 50.300000000000004]
+
+======== Run 20========
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[5.6000000000000005, 27.2375, 29.275000000000002, 37.975, 44.900000000000006]
+
+======== 4 Patrolling Agents, 1 Camera agents, 1 Intruders ========
+======== Run 1========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[6.3500000000000005, 18.35, 25.1, 27.6875, 36.95]
+
+======== Run 2========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[4.75, 21.4375, 26.575000000000003, 31.712500000000002, 43.6]
+
+======== Run 3========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[7.6000000000000005, 19.6875, 26.375, 28.85, 38.95]
+
+======== Run 4========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[19.6, 24.475, 26.650000000000002, 28.400000000000002, 39.900000000000006]
+
+======== Run 5========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[6.9, 18.75, 21.325000000000003, 26.625000000000004, 30.1]
+
+======== Run 6========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[3.2, 22.475, 27.275000000000002, 34.55, 42.400000000000006]
+
+======== Run 7========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[13.05, 23.737500000000004, 28.025000000000002, 34.3, 40.650000000000006]
+
+======== Run 8========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[16.5, 20.575000000000003, 26.0, 27.550000000000004, 37.1]
+
+======== Run 9========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[6.6000000000000005, 22.387500000000003, 26.075000000000003, 31.712500000000006, 43.5]
+
+======== Run 10========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[5.8500000000000005, 19.0375, 20.5, 27.25, 30.0]
+
+======== Run 11========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[2.1, 21.3625, 27.125, 31.975, 42.75]
+
+======== Run 12========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[4.65, 26.262500000000003, 29.475, 35.337500000000006, 46.650000000000006]
+
+======== Run 13========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[7.95, 20.6625, 27.15, 31.125, 39.900000000000006]
+
+======== Run 14========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[16.55, 19.637500000000003, 25.875, 28.6, 34.25]
+
+======== Run 15========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[18.25, 24.587500000000002, 27.0, 31.6625, 46.35]
+
+======== Run 16========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[15.450000000000001, 21.587500000000002, 26.25, 35.7125, 47.650000000000006]
+
+======== Run 17========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[4.4, 19.475, 27.75, 34.2625, 38.900000000000006]
+
+======== Run 18========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[9.700000000000001, 20.950000000000003, 27.025, 32.25, 37.15]
+
+======== Run 19========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[5.4, 24.800000000000004, 28.025000000000002, 29.487500000000004, 35.050000000000004]
+
+======== Run 20========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[3.7, 23.450000000000003, 27.025, 30.1625, 46.050000000000004]
+
+======== 3 Patrolling Agents, 2 Camera agents, 1 Intruders ========
+======== Run 1========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[12.200000000000001, 20.6875, 28.425, 31.725, 45.85]
+
+======== Run 2========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[18.35, 25.75, 27.15, 32.9375, 46.650000000000006]
+
+======== Run 3========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[10.200000000000001, 19.387500000000003, 24.775, 29.85, 45.45]
+
+======== Run 4========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[3.75, 12.412500000000001, 24.275, 28.05, 45.75]
+
+======== Run 5========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[6.25, 23.0375, 26.775000000000002, 29.425000000000004, 37.25]
+
+======== Run 6========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[8.8, 24.3625, 27.375, 29.487500000000004, 45.150000000000006]
+
+======== Run 7========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[5.8500000000000005, 23.8625, 27.8, 30.375000000000004, 50.550000000000004]
+
+======== Run 8========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 75.0
+Time taken (5-number summary):[5.4, 21.150000000000002, 27.150000000000002, 28.1875, 37.2]
+
+======== Run 9========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[5.15, 19.5875, 25.75, 31.9125, 45.45]
+
+======== Run 10========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[7.9, 23.500000000000004, 26.975, 29.462500000000002, 44.85]
+
+======== Run 11========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[3.7, 19.8875, 25.75, 29.6, 45.45]
+
+======== Run 12========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[5.2, 20.175000000000004, 25.925, 30.887500000000003, 49.900000000000006]
+
+======== Run 13========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[15.0, 22.900000000000002, 26.925000000000004, 29.275000000000002, 50.900000000000006]
+
+======== Run 14========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[3.8000000000000003, 24.200000000000003, 27.55, 30.5625, 47.550000000000004]
+
+======== Run 15========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[9.5, 22.95, 27.300000000000004, 37.0125, 47.85]
+
+======== Run 16========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[6.0, 22.525000000000002, 27.575000000000003, 34.975, 47.650000000000006]
+
+======== Run 17========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[0.6000000000000001, 18.1375, 26.025000000000002, 29.4125, 45.0]
+
+======== Run 18========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 15.0
+Time taken (5-number summary):[9.9, 18.737499999999997, 23.025000000000002, 27.437500000000004, 44.85]
+
+======== Run 19========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[1.35, 14.5875, 24.1, 28.300000000000004, 42.400000000000006]
+
+======== Run 20========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[2.85, 18.2125, 27.525, 31.25, 48.150000000000006]
+
+======== 2 Patrolling Agents, 3 Camera agents, 1 Intruders ========
+======== Run 1========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[5.7, 19.7375, 25.35, 26.900000000000002, 45.85]
+
+======== Run 2========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[6.9, 15.350000000000001, 19.925000000000004, 28.062500000000004, 47.1]
+
+======== Run 3========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[17.05, 21.325000000000003, 25.35, 38.8125, 47.050000000000004]
+
+======== Run 4========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[2.5, 8.5, 25.700000000000003, 29.587500000000002, 47.25]
+
+======== Run 5========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[1.6500000000000001, 19.462500000000002, 25.625, 31.025000000000002, 47.650000000000006]
+
+======== Run 6========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[5.65, 20.262500000000003, 26.825000000000003, 42.2875, 51.5]
+
+======== Run 7========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[5.3500000000000005, 21.7375, 27.700000000000003, 35.4125, 50.2]
+
+======== Run 8========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[5.300000000000001, 20.3, 26.175, 29.7875, 48.1]
+
+======== Run 9========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[9.15, 26.5375, 28.75, 34.35, 51.900000000000006]
+
+======== Run 10========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[2.45, 19.125, 26.550000000000004, 28.4625, 53.35]
+
+======== Run 11========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[9.4, 22.175, 27.400000000000002, 33.7375, 45.75]
+
+======== Run 12========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[7.050000000000001, 20.1125, 26.5, 32.625, 50.550000000000004]
+
+======== Run 13========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[18.75, 19.6, 27.225, 40.7625, 50.35]
+
+======== Run 14========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[3.25, 18.712500000000002, 25.225, 38.6, 50.650000000000006]
+
+======== Run 15========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[3.2, 10.6375, 25.200000000000003, 27.325000000000003, 45.85]
+
+======== Run 16========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[1.35, 18.35, 20.6, 26.837500000000002, 46.800000000000004]
+
+======== Run 17========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[7.45, 14.8, 22.025000000000002, 26.0375, 47.7]
+
+======== Run 18========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[6.25, 25.6, 27.25, 31.5375, 46.0]
+
+======== Run 19========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[2.45, 19.9, 23.1, 36.675, 48.35]
+
+======== Run 20========
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[3.4000000000000004, 20.012500000000003, 25.6, 29.312500000000004, 51.900000000000006]
+
+======== 1 Patrolling Agents, 4 Camera agents, 1 Intruders ========
+======== Run 1========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[18.35, 21.712500000000002, 26.700000000000003, 34.3, 52.550000000000004]
+
+======== Run 2========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[3.35, 23.3, 30.450000000000003, 37.9375, 51.900000000000006]
+
+======== Run 3========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[9.55, 22.012500000000003, 33.0, 39.5375, 53.050000000000004]
+
+======== Run 4========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[2.9000000000000004, 20.900000000000002, 25.75, 30.025000000000002, 44.2]
+
+======== Run 5========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[5.2, 24.35, 28.1, 34.425, 51.2]
+
+======== Run 6========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[6.8500000000000005, 24.950000000000003, 30.150000000000002, 35.3375, 47.85]
+
+======== Run 7========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[5.8500000000000005, 20.025000000000002, 27.025000000000002, 35.650000000000006, 53.050000000000004]
+
+======== Run 8========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[5.65, 20.325000000000003, 27.950000000000003, 40.45, 46.800000000000004]
+
+======== Run 9========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[9.75, 25.587500000000002, 28.025, 38.462500000000006, 48.400000000000006]
+
+======== Run 10========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[7.050000000000001, 24.975, 27.875, 38.8, 51.1]
+
+======== Run 11========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[7.45, 25.450000000000003, 29.450000000000003, 36.8125, 47.35]
+
+======== Run 12========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[7.050000000000001, 20.050000000000004, 32.45, 46.6125, 51.900000000000006]
+
+======== Run 13========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[6.6000000000000005, 25.212500000000002, 27.25, 31.4375, 43.2]
+
+======== Run 14========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[2.45, 20.8375, 27.275000000000002, 30.2875, 45.45]
+
+======== Run 15========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[6.9, 24.525, 27.775000000000002, 39.6625, 52.550000000000004]
+
+======== Run 16========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[6.9, 20.575000000000003, 27.700000000000003, 31.1125, 48.400000000000006]
+
+======== Run 17========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[0.7000000000000001, 17.55, 24.85, 29.575000000000003, 46.050000000000004]
+
+======== Run 18========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 75.0
+Time taken (5-number summary):[6.8500000000000005, 27.512500000000003, 31.875, 36.725, 46.2]
+
+======== Run 19========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 75.0
+Time taken (5-number summary):[7.050000000000001, 20.212500000000002, 29.025, 36.400000000000006, 53.050000000000004]
+
+======== Run 20========
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[7.75, 26.5375, 29.200000000000003, 36.775000000000006, 51.5]
+
+======== 4 Patrolling Agents, 1 Camera agents, 1 Intruders ========
+======== Run 1========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[8.75, 21.375000000000004, 27.175, 28.587500000000002, 34.25]
+
+======== Run 2========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[12.850000000000001, 21.7875, 26.85, 29.6, 45.45]
+
+======== Run 3========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[2.9000000000000004, 27.200000000000003, 28.025000000000002, 29.962500000000002, 50.900000000000006]
+
+======== Run 4========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[1.6500000000000001, 19.325000000000003, 26.1, 33.9875, 45.7]
+
+======== Run 5========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[7.7, 20.325000000000003, 27.950000000000003, 29.825000000000003, 38.6]
+
+======== Run 6========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[12.8, 23.475, 28.175000000000004, 28.637500000000003, 42.35]
+
+======== Run 7========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[5.6000000000000005, 20.75, 26.575000000000003, 29.625, 50.35]
+
+======== Run 8========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[18.45, 25.1125, 26.450000000000003, 29.35, 34.25]
+
+======== Run 9========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[15.450000000000001, 23.512500000000003, 27.075000000000003, 30.800000000000004, 40.6]
+
+======== Run 10========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[3.8000000000000003, 14.000000000000002, 20.200000000000003, 27.075000000000003, 37.9]
+
+======== Run 11========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[2.5, 20.050000000000004, 25.075000000000003, 29.175000000000004, 44.95]
+
+======== Run 12========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[3.1500000000000004, 21.7875, 27.700000000000003, 32.825, 44.650000000000006]
+
+======== Run 13========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[4.1000000000000005, 17.875, 21.25, 26.450000000000003, 32.85]
+
+======== Run 14========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[1.9500000000000002, 11.062500000000002, 24.5, 27.525, 32.7]
+
+======== Run 15========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[4.7, 20.125000000000004, 26.825000000000003, 29.700000000000003, 35.0]
+
+======== Run 16========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[3.35, 18.7875, 25.125, 28.775000000000002, 44.75]
+
+======== Run 17========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[4.45, 19.6875, 25.275000000000002, 29.1625, 38.650000000000006]
+
+======== Run 18========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[6.65, 19.200000000000003, 25.9, 28.7875, 46.45]
+
+======== Run 19========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[1.1, 18.075, 24.85, 30.9, 42.150000000000006]
+
+======== Run 20========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[3.1, 19.862500000000004, 27.35, 28.825000000000003, 38.35]
+
+======== Run 21========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[12.55, 23.7625, 27.650000000000002, 35.1125, 45.300000000000004]
+
+======== Run 22========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[7.45, 23.887500000000003, 27.1, 29.587500000000002, 45.300000000000004]
+
+======== Run 23========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[8.950000000000001, 20.7125, 27.150000000000002, 28.475, 34.4]
+
+======== Run 24========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[7.1000000000000005, 23.425000000000004, 26.925, 28.3125, 45.550000000000004]
+
+======== Run 25========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[1.1, 14.287500000000001, 19.65, 21.0, 41.5]
+
+======== Run 26========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[4.8500000000000005, 13.675, 23.400000000000002, 30.1, 51.2]
+
+======== Run 27========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[18.2, 23.637500000000003, 27.625, 30.575000000000003, 40.1]
+
+======== Run 28========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[3.2, 20.725, 27.450000000000003, 30.6, 42.45]
+
+======== Run 29========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[5.300000000000001, 19.95, 26.15, 30.1, 39.6]
+
+======== Run 30========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[3.1, 19.2875, 26.9, 34.074999999999996, 44.95]
+
+======== Run 31========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[4.3, 20.1625, 25.525, 28.137500000000003, 45.0]
+
+======== Run 32========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[3.5, 19.137500000000003, 22.55, 26.875, 39.550000000000004]
+
+======== Run 33========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[4.4, 24.0375, 26.6, 28.400000000000002, 35.050000000000004]
+
+======== Run 34========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[8.4, 20.150000000000002, 27.700000000000003, 34.1, 39.050000000000004]
+
+======== Run 35========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[7.9, 24.212500000000002, 26.8, 35.162499999999994, 51.2]
+
+======== Run 36========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[5.75, 20.525000000000002, 27.0, 30.637500000000003, 36.5]
+
+======== Run 37========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[3.8000000000000003, 21.1875, 27.825000000000003, 29.587500000000002, 35.050000000000004]
+
+======== Run 38========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[5.550000000000001, 19.6, 25.1, 28.625000000000004, 39.5]
+
+======== Run 39========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[2.15, 25.800000000000004, 27.5, 36.337500000000006, 51.2]
+
+======== Run 40========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[7.0, 20.5, 26.5, 31.900000000000002, 39.35]
+
+======== Run 41========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[7.1000000000000005, 19.65, 27.025000000000002, 30.0375, 51.25]
+
+======== Run 42========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[2.25, 24.900000000000002, 25.675, 29.05, 42.95]
+
+======== Run 43========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[6.1000000000000005, 24.387500000000003, 27.275000000000002, 28.475, 38.35]
+
+======== Run 44========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[6.15, 18.3375, 27.125, 28.762500000000003, 50.550000000000004]
+
+======== Run 45========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[4.15, 23.0375, 27.75, 30.0625, 44.45]
+
+======== Run 46========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[6.4, 18.525000000000002, 27.0, 29.3125, 39.35]
+
+======== Run 47========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[5.15, 20.5, 26.3, 29.725, 42.300000000000004]
+
+======== Run 48========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[2.85, 20.025000000000002, 26.225, 29.150000000000002, 35.85]
+
+======== Run 49========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[8.200000000000001, 20.125000000000004, 26.725, 28.337500000000002, 45.0]
+
+======== Run 50========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[2.6500000000000004, 19.450000000000003, 26.825000000000003, 29.462500000000002, 46.95]
+
+======== Run 51========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[0.65, 14.2875, 21.075000000000003, 29.300000000000004, 36.75]
+
+======== Run 52========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[5.2, 24.0625, 26.375, 32.0, 45.35]
+
+======== Run 53========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[0.8, 18.125, 26.275, 29.012500000000003, 36.050000000000004]
+
+======== Run 54========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[2.15, 22.0375, 27.150000000000002, 31.000000000000004, 42.85]
+
+======== Run 55========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[3.8000000000000003, 24.9125, 27.15, 28.712500000000002, 51.5]
+
+======== Run 56========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[6.5, 20.425000000000004, 25.800000000000004, 29.962500000000002, 38.95]
+
+======== Run 57========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[14.950000000000001, 19.6, 26.05, 28.362500000000004, 35.75]
+
+======== Run 58========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[8.15, 21.175, 25.375, 28.7875, 43.2]
+
+======== Run 59========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[3.75, 20.2875, 27.150000000000002, 30.8, 45.400000000000006]
+
+======== Run 60========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[5.5, 21.825000000000003, 27.3, 33.887499999999996, 50.2]
+
+======== Run 61========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[11.9, 24.187500000000004, 29.025, 35.95, 51.5]
+
+======== Run 62========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[3.6, 20.900000000000002, 26.700000000000003, 28.437500000000004, 36.0]
+
+======== Run 63========
+4 Patrolling Agents, 1 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[8.15, 26.837500000000002, 28.525, 30.6, 40.5]
+
+Winrate over 63 :0.37222095238
+======== 3 Patrolling Agents, 2 Camera agents, 1 Intruders ========
+======== Run 1========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[1.1, 18.6, 24.875, 27.425, 34.7]
+
+======== Run 2========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[5.95, 21.800000000000004, 25.925, 28.3375, 40.35]
+
+======== Run 3========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[5.5, 15.499999999999998, 25.525, 28.637500000000003, 37.35]
+
+======== Run 4========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[4.5, 19.2375, 26.75, 30.85, 42.7]
+
+======== Run 5========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[9.55, 25.487500000000004, 27.675, 33.95, 44.900000000000006]
+
+======== Run 6========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[3.1500000000000004, 22.0375, 27.925, 35.8, 47.35]
+
+======== Run 7========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[1.2000000000000002, 19.700000000000003, 26.8, 29.1625, 46.800000000000004]
+
+======== Run 8========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[8.6, 25.8125, 29.775000000000002, 37.775000000000006, 47.2]
+
+======== Run 9========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[5.75, 21.612500000000004, 25.975, 28.2625, 43.85]
+
+======== Run 10========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[5.300000000000001, 17.2625, 20.625, 29.9125, 47.95]
+
+======== Run 11========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[9.9, 20.75, 26.525, 28.3625, 45.25]
+
+======== Run 12========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[5.9, 24.1625, 27.675, 31.0375, 46.95]
+
+======== Run 13========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[7.1000000000000005, 19.225, 27.175, 29.5375, 44.35]
+
+======== Run 14========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[3.1500000000000004, 23.75, 27.85, 29.200000000000003, 49.85]
+
+======== Run 15========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[2.5500000000000003, 11.712500000000002, 22.675000000000004, 27.5375, 43.2]
+
+======== Run 16========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[5.550000000000001, 20.1, 27.700000000000003, 37.9875, 47.1]
+
+======== Run 17========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[9.75, 19.175, 27.25, 30.65, 47.35]
+
+======== Run 18========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[6.9, 20.6875, 26.725, 30.85, 50.550000000000004]
+
+======== Run 19========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[3.0500000000000003, 20.237500000000004, 27.25, 38.35, 46.95]
+
+======== Run 20========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[7.5, 20.5, 26.875, 29.625, 47.7]
+
+======== Run 21========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[18.85, 26.35, 29.425, 30.175000000000004, 47.050000000000004]
+
+======== Run 22========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[6.95, 22.65, 26.550000000000004, 28.712500000000002, 40.35]
+
+======== Run 23========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[4.45, 20.575000000000003, 25.3, 27.375, 50.35]
+
+======== Run 24========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[8.950000000000001, 20.6875, 26.450000000000003, 35.699999999999996, 46.95]
+
+======== Run 25========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[2.85, 20.7875, 25.525, 30.650000000000002, 48.400000000000006]
+
+======== Run 26========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[6.25, 24.4125, 27.700000000000003, 39.837500000000006, 48.400000000000006]
+
+======== Run 27========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[7.300000000000001, 20.125, 27.15, 28.962500000000002, 48.150000000000006]
+
+======== Run 28========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[4.65, 21.587500000000002, 27.1, 29.875, 50.900000000000006]
+
+======== Run 29========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[6.0, 19.275000000000002, 27.200000000000003, 28.5625, 47.85]
+
+======== Run 30========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[6.15, 22.4375, 26.5, 29.625, 43.150000000000006]
+
+======== Run 31========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[2.9000000000000004, 21.475, 28.200000000000003, 35.462500000000006, 50.35]
+
+======== Run 32========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[17.35, 21.6, 26.35, 35.675000000000004, 46.95]
+
+======== Run 33========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[2.6500000000000004, 24.462500000000002, 27.25, 36.725, 42.0]
+
+======== Run 34========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[2.5500000000000003, 25.087500000000002, 27.6, 33.212500000000006, 47.85]
+
+======== Run 35========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[2.15, 20.875, 26.725, 36.2, 51.5]
+
+======== Run 36========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[2.8000000000000003, 17.8625, 23.025000000000002, 29.337500000000006, 47.550000000000004]
+
+======== Run 37========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[6.15, 22.975, 27.325000000000003, 30.4125, 48.400000000000006]
+
+======== Run 38========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[12.350000000000001, 22.0375, 26.9, 28.15, 50.900000000000006]
+
+======== Run 39========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[1.7000000000000002, 23.875, 28.700000000000003, 30.125000000000004, 49.95]
+
+======== Run 40========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[5.75, 19.475, 26.775000000000002, 28.75, 50.650000000000006]
+
+======== Run 41========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[7.050000000000001, 23.375, 26.5, 28.35, 44.75]
+
+======== Run 42========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[6.6000000000000005, 20.5625, 25.575000000000003, 28.125000000000004, 43.7]
+
+======== Run 43========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[7.1000000000000005, 18.5875, 21.1, 27.6875, 42.5]
+
+======== Run 44========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[10.3, 20.275, 24.925, 29.575000000000003, 45.0]
+
+======== Run 45========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[6.7, 19.462500000000002, 22.1, 28.5375, 47.7]
+
+======== Run 46========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[4.75, 20.2875, 22.55, 27.575, 39.1]
+
+======== Run 47========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[4.45, 23.312500000000004, 27.35, 37.462500000000006, 44.2]
+
+======== Run 48========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[6.9, 23.387500000000003, 27.15, 35.175000000000004, 51.5]
+
+======== Run 49========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[16.35, 24.8625, 26.05, 28.3125, 38.6]
+
+======== Run 50========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[7.45, 19.700000000000003, 26.650000000000002, 28.125000000000004, 39.400000000000006]
+
+======== Run 51========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[5.5, 20.975, 27.55, 34.575, 44.2]
+
+======== Run 52========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[8.3, 19.937500000000004, 25.700000000000003, 28.712500000000002, 37.2]
+
+======== Run 53========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[8.0, 25.487500000000004, 29.1, 40.650000000000006, 50.900000000000006]
+
+======== Run 54========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[6.45, 20.387500000000003, 25.900000000000002, 28.125, 36.7]
+
+======== Run 55========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[5.8500000000000005, 19.575000000000003, 26.175000000000004, 29.5375, 46.1]
+
+======== Run 56========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[8.200000000000001, 25.225, 35.025000000000006, 43.575, 51.2]
+
+======== Run 57========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[3.6, 17.0, 24.625, 26.7875, 47.35]
+
+======== Run 58========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[4.15, 24.975, 27.25, 35.2625, 44.35]
+
+======== Run 59========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[1.8, 19.4125, 21.825000000000003, 31.3375, 50.550000000000004]
+
+======== Run 60========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[4.6000000000000005, 19.45, 25.0, 36.0625, 48.35]
+
+======== Run 61========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[2.45, 18.025000000000002, 24.0, 33.525, 45.150000000000006]
+
+======== Run 62========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[1.85, 21.9125, 25.6, 29.9125, 43.2]
+
+======== Run 63========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[8.25, 24.637500000000003, 26.75, 28.637500000000003, 44.300000000000004]
+
+======== Run 64========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[7.45, 19.150000000000002, 27.475, 38.775, 47.550000000000004]
+
+======== Run 65========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[6.9, 19.187500000000004, 20.875, 27.112500000000004, 43.800000000000004]
+
+======== Run 66========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[9.850000000000001, 19.137500000000003, 23.700000000000003, 27.950000000000003, 32.5]
+
+======== Run 67========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[11.9, 25.0625, 27.25, 35.725, 46.95]
+
+======== Run 68========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[4.5, 21.775000000000002, 26.475, 28.650000000000002, 47.7]
+
+======== Run 69========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[6.9, 23.6875, 29.400000000000002, 37.0, 51.0]
+
+======== Run 70========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[6.65, 24.150000000000002, 27.575000000000003, 29.612500000000004, 46.2]
+
+======== Run 71========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[5.5, 23.1, 27.700000000000003, 37.075, 45.1]
+
+======== Run 72========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[1.1500000000000001, 17.175, 25.55, 32.775000000000006, 51.5]
+
+======== Run 73========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[9.1, 21.55, 25.375, 29.025000000000002, 47.35]
+
+======== Run 74========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[7.8500000000000005, 24.675, 27.325000000000003, 29.012500000000003, 50.900000000000006]
+
+======== Run 75========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[12.4, 22.625, 28.1, 32.050000000000004, 46.35]
+
+======== Run 76========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[5.550000000000001, 19.95, 26.65, 34.1625, 48.400000000000006]
+
+======== Run 77========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[9.3, 19.0375, 24.6, 27.737500000000004, 46.300000000000004]
+
+======== Run 78========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 75.0
+Time taken (5-number summary):[8.950000000000001, 25.4125, 26.6, 29.35, 38.95]
+
+======== Run 79========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[6.2, 19.5375, 24.25, 28.85, 46.2]
+
+======== Run 80========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[17.85, 20.25, 24.800000000000004, 28.825000000000003, 42.85]
+
+======== Run 81========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[7.2, 18.975, 25.925, 31.887500000000003, 46.650000000000006]
+
+======== Run 82========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[18.400000000000002, 25.087500000000002, 27.125, 29.612500000000004, 45.300000000000004]
+
+======== Run 83========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 15.0
+Time taken (5-number summary):[2.7, 13.537500000000001, 24.475, 40.66250000000001, 50.1]
+
+======== Run 84========
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[7.45, 19.975, 29.200000000000003, 30.212500000000002, 50.550000000000004]
+
+3 Patrolling Agents, 2 Camera agents, 1 Intruders
+Winrate over 84 :0.40654761904761894
+
+
+======== 2 Patrolling Agents, 3 Camera agents, 1 Intruders ========
+======== Run 1========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[6.15, 17.6125, 23.200000000000003, 27.200000000000003, 51.2]
+
+======== Run 2========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[4.95, 19.85, 25.85, 35.2, 50.900000000000006]
+
+======== Run 3========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[6.0, 9.6125, 23.475, 31.0625, 52.550000000000004]
+
+======== Run 4========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[6.800000000000001, 20.725, 27.300000000000004, 32.025000000000006, 46.35]
+
+======== Run 5========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[16.3, 21.3625, 27.075000000000003, 28.3375, 47.35]
+
+======== Run 6========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[3.1, 15.975000000000001, 25.925, 36.6, 47.25]
+
+======== Run 7========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[6.8500000000000005, 20.575000000000003, 26.1, 34.3875, 51.5]
+
+======== Run 8========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[7.75, 19.650000000000002, 25.325000000000003, 27.525, 42.150000000000006]
+
+======== Run 9========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[6.3500000000000005, 20.825000000000003, 26.5, 28.250000000000004, 53.35]
+
+======== Run 10========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[6.9, 19.9125, 29.775, 34.1, 52.650000000000006]
+
+======== Run 11========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[1.5, 20.5, 27.15, 30.700000000000003, 51.2]
+
+======== Run 12========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[5.9, 19.0, 22.6, 27.2625, 46.650000000000006]
+
+======== Run 13========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[10.75, 26.450000000000003, 31.275000000000002, 40.0125, 50.550000000000004]
+
+======== Run 14========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[4.9, 18.875, 25.775000000000002, 27.675, 51.5]
+
+======== Run 15========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[3.9000000000000004, 18.2875, 22.5, 30.400000000000002, 47.25]
+
+======== Run 16========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[7.550000000000001, 23.825000000000003, 27.55, 35.4125, 50.650000000000006]
+
+======== Run 17========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[3.2, 20.612500000000004, 26.85, 27.700000000000003, 53.0]
+
+======== Run 18========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[7.25, 22.9375, 29.25, 35.95, 50.35]
+
+======== Run 19========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[3.25, 24.012500000000003, 27.150000000000002, 34.525000000000006, 42.650000000000006]
+
+======== Run 20========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[4.800000000000001, 21.0, 26.900000000000002, 34.2875, 51.1]
+
+======== Run 21========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[3.4000000000000004, 22.262500000000003, 27.125, 37.225, 52.550000000000004]
+
+======== Run 22========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[6.8500000000000005, 23.862500000000004, 28.525000000000002, 32.1625, 50.2]
+
+======== Run 23========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[1.75, 14.575000000000001, 22.85, 27.725, 46.300000000000004]
+
+======== Run 24========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[2.25, 20.625, 26.375, 30.35, 52.550000000000004]
+
+======== Run 25========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[19.6, 21.950000000000003, 27.025, 38.962500000000006, 47.25]
+
+======== Run 26========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[6.9, 19.637500000000003, 27.225, 32.7, 45.45]
+
+======== Run 27========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[8.3, 22.425, 26.375, 29.6625, 51.5]
+
+======== Run 28========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[7.1000000000000005, 20.975, 25.4, 27.425, 51.5]
+
+======== Run 29========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[4.3500000000000005, 20.837500000000002, 25.725, 28.812500000000004, 50.35]
+
+======== Run 30========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[9.05, 21.137500000000003, 27.05, 31.0, 50.35]
+
+======== Run 31========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[1.85, 7.0, 22.85, 28.625000000000004, 51.0]
+
+======== Run 32========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[2.85, 17.3, 26.15, 28.937500000000004, 44.95]
+
+======== Run 33========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[4.8500000000000005, 19.6625, 26.450000000000003, 31.462500000000002, 47.25]
+
+======== Run 34========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[6.75, 19.025000000000002, 27.125, 37.137499999999996, 51.5]
+
+======== Run 35========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[4.05, 18.5375, 23.425, 28.200000000000003, 46.95]
+
+======== Run 36========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[6.3500000000000005, 20.1625, 25.075000000000003, 29.5375, 44.45]
+
+======== Run 37========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[6.800000000000001, 19.587500000000002, 26.025000000000002, 33.25, 47.550000000000004]
+
+======== Run 38========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[7.7, 20.45, 26.925000000000004, 36.2, 53.35]
+
+======== Run 39========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[9.8, 19.825000000000003, 25.450000000000003, 34.712500000000006, 50.650000000000006]
+
+======== Run 40========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[16.85, 21.462500000000002, 26.0, 29.725, 45.300000000000004]
+
+======== Run 41========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[7.1000000000000005, 20.650000000000002, 26.200000000000003, 30.225, 47.550000000000004]
+
+======== Run 42========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[1.4500000000000002, 24.025000000000002, 31.675, 35.550000000000004, 47.95]
+
+======== Run 43========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[7.5, 20.137500000000003, 25.4, 29.262500000000003, 51.5]
+
+======== Run 44========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[3.2, 19.5625, 25.575000000000003, 31.750000000000004, 52.1]
+
+======== Run 45========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[7.050000000000001, 19.150000000000002, 23.950000000000003, 36.737500000000004, 50.2]
+
+======== Run 46========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[2.0500000000000003, 22.4, 27.5, 31.637500000000003, 50.900000000000006]
+
+======== Run 47========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[2.9000000000000004, 19.35, 29.475, 38.150000000000006, 50.2]
+
+======== Run 48========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[3.1, 22.05, 26.150000000000002, 33.5125, 51.2]
+
+======== Run 49========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[4.15, 19.900000000000002, 25.425, 33.175000000000004, 47.85]
+
+======== Run 50========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[5.0, 18.975, 23.450000000000003, 33.7125, 51.2]
+
+======== Run 51========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[6.1000000000000005, 20.125, 27.225, 30.775000000000002, 47.800000000000004]
+
+======== Run 52========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[7.7, 19.8875, 22.425000000000004, 28.5, 42.900000000000006]
+
+======== Run 53========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[19.3, 26.5375, 29.450000000000003, 43.612500000000004, 51.5]
+
+======== Run 54========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[7.1000000000000005, 21.1875, 26.700000000000003, 32.400000000000006, 46.050000000000004]
+
+======== Run 55========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[7.25, 24.712500000000002, 27.275, 35.1375, 43.7]
+
+2 Patrolling Agents, 3 Camera agents, 1 Intruders
+Winrate over 55 :0.4636363636363636
+
+======== 5 Patrolling Agents, 0 Camera agents, 1 Intruders ========
+======== Run 1========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[1.1500000000000001, 18.075, 28.425000000000004, 35.550000000000004, 48.35]
+
+======== Run 2========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[2.3000000000000003, 26.125000000000004, 31.55, 39.5, 48.300000000000004]
+
+======== Run 3========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[4.3500000000000005, 25.225, 29.625, 38.2, 46.35]
+
+======== Run 4========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[21.400000000000002, 27.525000000000002, 34.150000000000006, 36.3875, 46.1]
+
+======== Run 5========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[1.35, 19.737500000000004, 25.975, 29.5, 44.35]
+
+======== Run 6========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[3.0500000000000003, 20.5, 25.725, 34.6625, 47.85]
+
+======== Run 7========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[7.3500000000000005, 20.7875, 28.625, 34.8375, 43.5]
+
+======== Run 8========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[5.75, 20.087500000000002, 27.15, 38.6875, 45.95]
+
+======== Run 9========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[7.3500000000000005, 19.475, 33.7, 37.1, 47.95]
+
+======== Run 10========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[13.9, 26.05, 28.200000000000003, 32.987500000000004, 44.650000000000006]
+
+======== Run 11========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[8.4, 24.35, 29.175, 36.824999999999996, 48.550000000000004]
+
+======== Run 12========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[8.65, 23.775000000000002, 27.950000000000003, 37.2, 45.25]
+
+======== Run 13========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[18.75, 27.375, 29.575000000000003, 35.699999999999996, 45.7]
+
+======== Run 14========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[5.6000000000000005, 25.6, 31.825, 37.0, 48.050000000000004]
+
+======== Run 15========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[4.75, 23.837500000000002, 27.875, 35.3375, 41.550000000000004]
+
+======== Run 16========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[6.550000000000001, 25.837500000000002, 27.975, 34.337500000000006, 40.150000000000006]
+
+======== Run 17========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[4.5, 20.587500000000002, 27.25, 36.7625, 50.1]
+
+======== Run 18========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 15.0
+Time taken (5-number summary):[4.8500000000000005, 19.4375, 25.525, 33.4, 50.150000000000006]
+
+======== Run 19========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[9.55, 26.175000000000004, 31.825000000000003, 40.925000000000004, 48.800000000000004]
+
+======== Run 20========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[3.6, 26.9125, 29.400000000000002, 34.1875, 48.85]
+
+======== Run 21========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[10.05, 27.225, 28.775, 35.550000000000004, 47.300000000000004]
+
+======== Run 22========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[12.200000000000001, 24.125, 27.375, 36.7, 45.85]
+
+======== Run 23========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[7.75, 20.137500000000003, 26.925, 35.612500000000004, 49.050000000000004]
+
+======== Run 24========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[0.8, 23.825000000000003, 29.375, 36.800000000000004, 47.800000000000004]
+
+======== Run 25========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[3.5500000000000003, 19.9125, 27.1, 35.6875, 39.6]
+
+======== Run 26========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[2.4000000000000004, 26.650000000000002, 28.375, 34.0625, 46.85]
+
+======== Run 27========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[16.75, 24.9875, 27.550000000000004, 30.937500000000004, 46.75]
+
+======== Run 28========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[6.1000000000000005, 20.425000000000004, 26.85, 36.8375, 47.5]
+
+======== Run 29========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[1.8, 21.325000000000003, 27.825000000000003, 34.8125, 45.85]
+
+======== Run 30========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[2.95, 26.650000000000002, 29.25, 32.587500000000006, 46.5]
+
+======== Run 31========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[1.75, 28.4125, 34.425, 39.0, 47.45]
+
+======== Run 32========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[3.4000000000000004, 18.875, 24.875, 34.375, 48.150000000000006]
+
+======== Run 33========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[20.25, 27.125000000000004, 34.1, 39.2, 45.85]
+
+======== Run 34========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[4.3, 18.3625, 27.975, 35.7625, 41.6]
+
+======== Run 35========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[15.600000000000001, 26.3125, 33.775000000000006, 43.825, 48.900000000000006]
+
+======== Run 36========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[6.050000000000001, 27.1, 28.9, 35.3875, 45.7]
+
+======== Run 37========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[7.75, 23.6, 30.950000000000003, 36.237500000000004, 42.85]
+
+======== Run 38========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[9.75, 19.5625, 27.450000000000003, 30.812500000000004, 46.25]
+
+======== Run 39========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[2.15, 19.362500000000004, 28.475, 36.300000000000004, 39.800000000000004]
+
+======== Run 40========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[20.8, 25.962500000000002, 27.35, 30.325000000000003, 45.550000000000004]
+
+======== Run 41========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 20.0
+Time taken (5-number summary):[5.4, 20.837500000000002, 26.125, 30.337500000000002, 44.800000000000004]
+
+======== Run 42========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[8.9, 20.525000000000002, 27.025000000000002, 28.8, 42.45]
+
+======== Run 43========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[1.4500000000000002, 20.112500000000004, 27.8, 34.7875, 49.050000000000004]
+
+======== Run 44========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[7.65, 24.7375, 28.55, 34.675000000000004, 47.85]
+
+======== Run 45========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[1.9500000000000002, 19.450000000000003, 26.25, 36.0125, 45.45]
+
+======== Run 46========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[1.5, 25.35, 27.0, 36.112500000000004, 51.1]
+
+======== Run 47========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[9.65, 26.275000000000002, 29.0, 35.7625, 44.550000000000004]
+
+======== Run 48========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[6.050000000000001, 25.4, 29.025, 34.5625, 49.6]
+
+======== Run 49========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[5.6000000000000005, 22.475, 27.025000000000002, 31.950000000000003, 41.7]
+
+======== Run 50========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[2.45, 20.050000000000004, 26.1, 32.35, 52.550000000000004]
+
+======== Run 51========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 30.0
+Time taken (5-number summary):[0.2, 26.1625, 34.650000000000006, 38.125, 48.75]
+
+======== Run 52========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[4.7, 15.6, 23.075000000000003, 28.125, 53.050000000000004]
+
+======== Run 53========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[3.3000000000000003, 18.975, 29.200000000000003, 34.175, 46.6]
+
+======== Run 54========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[5.5, 21.550000000000004, 26.525000000000002, 31.200000000000003, 48.150000000000006]
+
+======== Run 55========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 45.0
+Time taken (5-number summary):[19.6, 27.200000000000003, 31.650000000000002, 37.05, 42.550000000000004]
+
+======== Run 56========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 40.0
+Time taken (5-number summary):[5.45, 25.450000000000003, 31.825, 38.1875, 52.35]
+
+======== Run 57========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 35.0
+Time taken (5-number summary):[0.9, 20.6, 31.325000000000003, 40.1875, 47.5]
+
+======== Run 58========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Intruder win percentage: 25.0
+Time taken (5-number summary):[1.1, 22.2125, 28.0, 35.7625, 42.85]
+
+5 Patrolling Agents, 0 Camera agents, 1 Intruders
+Winrate over 58 :0.38448275862068954
+======== 1 Patrolling Agents, 4 Camera agents, 1 Intruders ========
+======== Run 1========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[19.05, 27.225, 35.650000000000006, 38.72500000000001, 52.75]
+
+======== Run 2========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[9.55, 27.15, 31.6, 38.95, 53.35]
+
+======== Run 3========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 85.0
+Time taken (5-number summary):[6.9, 24.087500000000002, 27.825000000000003, 42.6375, 53.050000000000004]
+
+======== Run 4========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 80.0
+Time taken (5-number summary):[7.1000000000000005, 27.2375, 31.725, 39.875, 46.5]
+
+======== Run 5========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[6.8500000000000005, 27.1, 31.675, 37.5625, 50.900000000000006]
+
+======== Run 6========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 80.0
+Time taken (5-number summary):[7.75, 28.262500000000003, 36.625, 39.612500000000004, 50.900000000000006]
+
+======== Run 7========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[7.45, 22.75, 27.400000000000002, 29.625, 50.900000000000006]
+
+======== Run 8========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 80.0
+Time taken (5-number summary):[10.200000000000001, 28.375, 33.75, 38.0625, 51.5]
+
+======== Run 9========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 75.0
+Time taken (5-number summary):[10.3, 27.2875, 35.5, 42.7, 50.650000000000006]
+
+======== Run 10========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 80.0
+Time taken (5-number summary):[18.75, 26.925, 29.525000000000002, 35.725, 46.35]
+
+======== Run 11========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[4.3500000000000005, 24.200000000000003, 29.55, 47.175000000000004, 53.050000000000004]
+
+======== Run 12========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[3.45, 18.725, 27.125, 37.637499999999996, 46.050000000000004]
+
+======== Run 13========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[6.8500000000000005, 25.0, 27.0, 37.599999999999994, 53.35]
+
+======== Run 14========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 75.0
+Time taken (5-number summary):[18.75, 26.775000000000002, 36.7, 43.9125, 50.85]
+
+======== Run 15========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 85.0
+Time taken (5-number summary):[7.45, 28.0125, 36.8, 40.375, 51.900000000000006]
+
+======== Run 16========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 80.0
+Time taken (5-number summary):[7.1000000000000005, 27.125000000000004, 34.2, 46.487500000000004, 53.050000000000004]
+
+======== Run 17========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[9.600000000000001, 23.9875, 32.125, 39.2, 53.050000000000004]
+
+======== Run 18========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 85.0
+Time taken (5-number summary):[7.65, 24.2875, 27.4, 36.625, 51.5]
+
+======== Run 19========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 80.0
+Time taken (5-number summary):[6.65, 26.012500000000003, 27.150000000000002, 29.450000000000003, 47.7]
+
+======== Run 20========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 80.0
+Time taken (5-number summary):[7.65, 25.7125, 28.675000000000004, 46.1625, 52.550000000000004]
+
+======== Run 21========
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[6.9, 22.650000000000002, 27.175000000000004, 39.4125, 52.75]
+
+======== Run 22========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[1.6, 19.837500000000002, 27.625, 39.925000000000004, 52.550000000000004]
+
+======== Run 23========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 80.0
+Time taken (5-number summary):[6.8500000000000005, 23.875, 28.175, 35.425000000000004, 52.75]
+
+======== Run 24========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[6.8500000000000005, 25.262500000000003, 28.650000000000002, 35.725, 44.85]
+
+======== Run 25========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[2.6, 25.075000000000003, 29.1, 37.825, 51.900000000000006]
+
+======== Run 26========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[18.75, 25.6625, 31.475, 41.81250000000001, 50.650000000000006]
+
+======== Run 27========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 75.0
+Time taken (5-number summary):[25.55, 28.875, 36.725, 44.8, 50.550000000000004]
+
+======== Run 28========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 75.0
+Time taken (5-number summary):[6.9, 19.825000000000003, 35.95, 45.575, 52.75]
+
+======== Run 29========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 50.0
+Time taken (5-number summary):[7.6000000000000005, 26.8625, 33.900000000000006, 37.6875, 51.1]
+
+======== Run 30========
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[11.55, 26.2375, 27.900000000000002, 30.975, 51.900000000000006]
+
+======== Run 31========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 90.0
+Time taken (5-number summary):[19.1, 28.5625, 35.775, 37.7, 53.050000000000004]
+
+======== Run 32========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 85.0
+Time taken (5-number summary):[7.65, 25.4125, 27.3, 31.900000000000002, 50.35]
+
+======== Run 33========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 65.0
+Time taken (5-number summary):[8.35, 25.7125, 28.075000000000003, 42.625, 51.2]
+
+======== Run 34========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 95.0
+Time taken (5-number summary):[20.3, 26.975, 32.175, 40.300000000000004, 47.25]
+
+======== Run 35========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 85.0
+Time taken (5-number summary):[7.1000000000000005, 27.0, 28.55, 38.550000000000004, 50.2]
+
+======== Run 36========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 85.0
+Time taken (5-number summary):[19.700000000000003, 25.5375, 32.625, 38.2875, 50.900000000000006]
+
+======== Run 37========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[8.6, 26.4125, 30.1, 39.025, 45.75]
+
+======== Run 38========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 85.0
+Time taken (5-number summary):[18.75, 25.437500000000004, 28.400000000000002, 39.862500000000004, 50.900000000000006]
+
+======== Run 39========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[6.8500000000000005, 23.725, 27.875, 37.425, 50.800000000000004]
+
+======== Run 40========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 85.0
+Time taken (5-number summary):[7.3500000000000005, 26.6625, 31.375000000000004, 38.8875, 51.5]
+
+======== Run 41========
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[7.45, 20.575000000000003, 27.1, 35.650000000000006, 41.45]
+
+======== Run 42========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[7.1000000000000005, 25.1125, 28.4, 35.9625, 46.95]
+
+======== Run 43========
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[4.45, 25.525000000000002, 29.05, 40.237500000000004, 53.35]
+
+======== Run 44========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 80.0
+Time taken (5-number summary):[19.1, 26.9875, 35.425000000000004, 38.712500000000006, 47.85]
+
+======== Run 45========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 80.0
+Time taken (5-number summary):[19.05, 24.7875, 28.450000000000003, 38.5, 46.35]
+
+======== Run 46========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 75.0
+Time taken (5-number summary):[7.45, 25.687500000000004, 28.0, 41.575, 50.900000000000006]
+
+======== Run 47========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 90.0
+Time taken (5-number summary):[2.1, 25.137500000000003, 33.85, 38.8, 51.900000000000006]
+
+======== Run 48========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[6.8500000000000005, 27.1, 29.200000000000003, 38.8375, 51.5]
+
+======== Run 49========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 80.0
+Time taken (5-number summary):[20.700000000000003, 27.3, 34.5, 39.4125, 52.550000000000004]
+
+======== Run 50========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 75.0
+Time taken (5-number summary):[19.05, 26.575000000000003, 28.700000000000003, 38.8, 53.050000000000004]
+
+======== Run 51========
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[6.8500000000000005, 26.1625, 27.6, 40.05, 50.900000000000006]
+
+======== Run 52========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[7.45, 20.8, 28.650000000000002, 38.837500000000006, 50.650000000000006]
+
+======== Run 53========
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 80.0
+Time taken (5-number summary):[7.1000000000000005, 26.900000000000002, 32.05, 39.4125, 52.75]
+
+======== Run 54========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 75.0
+Time taken (5-number summary):[10.850000000000001, 25.7, 28.925, 39.625, 47.25]
+
+======== Run 55========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 60.0
+Time taken (5-number summary):[7.3500000000000005, 23.9875, 25.900000000000002, 45.487500000000004, 50.35]
+
+======== Run 56========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 70.0
+Time taken (5-number summary):[1.75, 25.3, 31.250000000000004, 40.425000000000004, 53.35]
+
+======== Run 57========
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 85.0
+Time taken (5-number summary):[18.05, 20.45, 28.4, 37.3125, 52.550000000000004]
+
+======== Run 58========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: guards
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 55.00000000000001
+Time taken (5-number summary):[7.050000000000001, 20.8, 26.675000000000004, 29.5, 50.5]
+
+======== Run 59========
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: intruders
+Won by: guards
+Won by: guards
+Won by: guards
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Intruder win percentage: 75.0
+Time taken (5-number summary):[6.8500000000000005, 24.200000000000003, 35.45, 43.0125, 50.650000000000006]
+
+1 Patrolling Agents, 4 Camera agents, 1 Intruders
+Winrate over 59 :0.7364406779661018
+

@@ -1,0 +1,15 @@
+{
+    "agents": [
+        "PatrollingGuard",
+        "PatrollingGuard",
+        "PatrollingGuard",
+        "PatrollingGuard",
+        "PatrollingGuard",
+        "PathfindingIntruder",
+        "PathfindingIntruder",
+        "PathfindingIntruder",
+        "PathfindingIntruder",
+        "PathfindingIntruder",
+        "PathfindingIntruder"
+    ]
+}

@@ -22,8 +22,10 @@ if __name__ == '__main__':
         world = World(m)
 
         world.add_agent(agents.CameraGuard)
-        world.add_agent(agents.PatrollingGuard)
-        world.add_agent(agents.PatrollingGuard)
+        world.add_agent(agents.CameraGuard)
+        world.add_agent(agents.CameraGuard)
+        world.add_agent(agents.CameraGuard)
+        world.add_agent(agents.CameraGuard)
         world.add_agent(agents.PathfindingIntruder)
         world.add_agent(agents.PathfindingIntruder)
 
